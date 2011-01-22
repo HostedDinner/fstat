@@ -13,6 +13,7 @@ include $prefolder."config/settings.php";
 include $prefolder."functions/backend_include.php";
 
 $cou_arr = array();
+$tmp_sort_c1 = array();
 
 for($i = 1; $i <= date("t", $fstat_backend_timestamp); $i++){
 	$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
