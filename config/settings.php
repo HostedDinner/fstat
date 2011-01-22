@@ -1,6 +1,8 @@
 <?php
 	date_default_timezone_set('Europe/Berlin');
 	
+	$fstat_default_lang = "de";//like in lang dir
+	
 	$fstat_cache_dir = "./cache/";
 	$fstat_data_dir = "./stat_data/";
 	$fstat_ico_dir = "./icons/";

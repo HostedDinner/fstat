@@ -1,5 +1,5 @@
 <?php
-	$monthnames = array("Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember");
+	$monthnames = array(FLANG_JAN, FLANG_FEB, FLANG_MAR, FLANG_APR, FLANG_MAY, FLANG_JUN, FLANG_JUL, FLANG_AUG, FLANG_SEP, FLANG_OKT, FLANG_NOV, FLANG_DEC);
 
 	if(isset($_GET['year'])){
 		$show_year = preg_replace('#[^0-9]#i','',$_GET['year']);//alles ausser 0-9 mit nichts ersetzten
