@@ -1,0 +1,137 @@
+body{
+	background:#FFF;
+	color:#F90;
+}
+
+h1, h2, h3, h4, h5, h6{
+	text-align:center;
+	color:#F40;
+}
+
+h2{
+	margin-bottom:1px;
+	margin-top:1px;
+}
+
+
+a{
+	color:#F40;
+}
+a:hover{
+	color:#000;
+}
+
+table.Auflistung a{
+	text-decoration:none;
+}
+
+#container{
+	width:900px;
+	margin:0 auto;
+}
+
+.high{
+	color:#F40;
+	font-weight:bold;
+}
+.backhigh{
+	background:#FEC;
+}
+
+.border{
+	margin:0 0 2px 0;
+	padding:0;
+	border:solid 1px #F40;
+}
+
+.border div.text{
+	padding:1px 5px;
+}
+
+.left{
+	margin:0 0 2px 0;
+	padding:0 1px 0 0;
+	width:159px;
+	float:left;
+}
+
+.right{
+	margin:0 0 2px 0;
+	padding:0 0 0 1px;
+	width:369px;
+	float:right;
+}
+
+.middle{
+	margin:0 auto 2px 159px;
+	padding:0 2px 0 2px;
+	width:368px;
+}
+
+
+.table_sum td{
+	border-top:solid 2px #F40;
+	font-weight:bold;
+}
+
+
+.Auflistung{
+	width:100%;
+}
+
+
+
+.databoard_100{
+	width:100%;
+	height:100px;
+}
+.databoard_50{
+	width:100%;
+	height:50px;
+}
+.databoard_100 td, .databoard_50 td{
+	vertical-align:bottom;
+}
+.databoard_100 td div, .databoard_50 td div{
+	background:#F40;
+}
+.databoard_100 td div:hover, .databoard_50 td div:hover{
+	background:#F90;
+}
+
+
+.Auflistung .perc div{
+	height:0.8em;
+	/*font-size:50%;
+	overflow:hidden;*/
+	margin:1px;
+	background:#F40;
+}
+.Auflistung .perc div:hover{
+	background:#F90;
+}
+
+
+
+
+.footer{
+	margin-top:20px;
+	padding-top:20px;
+	padding-bottom:20px;
+	text-align:right;
+	clear:both;
+	
+	border-top:solid 2px #F40;
+}
+
+/*MENU*/
+
+.menu { height:1.5em; position:relative; margin-bottom:2px; width:898px;}
+.menu td {vertical-align:top;}
+.mainentry {width:100px; float:left;}
+.mainentry ul{display:none; list-style-type:none;}
+.mainentry:hover ul{display:block;}
+
+.menu{border:solid 1px #F40;background:#FEC;}
+.mainentry a{text-decoration:none}
+.mainentry ul{background:#FFF; border:solid 1px #F40; margin:0px; padding:4px;}
