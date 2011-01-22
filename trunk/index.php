@@ -3,6 +3,7 @@
 	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
 	error_reporting(E_ALL); // alle Fehler anzeigen
 	include "./config/settings.php";
+	include "./config/lang.php";
 	include_once "./functions/main_include.php";
 	include_once "./functions/date.php";//enthält $monthnames, $show_year, $show_month, $show_timestamp
 		
@@ -15,7 +16,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>Statistik f&uuml;r <?php echo $monthnames[$show_month-1]." ".$show_year;?></title>
+	<title><?php echo FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;?></title>
 	<meta name="author" content="Fabian Neffgen">
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="./style.css">
@@ -38,18 +39,18 @@
 </head>
 <body>
 <div id="container">
-	<h1>Statistik f&uuml;r <?php echo $monthnames[$show_month-1]." ".$show_year;?></h1>
+	<h1><?php echo FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;?></h1>
 	<div class="menu">
 		<table>
 		<tr>
 		<td class="mainentry">
-			<a href="<?php echo "./?year=".date("Y")."&amp;month=".date("m"); ?>">Monat</a>
+			<a href="<?php echo "./?year=".date("Y")."&amp;month=".date("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_MONTH; ?></a>
 			<ul>
 <?php
 	for($i = 0; $i < 12; $i++){
 	
 		if($i != ($show_month-1)){
-			$string = "<a href=\"./?year=".$show_year."&amp;month=".($i+1)."\">".$monthnames[$i]."</a>";
+			$string = "<a href=\"./?year=".$show_year."&amp;month=".($i+1)."&amp;lang=".$show_lang."\">".$monthnames[$i]."</a>";
 		}else{
 			$string = $monthnames[$show_month-1];
 		}
@@ -59,17 +60,34 @@
 			</ul>
 		</td>
 		<td class="mainentry">
-			<a href="#">Jahr</a>
+			<a href="<?php echo "./?year=".date("Y")."&amp;month=".date("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_YEAR; ?></a>
 			<ul>
 <?php
 	for($i = -3; $i <= 3; $i++){
 		if($i == 0){
 			$string = $show_year;
 		}else{
-			$string = "<a href=\"./?year=".($show_year+$i)."&amp;month=".$show_month."\">".($show_year+$i)."</a>";
+			$string = "<a href=\"./?year=".($show_year+$i)."&amp;month=".$show_month."&amp;lang=".$show_lang."\">".($show_year+$i)."</a>";
 		}
 		echo "\t\t\t\t<li>".$string."</li>\n";
 	}
+?>
+			</ul>
+		</td>
+		<td class="mainentry">
+			<a href="#"><?php echo FLANG_LANG; ?></a>
+			<ul>
+<?php
+	$langdir = opendir("./lang/");
+	while (($file = readdir($langdir)) !== FALSE){
+		if((substr($file, -4) == ".php")){
+			$langcode = substr($file, -6, 2);
+			$langstr = LookupLang($langcode);
+			$string = "<a href=\"./?year=".$show_year."&amp;month=".$show_month."&amp;lang=".$langcode."\">".$langstr."</a>";
+			echo "\t\t\t\t<li>".$string."</li>\n";
+		}
+	}
+	closedir($langdir);
 ?>
 			</ul>
 		</td>
@@ -82,12 +100,12 @@ case "overview":
 ?>
 	<div class="left">
 		<div class="border">
-			<h2>&Uuml;bersicht</h2>
+			<h2><?php echo FLANG_H_OVERVIEW; ?></h2>
 			<table class="Auflistung" style="text-align:right;">
 			<tr>
-				<th>Tag:</th>
-				<th>Bes.:</th>
-				<th>Bots:</th>
+				<th><?php echo FLANG_DAY; ?>:</th>
+				<th><?php echo FLANG_VISITOR_S; ?>:</th>
+				<th><?php echo FLANG_BOT_S; ?>:</th>
 			</tr>
 <?php
 	$xml_counter = new DOMDocument();
@@ -124,7 +142,7 @@ case "overview":
 	$count_all_p = $xml_counter->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
 	
 	echo "\t\t\t<tr class=\"table_sum\">\n";
-	echo "\t\t\t\t<td>G:</td>\n";
+	echo "\t\t\t\t<td>".FLANG_SUM_S.":</td>\n";
 	echo "\t\t\t\t<td>".$count_all_p."</td>\n";
 	echo "\t\t\t\t<td>".$count_all_b."</td>\n";
 	echo "\t\t\t</tr>\n";
@@ -135,13 +153,13 @@ case "overview":
 	</div>
 	<div class="right">
 		<div class="border">
-			<h2>Browser</h2>
+			<h2><?php echo FLANG_H_BROWSER; ?></h2>
 			<table class="Auflistung">
 			<tr>
 				<th>&nbsp;</th>
-				<th>Browser:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_BROWSER; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_browser = new DOMDocument();
@@ -192,13 +210,13 @@ case "overview":
 			</table>
 		</div>
 		<div class="border">
-			<h2>OS</h2>
+			<h2><?php echo FLANG_H_OS; ?></h2>
 			<table class="Auflistung">
 			<tr>
 				<th>&nbsp;</th>
-				<th>OS:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_OS; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_os = new DOMDocument();
@@ -249,13 +267,13 @@ case "overview":
 			</table>
 		</div>
 		<div class="border">
-			<h2>Bots</h2>
+			<h2><?php echo FLANG_H_BOT; ?></h2>
 			<table class="Auflistung">
 			<tr>
 				<th>&nbsp;</th>
-				<th>Bots:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_BOT_S; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_bot = new DOMDocument();
@@ -318,23 +336,23 @@ case "overview":
 			
 			$height = round(($count_b/$count_max_b)*50,0);//50px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_b." Bots am ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
 	}else{
-		echo "\t\t\t<div class=\"text\">Keine Daten vorhanden!</div>\n";
+		echo "\t\t\t<div class=\"text\">".FLANG_NODATA."</div>\n";
 	}
 ?>
 		</div>
 		<div class="border">
-			<h2>L&auml;nder</h2>
+			<h2><?php echo FLANG_H_COUNTRY; ?></h2>
 			<table class="Auflistung">
 			<tr>
 				<th>&nbsp;</th>
-				<th>Land:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_COUNTRY; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_cou = new DOMDocument();
@@ -373,7 +391,7 @@ case "overview":
 	</div>
 	<div class="middle">
 		<div class="border">
-			<h2>Besucherverteilung</h2>
+			<h2><?php echo FLANG_H_DIST_VISIT; ?></h2>
 <?php 		
 	if($count_max_p > 0){
 		echo "\t\t\t<table class=\"databoard_100\">\n";
@@ -387,23 +405,23 @@ case "overview":
 			
 			$height = round(($count_p/$count_max_p)*100,0);//100px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." Besucher am ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
 	}else{
-		echo "\t\t\t<div class=\"text\">Keine Daten vorhanden!</div>\n";
+		echo "\t\t\t<div class=\"text\">".FLANG_NODATA."</div>\n";
 	}
 ?>
 		</div>
 		<div class="border">
-			<h2>Seiten</h2>
+			<h2><?php echo FLANG_H_SITE; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>Seite:</th>
-				<th>Besucher:</th>
-				<th>Graph:</th>
-				<th>Bots:</th>
+				<th><?php echo FLANG_SITE; ?>:</th>
+				<th><?php echo FLANG_VISITOR_L; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
+				<th><?php echo FLANG_BOT_L; ?>:</th>
 			</tr>
 <?php
 	$xml_sites = new DOMDocument();
@@ -442,12 +460,12 @@ case "overview":
 			</table>
 		</div>
 		<div class="border">
-			<h2>Referer</h2>
+			<h2><?php echo FLANG_H_REFERER; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>Domain:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_DOMAIN; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_ref = new DOMDocument();
@@ -482,12 +500,12 @@ case "overview":
 			</table>
 		</div>
 		<div class="border">
-			<h2>Suchw&ouml;rter</h2>
+			<h2><?php echo FLANG_H_SEARCHW; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>String:</th>
-				<th>Anzahl:</th>
-				<th>Graph:</th>
+				<th><?php echo FLANG_SEARCHW; ?>:</th>
+				<th><?php echo FLANG_COUNT; ?>:</th>
+				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
 	$xml_search = new DOMDocument();
@@ -522,7 +540,7 @@ case "overview":
 			</table>
 		</div>
 		<div class="border">
-			<h2>Zeitverteilung</h2>
+			<h2><?php echo FLANG_H_DIST_TIME; ?></h2>
 <?php 		
 	$xml_time = new DOMDocument();
 	$xml_time->loadXML(get_xml_backend("./backend/time.php"));
@@ -553,12 +571,12 @@ case "overview":
 			
 			$height = round(($count_p/$count_max_time_p)*100,0);//100px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." Besucher in der Zeit ".$period." Uhr\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_T." ".$period." ".FLANG_CLOCK."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
 	}else{
-		echo "\t\t\t<div class=\"text\">Keine Daten vorhanden!</div>\n";
+		echo "\t\t\t<div class=\"text\">".FLANG_NODATA."</div>\n";
 	}
 ?>
 		</div>
@@ -568,7 +586,7 @@ case "overview":
 }
 ?>
 	<div class="footer">
-		Diese Statistik benutzt die <a href="http://user-agent-string.info/">UAString Api</a>
+		<?php echo FLANG_H_USEDBY; ?> <a href="http://user-agent-string.info/">UAString Api</a>
 	</div>
 </div>
 </body>
