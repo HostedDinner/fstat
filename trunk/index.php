@@ -44,7 +44,7 @@
 		<table>
 		<tr>
 		<td class="mainentry">
-			<a href="<?php echo "./?year=".date("Y")."&amp;month=".date("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_MONTH; ?></a>
+			<a href="<?php echo "./?year=".gmdate("Y")."&amp;month=".gmdate("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_MONTH; ?></a>
 			<ul>
 <?php
 	for($i = 0; $i < 12; $i++){
@@ -60,7 +60,7 @@
 			</ul>
 		</td>
 		<td class="mainentry">
-			<a href="<?php echo "./?year=".date("Y")."&amp;month=".date("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_YEAR; ?></a>
+			<a href="<?php echo "./?year=".gmdate("Y")."&amp;month=".gmdate("m")."&amp;lang=".$show_lang; ?>"><?php echo FLANG_YEAR; ?></a>
 			<ul>
 <?php
 	for($i = -3; $i <= 3; $i++){
@@ -124,7 +124,7 @@ case "overview":
 		
 		$day = $nodeday->getAttribute("id");
 		
-		if(date("w", mktime(1, 1, 1, $show_month, $day, $show_year)) == 0){
+		if(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){
 			$td = "<td class=\"high\">";
 		}else{
 			$td = "<td>";

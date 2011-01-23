@@ -32,49 +32,43 @@
 		exit;//zur Absicherung
 	}
 	
-	$year = date("Y");
-	$month = date("m");
-	$day = date("d");
+	$year = gmdate("Y");
+	$month = gmdate("m");
+	$day = gmdate("d");
+	
+	$is_new = true;
+	$ip = getenv("REMOTE_ADDR");
 	
 	//"Alte" Dateien im IP.Verzeichniss loeschen:
+	//+ gleichzeitig neu finden
 	$ipdir = opendir(FSTAT_PATH.$fstat_cache_dir."ip/");
 	while (($file = readdir($ipdir)) !== FALSE){
 		if((substr($file, -3) == ".ip")){
 			//$file;
 			$f_cont = @fopen(FSTAT_PATH.$fstat_cache_dir."ip/".$file,'r');
 			$timestamp = trim(fgets($f_cont));//erste Zeile Timestamp
-			fclose($f_cont);
+			
 			//loeschen, wenn zu alt
-			if($timestamp < time() - $fstat_new_user){
+			if($timestamp < (time() - $fstat_new_user)){
+				fclose($f_cont);
 				unlink(FSTAT_PATH.$fstat_cache_dir."ip/".$file);
-			}
-		}
-	}
-	closedir($ipdir);
-	//fertig mit loeschen
-	
-	//IP lesen und evt vorhandene finden
-	$is_new = true;
-	$ip = getenv("REMOTE_ADDR");
-	
-	$ipdir = opendir(FSTAT_PATH.$fstat_cache_dir."ip/");
-	while (($file = readdir($ipdir)) !== FALSE){
-		if((substr($file, -3) == ".ip")){
-			//$file;
-			if($file == $ip.".ip"){//wenn die Ip ubereinstimmt
-				$f_cont = @fopen(FSTAT_PATH.$fstat_cache_dir."ip/".$file,'r');
-				$user_timestamp = trim(fgets($f_cont));//erste Zeile Timestamp, nicht von belang, weiter unten erst
+				continue;
+			//wenn ip übereinstimmt
+			}elseif($file == $ip.".ip"){
+				$user_timestamp = $timestamp;
 				$ua = trim(fgets($f_cont));//zweite zeile UA
-				$browser_typ = trim(fgets($f_cont));//dritte Zeile Typ (Browser, Bot, ...) ab V1.0
+				$browser_typ = trim(fgets($f_cont));//dritte Zeile Typ (Browser, Bot, ...)
 				fclose($f_cont);
 				if($ua == $_SERVER['HTTP_USER_AGENT']){//und wenn der Useragent stimmt:
 					$is_new = false;
 				}
-				break;
+			}else{
+				fclose($f_cont);
 			}
 		}
 	}
 	closedir($ipdir);
+	
 	if($is_new == true){
 	//Daten auswerten
 		$user_timestamp = time();
@@ -163,9 +157,9 @@
 		exit;//zur Absicherung
 	}
 	if($browser_typ == "Robot"){
-		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".date("d_H",$user_timestamp).".path", 'a');
+		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
 	}else{
-		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$ip."_".date("d_H",$user_timestamp).".path", 'a');
+		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
 	}
 	
 	if($fstat_use_site_var){
