@@ -30,9 +30,17 @@ table.Auflistung a{
 	margin:0 auto;
 }
 
-.high{
+.high_Sa{
+	color:#0BF;
+	font-weight:bold;
+}
+.high_Su{
 	color:#F40;
 	font-weight:bold;
+}
+.high_today{
+	color:#FEC;
+	background:#F40;
 }
 .backhigh{
 	background:#FEC;
