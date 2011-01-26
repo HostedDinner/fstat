@@ -124,8 +124,12 @@ case "overview":
 		
 		$day = $nodeday->getAttribute("id");
 		
-		if(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){
-			$td = "<td class=\"high\">";
+		if((gmdate("j") == $day) && (gmdate("m") == $show_month) && (gmdate("Y") == $show_year)){
+			$td = "<td class=\"high_today\">";
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 6){//6 für Samstag
+			$td = "<td class=\"high_Sa\">";
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){//0 für Sonntag
+			$td = "<td class=\"high_Su\">";
 		}else{
 			$td = "<td>";
 		}
