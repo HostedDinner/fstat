@@ -22,35 +22,33 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
-		$xpath = new  DOMXPath($xmldoc);
-		
-		//Bots
-		$query = '//typ[.="Robot"]/..'; //Parent Node von typ=Robot (<visitor>)
-		$nodelist = $xpath->query($query);
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$bot_fam = $visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
-			$bot_name = $visitor->getElementsByTagName("unam")->item(0)->nodeValue;
-			$bot_icon = $visitor->getElementsByTagName("uico")->item(0)->nodeValue;
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			if($typ == "Robot"){
+				$bot_fam = $visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
+				$bot_name = $visitor->getElementsByTagName("unam")->item(0)->nodeValue;
+				$bot_icon = $visitor->getElementsByTagName("uico")->item(0)->nodeValue;
+				
+				//mit Subverson
+				if(!isset($bot_arr[$bot_fam][$bot_name]['count'])){
+					$bot_arr[$bot_fam][$bot_name]['count'] = 1;
+				}else{
+					$bot_arr[$bot_fam][$bot_name]['count'] = $bot_arr[$bot_fam][$bot_name]['count'] + 1;
+				}
 			
-			//mit Subverson
-			if(!isset($bot_arr[$bot_fam][$bot_name]['count'])){
-				$bot_arr[$bot_fam][$bot_name]['count'] = 1;
-			}else{
-				$bot_arr[$bot_fam][$bot_name]['count'] = $bot_arr[$bot_fam][$bot_name]['count'] + 1;
+				//Ohne Sub, nur Anzahl
+				if(!isset($bot_arr[$bot_fam]['all']['count'])){
+					$bot_arr[$bot_fam]['all']['count'] = 1;
+				}else{
+					$bot_arr[$bot_fam]['all']['count'] = $bot_arr[$bot_fam]['all']['count'] + 1;
+				}
+				//letztes Icon!
+				$bot_arr[$bot_fam]['all']['icon'] = $bot_icon;
+				$bot_arr[$bot_fam][$bot_name]['icon'] = $bot_icon;
 			}
-			
-			//Ohne Sub, nur Anzahl
-			if(!isset($bot_arr[$bot_fam]['all']['count'])){
-				$bot_arr[$bot_fam]['all']['count'] = 1;
-			}else{
-				$bot_arr[$bot_fam]['all']['count'] = $bot_arr[$bot_fam]['all']['count'] + 1;
-			}
-			//letztes Icon!
-			$bot_arr[$bot_fam]['all']['icon'] = $bot_icon;
-			$bot_arr[$bot_fam][$bot_name]['icon'] = $bot_icon;
 		}
-		
 	}
 }
 

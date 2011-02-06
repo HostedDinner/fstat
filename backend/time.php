@@ -17,16 +17,6 @@ $count_people[24] = 0;//alle
 
 //0-> 00:00 - 01:00; 1->01:00-02:00; usw; 24->alle
 
-
-//Ausgabe vorbereiten:
-$xmlausgabe = new DOMDocument('1.0', 'UTF-8');
-	$xmlausgabe->xmlStandalone = true;
-	$xmlausgabe->preserveWhiteSpace = false;
-	$xmlausgabe->formatOutput = true;
-$root = $xmlausgabe->createElement("list");
-$root = $xmlausgabe->appendChild($root);
-
-
 for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 	$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
 	
@@ -34,16 +24,14 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
-		$nodelist = $xmldoc->getElementsByTagName("uti");
-		
-		foreach($nodelist as $nodetime){
-			$timestr = $nodetime->nodeValue;
+		foreach($nodelist as $visitor){
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$timestr = $visitor->getElementsByTagName("uti")->item(0)->nodeValue;
 			$time = date("G", $timestr);//hier kein gmdate, da hier das erste mal konvertiert wird :P
 			
-			//Bot/People?
-			$bpstr = $nodetime->parentNode->getElementsByTagName("typ")->item(0)->nodeValue;
-			if($bpstr == "Robot"){
+			if($typ == "Robot"){
 				if(!isset($count_bots[$time])){
 					$count_bots[$time] = 1;
 				}else{
@@ -62,6 +50,14 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 	}
 }
 
+
+//Ausgabe vorbereiten:
+$xmlausgabe = new DOMDocument('1.0', 'UTF-8');
+	$xmlausgabe->xmlStandalone = true;
+	$xmlausgabe->preserveWhiteSpace = false;
+	$xmlausgabe->formatOutput = true;
+$root = $xmlausgabe->createElement("list");
+$root = $xmlausgabe->appendChild($root);
 
 for($i = 0; $i < 24; $i++){
 	if(isset($count_bots[$i])){
