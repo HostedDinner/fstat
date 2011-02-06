@@ -21,17 +21,19 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
-		$nodelist = $xmldoc->getElementsByTagName("rkey");
-		
-		foreach($nodelist as $keys){
-			$key = $keys->nodeValue;
+		foreach($nodelist as $visitor){
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+				$key = $visitor->getElementsByTagName("rkey")->item(0)->nodeValue;
 
-			if(isset($key) and $key != ""){
-				if(!isset($key_arr[$key])){
-					$key_arr[$key] = 1;
-				}else{
-					$key_arr[$key] = $key_arr[$key] + 1;
+				if((isset($key)) and ($key != "")){
+					if(!isset($key_arr[$key])){
+						$key_arr[$key] = 1;
+					}else{
+						$key_arr[$key] = $key_arr[$key] + 1;
+					}
 				}
 			}
 		}

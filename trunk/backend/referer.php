@@ -21,21 +21,22 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
-		$nodelist = $xmldoc->getElementsByTagName("rdom");
-		
-		foreach($nodelist as $domains){
-			$domain = $domains->nodeValue;
-
-			if(isset($domain) and $domain != ""){
-				if(!isset($ref_arr[$domain])){
-					$ref_arr[$domain] = 1;
-				}else{
-					$ref_arr[$domain] = $ref_arr[$domain] + 1;
+		foreach($nodelist as $visitor){
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+				$domain = $visitor->getElementsByTagName("rdom")->item(0)->nodeValue;
+	
+				if((isset($domain)) and ($domain != "")){
+					if(!isset($ref_arr[$domain])){
+						$ref_arr[$domain] = 1;
+					}else{
+						$ref_arr[$domain] = $ref_arr[$domain] + 1;
+					}
 				}
 			}
 		}
-		
 	}
 }
 

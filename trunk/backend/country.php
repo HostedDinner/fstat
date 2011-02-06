@@ -22,20 +22,22 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
-		$nodelist = $xmldoc->getElementsByTagName("ucon");
-		
-		foreach($nodelist as $countrys){
-			$name = $countrys->nodeValue;
-			$icon = $countrys->parentNode->getElementsByTagName("ucoi")->item(0)->nodeValue;
+		foreach($nodelist as $visitor){
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+				$name = $visitor->getElementsByTagName("ucon")->item(0)->nodeValue;
+				$icon = $visitor->getElementsByTagName("ucoi")->item(0)->nodeValue;
 
-			if(isset($name) and $name != ""){
-				if(!isset($cou_arr[$name]['count'])){
-					$cou_arr[$name]['count'] = 1;
-				}else{
-					$cou_arr[$name]['count'] = $cou_arr[$name]['count'] + 1;
+				if(isset($name) and $name != ""){
+					if(!isset($cou_arr[$name]['count'])){
+						$cou_arr[$name]['count'] = 1;
+					}else{
+						$cou_arr[$name]['count'] = $cou_arr[$name]['count'] + 1;
+					}
+					$cou_arr[$name]['icon'] = $icon;
 				}
-				$cou_arr[$name]['icon'] = $icon;
 			}
 		}
 		

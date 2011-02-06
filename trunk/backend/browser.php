@@ -22,33 +22,32 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$xmldoc = new DOMDocument();
 		$xmldoc->load($filename);
 		
-		$xpath = new  DOMXPath($xmldoc);
-		
-		//People
-		$query = '//typ[.!="Robot"]/..'; //Parent Node von typ!=Robot (<visitor>)
-		$nodelist = $xpath->query($query);
+		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$br_fam = $visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
-			$br_name = $visitor->getElementsByTagName("unam")->item(0)->nodeValue;
-			$br_icon = $visitor->getElementsByTagName("uico")->item(0)->nodeValue;
-			
-			//mit Subverson
-			if(!isset($br_arr[$br_fam][$br_name]['count'])){
-				$br_arr[$br_fam][$br_name]['count'] = 1;
-			}else{
-				$br_arr[$br_fam][$br_name]['count'] = $br_arr[$br_fam][$br_name]['count'] + 1;
+			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+				$br_fam = $visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
+				$br_name = $visitor->getElementsByTagName("unam")->item(0)->nodeValue;
+				$br_icon = $visitor->getElementsByTagName("uico")->item(0)->nodeValue;
+				
+				//mit Subverson
+				if(!isset($br_arr[$br_fam][$br_name]['count'])){
+					$br_arr[$br_fam][$br_name]['count'] = 1;
+				}else{
+					$br_arr[$br_fam][$br_name]['count'] = $br_arr[$br_fam][$br_name]['count'] + 1;
+				}
+				
+				//Ohne Sub, nur Anzahl
+				if(!isset($br_arr[$br_fam]['all']['count'])){
+					$br_arr[$br_fam]['all']['count'] = 1;
+				}else{
+					$br_arr[$br_fam]['all']['count'] = $br_arr[$br_fam]['all']['count'] + 1;
+				}
+				//letztes Icon!
+				$br_arr[$br_fam]['all']['icon'] = $br_icon;
+				$br_arr[$br_fam][$br_name]['icon'] = $br_icon;
 			}
-			
-			//Ohne Sub, nur Anzahl
-			if(!isset($br_arr[$br_fam]['all']['count'])){
-				$br_arr[$br_fam]['all']['count'] = 1;
-			}else{
-				$br_arr[$br_fam]['all']['count'] = $br_arr[$br_fam]['all']['count'] + 1;
-			}
-			//letztes Icon!
-			$br_arr[$br_fam]['all']['icon'] = $br_icon;
-			$br_arr[$br_fam][$br_name]['icon'] = $br_icon;
 		}
 		
 	}
