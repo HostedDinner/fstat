@@ -13,6 +13,8 @@
 	$fstat_site_variable = "site";
 	$fstat_default_site_name = "start";
 	
+	$fstat_last_length = 50;
+	
 	$fstat_show_bots_as_visitors = false;
 	
 	$fstat_update_interval = 604800;//in sec: 7 Days

@@ -18,6 +18,7 @@
 	define('FLANG_YEAR', "Year");
 	
 	//Headers:
+	define('FLANG_H_LAST', "List of the last");
 	define('FLANG_H_STATFOR', "Statistic for");
 	define('FLANG_H_OVERVIEW', "Overview");
 	define('FLANG_H_DIST_VISIT', "Visitorspread");
@@ -31,12 +32,15 @@
 	define('FLANG_H_SEARCHW', "Search Words");
 	define('FLANG_H_SITE', "Sites");
 	
+	
 	define('FLANG_BROWSER', "Browser");
 	define('FLANG_COUNTRY', "Country");
+	define('FLANG_DATE', "Date");
 	define('FLANG_DOMAIN', "Domain");
 	define('FLANG_OS', "OS");
 	define('FLANG_SEARCHW', "Word");
 	define('FLANG_SITE', "Site");
+	define('FLANG_TIME', "Time");
 	
 	//Other
 	define('FLANG_LANG', "Language");
@@ -48,6 +52,8 @@
 	define('FLANG_BOT_S', "Bots");
 	define('FLANG_VISITOR_L', "Visitors");
 	define('FLANG_VISITOR_S', "Vis.");
+	
+	define('FLANG_LAST', "Last");
 	
 	define('FLANG_SUM_S', "S");
 	
