@@ -70,11 +70,11 @@ echo $xmlausgabe->saveXML();
 //  <day id="1">
 //    <bots>3</bots>
 //    <people>3</people>
-//  </day1>
+//  </day>
 //  <day id="2">
 //    <bots>4</bots>
 //    <people>1</people>
-//  </day2>
+//  </day>
 //  ...
 //  <total>
 //    <bots>15</bots>

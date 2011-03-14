@@ -83,12 +83,6 @@ table.Auflistung a{
 }
 
 
-.Auflistung{
-	width:100%;
-}
-
-
-
 .databoard_100{
 	width:100%;
 	height:100px;
@@ -107,6 +101,9 @@ table.Auflistung a{
 	background:#F90;
 }
 
+.Auflistung{
+	width:100%;
+}
 
 .Auflistung .perc div{
 	height:0.8em;
@@ -119,7 +116,12 @@ table.Auflistung a{
 	background:#F90;
 }
 
-
+.Auflistung .icell{
+	vertical-align:middle;
+	text-align:center;
+	padding:0;
+	margin:0;
+}
 
 
 .footer{
