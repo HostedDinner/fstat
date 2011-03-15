@@ -45,13 +45,13 @@
 			}
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td>".$tmpcount.".</td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uip."\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td>".date("d.m.y", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ufam."\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_unam."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ofam."\"><img src=\"".$fstat_ico_dir."os/".$v_oico."\" alt=\"*\"></td>\n";
-		echo "\t\t\t\t<td title=\"".$v_ofam."\">".$v_onam."</td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_onam."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ucon."\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td>".$v_ucon."</td>\n";
 		echo "\t\t\t\t<td title=\"".$v_rkey."\">".$v_rdom."</td>\n";

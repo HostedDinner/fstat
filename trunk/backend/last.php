@@ -52,10 +52,13 @@ while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 				//ADD here everything
 				$newnode = $xmlausgabe->importNode($nodelist->item($pos), true);
 				
-				//find Paths
 				$typ = $newnode->getElementsByTagName("typ")->item(0)->nodeValue;
 				$timestamp = $newnode->getElementsByTagName("uti")->item(0)->nodeValue;
 				$ip = $newnode->getElementsByTagName("uip")->item(0)->nodeValue;
+				//don't show bots
+				if((!$fstat_show_bots_as_visitors) and ($typ == "Robot")){
+					continue;
+				}
 				if($typ == "Robot"){
 					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".gmdate("d_H",$timestamp).".path";
 				}else{
