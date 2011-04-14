@@ -163,12 +163,17 @@
 	}
 	
 	if($fstat_use_site_var){
-		if(isset($_GET[$fstat_site_variable])){
-			$tmp = $_GET[$fstat_site_variable];
-		}else{
-			$tmp = $fstat_default_site_name;
+		$site_name = $fstat_default_site_name;//default
+		
+		$tmp_sitevar_array = explode(",", $fstat_site_variable);
+		foreach($tmp_sitevar_array as $tmp_sitevar){
+			$tmp_sitevar = trim($tmp_sitevar);
+			if(isset($_GET[$tmp_sitevar])){
+				$site_name = $_GET[$tmp_sitevar];
+				break;//use first one from config
+			}
 		}
-		fputs($f_cont, time()."|".basename($_SERVER['SCRIPT_FILENAME'])."|".$tmp."\n");
+		fputs($f_cont, time()."|".basename($_SERVER['SCRIPT_FILENAME'])."|".$site_name."\n");
 	}else{
 		fputs($f_cont, time()."|".basename($_SERVER['SCRIPT_FILENAME'])."\n");
 	}
