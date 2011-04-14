@@ -10,7 +10,7 @@
 	$fstat_new_user = 14400;//in sec: 4 Hours
 	
 	$fstat_use_site_var = true;
-	$fstat_site_variable = "site";
+	$fstat_site_variable = "site,file";//seperate with comma, for use with multiple site var sources
 	$fstat_default_site_name = "start";
 	
 	$fstat_last_length = 50;
