@@ -5,7 +5,7 @@ body{
 
 h1, h2, h3, h4, h5, h6{
 	text-align:center;
-	color:#F40;
+	color:#F90;
 }
 
 h2{
@@ -18,7 +18,7 @@ a{
 	color:#F40;
 }
 a:hover{
-	color:#000;
+	color:#BF8630;
 }
 
 table.Auflistung a{
@@ -39,17 +39,17 @@ table.Auflistung a{
 	font-weight:bold;
 }
 .high_today{
-	color:#FEC;
-	background:#F40;
+	color:#FFF;
+	background:#FB4;
 }
 .backhigh{
-	background:#FEC;
+	background:#FFE4BB;
 }
 
 .border{
 	margin:0 0 2px 0;
 	padding:0;
-	border:solid 1px #F40;
+	border:solid 1px #F90;
 }
 
 .border div.text{
@@ -95,14 +95,20 @@ table.Auflistung a{
 	vertical-align:bottom;
 }
 .databoard_100 td div, .databoard_50 td div{
-	background:#F40;
+	background:#F90;
 }
 .databoard_100 td div:hover, .databoard_50 td div:hover{
-	background:#F90;
+	background:#BF8630;
 }
 
 .Auflistung{
 	width:100%;
+}
+
+.Auflistung th{
+	text-align:center;
+	color:#FFF;
+	background:#F90;
 }
 
 .Auflistung .perc div{
@@ -110,10 +116,10 @@ table.Auflistung a{
 	/*font-size:50%;
 	overflow:hidden;*/
 	margin:1px;
-	background:#F40;
+	background:#F90;
 }
 .Auflistung .perc div:hover{
-	background:#F90;
+	background:#BF8630;
 }
 
 .Auflistung .icell{
@@ -131,7 +137,7 @@ table.Auflistung a{
 	text-align:right;
 	clear:both;
 	
-	border-top:solid 2px #F40;
+	border-top:solid 2px #F90;
 }
 
 /*MENU*/
@@ -142,6 +148,6 @@ table.Auflistung a{
 .mainentry ul{display:none; list-style-type:none;}
 .mainentry:hover ul{display:block;}
 
-.menu{border:solid 1px #F40;background:#FEC;}
+.menu{border:solid 1px #F90;background:#FFE4BB;}
 .mainentry a{text-decoration:none}
-.mainentry ul{background:#FFF; border:solid 1px #F40; margin:0px; padding:4px;}
+.mainentry ul{background:#FFF; border:solid 1px #F90; margin:0px; padding:4px;}

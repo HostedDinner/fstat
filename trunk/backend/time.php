@@ -27,8 +27,8 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-			$timestr = $visitor->getElementsByTagName("uti")->item(0)->nodeValue;
+			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$timestr = @$visitor->getElementsByTagName("uti")->item(0)->nodeValue;
 			$time = date("G", $timestr);//hier kein gmdate, da hier das erste mal konvertiert wird :P
 			
 			if($typ == "Robot"){

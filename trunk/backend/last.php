@@ -52,9 +52,9 @@ while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 				//ADD here everything
 				$newnode = $xmlausgabe->importNode($nodelist->item($pos), true);
 				
-				$typ = $newnode->getElementsByTagName("typ")->item(0)->nodeValue;
-				$timestamp = $newnode->getElementsByTagName("uti")->item(0)->nodeValue;
-				$ip = $newnode->getElementsByTagName("uip")->item(0)->nodeValue;
+				$typ = @$newnode->getElementsByTagName("typ")->item(0)->nodeValue;
+				$timestamp = @$newnode->getElementsByTagName("uti")->item(0)->nodeValue;
+				$ip = @$newnode->getElementsByTagName("uip")->item(0)->nodeValue;
 				//don't show bots
 				if((!$fstat_show_bots_as_visitors) and ($typ == "Robot")){
 					continue;

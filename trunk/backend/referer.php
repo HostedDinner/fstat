@@ -24,9 +24,9 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
 			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
-				$domain = $visitor->getElementsByTagName("rdom")->item(0)->nodeValue;
+				$domain = @$visitor->getElementsByTagName("rdom")->item(0)->nodeValue;
 	
 				if((isset($domain)) and ($domain != "")){
 					if(!isset($ref_arr[$domain])){

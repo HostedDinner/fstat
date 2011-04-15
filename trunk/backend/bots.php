@@ -25,11 +25,11 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
 			if($typ == "Robot"){
-				$bot_fam = $visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
-				$bot_name = $visitor->getElementsByTagName("unam")->item(0)->nodeValue;
-				$bot_icon = $visitor->getElementsByTagName("uico")->item(0)->nodeValue;
+				$bot_fam = @$visitor->getElementsByTagName("ufam")->item(0)->nodeValue;
+				$bot_name = @$visitor->getElementsByTagName("unam")->item(0)->nodeValue;
+				$bot_icon = @$visitor->getElementsByTagName("uico")->item(0)->nodeValue;
 				
 				//mit Subverson
 				if(!isset($bot_arr[$bot_fam][$bot_name]['count'])){
