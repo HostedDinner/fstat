@@ -25,10 +25,10 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
 			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
-				$name = $visitor->getElementsByTagName("ucon")->item(0)->nodeValue;
-				$icon = $visitor->getElementsByTagName("ucoi")->item(0)->nodeValue;
+				$name = @$visitor->getElementsByTagName("ucon")->item(0)->nodeValue;
+				$icon = @$visitor->getElementsByTagName("ucoi")->item(0)->nodeValue;
 
 				if(isset($name) and $name != ""){
 					if(!isset($cou_arr[$name]['count'])){

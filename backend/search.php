@@ -24,9 +24,9 @@ for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
 		$nodelist = $xmldoc->getElementsByTagName("visitor");
 		
 		foreach($nodelist as $visitor){
-			$typ = $visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
 			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
-				$key = $visitor->getElementsByTagName("rkey")->item(0)->nodeValue;
+				$key = @$visitor->getElementsByTagName("rkey")->item(0)->nodeValue;
 
 				if((isset($key)) and ($key != "")){
 					if(!isset($key_arr[$key])){

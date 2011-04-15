@@ -70,10 +70,13 @@
 	$xml_browser->loadXML(get_xml_backend("./backend/browser.php"));
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_browser->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
-		$count_all = $count_all + $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_browser->getElementsByTagName("typ");
@@ -85,6 +88,7 @@
 		$icon =  $nodebr->getElementsByTagName("all")->item(0)->getElementsByTagName("icon")->item(0)->nodeValue;
 		$count = $nodebr->getElementsByTagName("all")->item(0)->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
@@ -92,7 +96,7 @@
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('b_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 		
 		$nodelist2 = $nodebr->getElementsByTagName("sub");
@@ -127,10 +131,13 @@
 	$xml_os->loadXML(get_xml_backend("./backend/os.php"));
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_os->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
-		$count_all = $count_all + $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_os->getElementsByTagName("typ");
@@ -142,6 +149,7 @@
 		$icon =  $nodeos->getElementsByTagName("all")->item(0)->getElementsByTagName("icon")->item(0)->nodeValue;
 		$count = $nodeos->getElementsByTagName("all")->item(0)->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
@@ -149,7 +157,7 @@
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$icon."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('o_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 		
 		$nodelist2 = $nodeos->getElementsByTagName("sub");
@@ -184,10 +192,13 @@
 	$xml_bot->loadXML(get_xml_backend("./backend/bots.php"));
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_bot->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
-		$count_all = $count_all + $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_bot->getElementsByTagName("typ");
@@ -199,6 +210,7 @@
 		$icon =  $nodebot->getElementsByTagName("all")->item(0)->getElementsByTagName("icon")->item(0)->nodeValue;
 		$count = $nodebot->getElementsByTagName("all")->item(0)->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
@@ -206,7 +218,7 @@
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('b_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 		
 		$nodelist2 = $nodebot->getElementsByTagName("sub");
@@ -264,10 +276,13 @@
 	
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_cou->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
-		$count_all = $count_all + $nodecount->nodeValue;
+		$tmp = $nodecount->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_cou->getElementsByTagName("cou");
@@ -280,13 +295,14 @@
 		$icon = $nodecou->getElementsByTagName("icon")->item(0)->nodeValue;
 		$count = $nodecou->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$icon."\" alt=\"*\"></td>\n";
 		echo "\t\t\t\t<td>".$country."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 	}
 ?>
@@ -335,28 +351,41 @@
 	//count all
 	$count_all_p = 0;//reset
 	$count_all_p = $xml_sites->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
+	$count_max_p = 0;
 	
 	$nodelist = $xml_sites->getElementsByTagName("sub");
 	
 	$tmpcount = 0;
+	$last_parent_site = "";
+	
+	foreach($nodelist as $nodesite){
+		$tmp = $nodesite->getElementsByTagName("people")->item(0)->nodeValue;
+		if($tmp > $count_max_p){$count_max_p = $tmp;}
+	}
+	
 	foreach($nodelist as $nodesite){
 		$tmpcount++;
 		
 		$parentssite = $nodesite->parentNode->getAttribute("name");
-		if($parentssite == "index.php"){
-			$name = $nodesite->getAttribute("name");
-		}else{
-			$name = $nodesite->parentNode->getAttribute("name") . "/" . $nodesite->getAttribute("name");
+		if($parentssite != $last_parent_site){
+			$last_parent_site = $parentssite;
+			echo "\t\t\t<tr>\n";
+			echo "\t\t\t\t<th colspan=\"4\">".$parentssite."</td>\n";
+			echo "\t\t\t</tr>\n";
 		}
+		
+		$name = $nodesite->getAttribute("name");
+		
 		$count_p = $nodesite->getElementsByTagName("people")->item(0)->nodeValue;
 		$count_b = $nodesite->getElementsByTagName("bots")->item(0)->nodeValue;
 		$perc_p = round(($count_p/$count_all_p)*100, 1);
+		$perc_p_relative = round(($count_p/$count_max_p)*100, 1);
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
 		echo "\t\t\t\t<td>".$name."</td>\n";
 		echo "\t\t\t\t<td>".$count_p."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc_p." %\"><div style=\"width:".$perc_p."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc_p." %\"><div style=\"width:".$perc_p_relative."%;\"></div></td>\n";
 		echo "\t\t\t\t<td>".$count_b."</td>\n";
 		echo "\t\t\t</tr>\n";
 	}
@@ -377,10 +406,13 @@
 	
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_ref->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
-		$count_all = $count_all + $nodecount->nodeValue;
+		$tmp = $nodecount->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_ref->getElementsByTagName("ref");
@@ -392,12 +424,13 @@
 		$domain = $noderef->getAttribute("domain");
 		$count = $noderef->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
 		echo "\t\t\t\t<td>".$domain."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 	}
 ?>
@@ -417,10 +450,13 @@
 	
 	
 	$count_all = 0;
+	$count_max = 0;
 	//count all
 	$nodelist = $xml_search->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
-		$count_all = $count_all + $nodecount->nodeValue;
+		$tmp = $nodecount->nodeValue;
+		if($tmp > $count_max){$count_max = $tmp;}
+		$count_all = $count_all + $tmp;
 	}
 	
 	$nodelist = $xml_search->getElementsByTagName("ref");
@@ -432,12 +468,13 @@
 		$string = $nodesearch->getAttribute("keywords");
 		$count = $nodesearch->getElementsByTagName("count")->item(0)->nodeValue;
 		$perc = round(($count/$count_all)*100, 1);
+		$perc_relative = round(($count/$count_max)*100, 1);
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
 		echo "\t\t\t\t<td>".$string."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
-		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc."%;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 	}
 ?>
