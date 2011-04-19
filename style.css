@@ -158,10 +158,11 @@ a:hover{
 
 
 .footer{
+	font-size:80%;
 	margin-top:20px;
 	padding-top:20px;
 	padding-bottom:20px;
-	text-align:right;
+	text-align:center;
 	clear:both;
 	
 	border-top:solid 2px #F90;
