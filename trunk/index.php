@@ -1,9 +1,10 @@
 <?php
-	//error_reporting(E_NONE); //keine Fehler anzeigen
+	error_reporting(E_NONE); //keine Fehler anzeigen
 	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-	error_reporting(E_ALL); // alle Fehler anzeigen
+	//error_reporting(E_ALL); // alle Fehler anzeigen
 	include "./config/settings.php";
 	include "./config/lang.php";
+	include "./config/information.php";
 	include_once "./functions/main_include.php";
 	include_once "./functions/date.php";//enthält $monthnames, $show_year, $show_month, $show_timestamp
 		
