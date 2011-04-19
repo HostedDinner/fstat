@@ -1,5 +1,5 @@
 body{
-	background:#FFF;
+	background:#EEE;
 	color:#F90;
 }
 
@@ -19,10 +19,6 @@ a{
 }
 a:hover{
 	color:#BF8630;
-}
-
-table.Auflistung a{
-	text-decoration:none;
 }
 
 #container{
@@ -48,8 +44,14 @@ table.Auflistung a{
 
 .border{
 	margin:0 0 2px 0;
-	padding:0;
+	padding:4px 0;
+	
+	text-align:center;
+	
+	background:#FFF;
 	border:solid 1px #F90;
+	border-radius:6px;
+	box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .border div.text{
@@ -86,13 +88,19 @@ table.Auflistung a{
 .databoard_100{
 	width:100%;
 	height:100px;
+	border-collapse:collapse;
 }
 .databoard_50{
 	width:100%;
 	height:50px;
+	border-collapse:collapse;
+}
+.databoard_100 tr, .databoard_50 tr{
+	border-bottom:1px solid #F90;
 }
 .databoard_100 td, .databoard_50 td{
 	vertical-align:bottom;
+	padding-bottom:0;
 }
 .databoard_100 td div, .databoard_50 td div{
 	background:#F90;
@@ -102,13 +110,28 @@ table.Auflistung a{
 }
 
 .Auflistung{
+	margin-left:auto;
+	margin-right:auto;
 	width:100%;
+	
+	text-align:left;
+	
+	border-collapse:collapse;
+}
+
+.Auflistung a{
+	text-decoration:none;
 }
 
 .Auflistung th{
 	text-align:center;
 	color:#FFF;
 	background:#F90;
+}
+
+.Auflistung td{
+	padding-left:3px;
+	padding-right:3px;
 }
 
 .Auflistung .perc div{
@@ -127,6 +150,10 @@ table.Auflistung a{
 	text-align:center;
 	padding:0;
 	margin:0;
+}
+
+.Auflistung .text{
+	text-align:center;
 }
 
 
@@ -148,6 +175,6 @@ table.Auflistung a{
 .mainentry ul{display:none; list-style-type:none;}
 .mainentry:hover ul{display:block;}
 
-.menu{border:solid 1px #F90;background:#FFE4BB;}
+.menu{border:solid 1px #F90;background:#FFE4BB; border-radius:6px; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);}
 .mainentry a{text-decoration:none}
-.mainentry ul{background:#FFF; border:solid 1px #F90; margin:0px; padding:4px;}
+.mainentry ul{background:#FFF; border:solid 1px #F90; border-radius:6px; box-shadow:2px 2px 3px rgba(0, 0, 0, 0.5); margin:0px; padding:4px;}

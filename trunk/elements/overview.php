@@ -114,6 +114,10 @@
 			echo "\t\t\t</tr>\n";
 		}
 	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"4\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
+	}
 ?>
 			</table>
 		</div>
@@ -175,6 +179,10 @@
 			echo "\t\t\t</tr>\n";
 		}
 	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"4\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
+	}
 ?>
 			</table>
 		</div>
@@ -235,6 +243,10 @@
 			echo "\t\t\t\t<td>&nbsp;</td>\n";
 			echo "\t\t\t</tr>\n";
 		}
+	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"4\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
 	}
 ?>
 			</table>
@@ -305,6 +317,10 @@
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"4\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
+	}
 ?>
 			</table>
 		</div>
@@ -353,6 +369,9 @@
 	$count_all_p = $xml_sites->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
 	$count_max_p = 0;
 	
+	$count_all_b = 0;
+	$count_all_b = $xml_sites->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
+	
 	$nodelist = $xml_sites->getElementsByTagName("sub");
 	
 	$tmpcount = 0;
@@ -370,7 +389,7 @@
 		if($parentssite != $last_parent_site){
 			$last_parent_site = $parentssite;
 			echo "\t\t\t<tr>\n";
-			echo "\t\t\t\t<th colspan=\"4\">".$parentssite."</td>\n";
+			echo "\t\t\t\t<th colspan=\"4\">".$parentssite."</th>\n";
 			echo "\t\t\t</tr>\n";
 		}
 		
@@ -388,6 +407,10 @@
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc_p." %\"><div style=\"width:".$perc_p_relative."%;\"></div></td>\n";
 		echo "\t\t\t\t<td>".$count_b."</td>\n";
 		echo "\t\t\t</tr>\n";
+	}
+	
+	if($count_all_p == 0 and $count_all_b == 0){
+		echo "\t\t\t<tr><td colspan=\"4\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
 	}
 ?>
 			</table>
@@ -433,6 +456,10 @@
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
 	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"3\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
+	}
 ?>
 			</table>
 		</div>
@@ -476,6 +503,10 @@
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
 		echo "\t\t\t</tr>\n";
+	}
+	
+	if($count_all == 0){
+		echo "\t\t\t<tr><td colspan=\"3\"><div class=\"text\">".FLANG_NODATA."</div></td></tr>\n";
 	}
 ?>
 			</table>
