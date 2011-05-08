@@ -17,6 +17,10 @@
 	define('FLANG_MONTH', "Monat");
 	define('FLANG_YEAR', "Jahr");
 	
+	define('FLANG_TODAY', "Heute");
+	define('FLANG_PREV_MONTH', "Vorheriger Monat");
+	define('FLANG_NEXT_MONTH', "N&auml;chster Monat");
+	
 	//Headers:
 	define('FLANG_H_LAST', "Auflistung der letzen");
 	define('FLANG_H_STATFOR', "Statistik f&uuml;r");

@@ -5,14 +5,8 @@
 	include "./config/settings.php";
 	include "./config/lang.php";
 	include "./config/information.php";
-	include_once "./functions/main_include.php";
-	include_once "./functions/date.php";//enthält $monthnames, $show_year, $show_month, $show_timestamp
-		
-	if(isset($_GET['show'])){
-		$show_cat = preg_replace('#[^0-9^a-z]#i','',$_GET['show']);//alles ausser 0-9 mit nichts ersetzten
-	}else{
-		$show_cat = "overview";
-	}
+	include_once "./functions/date.php";//defines $monthnames, $show_year, $show_month, $show_timestamp
+	include_once "./functions/main_include.php";//defines $show_cat and needs date.php
 	
 	if(isset($_GET['length'])){
 		$fstat_last_length = preg_replace('#[^0-9]#i','',$_GET['length']);//alles ausser 0-9 mit nichts ersetzten

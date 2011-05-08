@@ -21,6 +21,12 @@ a:hover{
 	color:#BF8630;
 }
 
+hr{
+	height:1px;
+	border:0;
+	color:#F90;background-color:#F90;
+}
+
 #container{
 	width:900px;
 	margin:0 auto;
@@ -51,7 +57,7 @@ a:hover{
 	background:#FFF;
 	border:solid 1px #F90;
 	border-radius:6px;
-	box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);
+	/*box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);*/
 }
 
 .border div.text{
@@ -73,8 +79,10 @@ a:hover{
 }
 
 .middle{
-	margin:0 auto 2px 159px;
-	padding:0 2px 0 2px;
+	/*margin:0 auto 2px 159px;*/
+	margin:0 auto 2px 161px;
+	/*padding:0 2px 0 2px;*/
+	padding:0;
 	width:368px;
 }
 
@@ -169,13 +177,72 @@ a:hover{
 }
 
 /*MENU*/
+.menubar{
+	z-index:9;/*fix for IE!*/
+	margin:0 0 2px 0;
+	padding:2px 8px;
+	position:relative;
+	
+	width:882px;/*+ pading, border = 900*/
+	border:solid 1px #F90;
+	background:#FFE4BB;
+	border-radius:6px;
+	/*box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);*/
+}
 
-.menu { height:1.5em; position:relative; margin-bottom:2px; width:898px;}
-.menu td {vertical-align:top;}
-.mainentry {width:100px; float:left;}
-.mainentry ul{display:none; list-style-type:none;}
-.mainentry:hover ul{display:block;}
+.menuentry{
+	z-index:9;/*fix for IE!*/
+	margin:0;
+	padding:0;
+	float:left;
+	width:100px;
+	position:relative;
+}
+.menuentry a{
+	text-decoration:none
+}
 
-.menu{border:solid 1px #F90;background:#FFE4BB; border-radius:6px; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);}
-.mainentry a{text-decoration:none}
-.mainentry ul{background:#FFF; border:solid 1px #F90; border-radius:6px; box-shadow:2px 2px 3px rgba(0, 0, 0, 0.5); margin:0px; padding:4px;}
+
+.submenu a, .submenu span{
+	display:block;
+}
+
+/* a:hover? */
+.menuentry:hover .submenu{
+	visibility:visible;
+	opacity:1;
+	
+	-moz-transition:all 0.5s ease-in-out; /* Firefox */
+	-webkit-transition:all 0.5s ease-in-out; /* Safari and Chrome */
+	-o-transition:all 0.5s ease-in-out;  /* Opera */
+	transition:all 0.5s ease-in-out; /* Browsers that Support it */
+}
+
+.menuentry .submenu{
+	z-index:10;
+	position:absolute;
+	display:block;
+	visibility:hidden;
+	opacity:0;
+	
+	top:100%;
+	left:0;
+	min-width:150px;
+	margin:0px;
+	padding:4px;
+	
+	background:#FFF;
+	border:solid 1px #F90;
+	border-radius:6px;
+	box-shadow:4px 4px 6px rgba(0, 0, 0, 0.5);
+	
+	-moz-transition:all 0.5s ease-in-out; /* Firefox */
+	-webkit-transition:all 0.5s ease-in-out; /* Safari and Chrome */
+	-o-transition:all 0.5s ease-in-out; /* Opera */
+	transition:all 0.5s ease-in-out; /* Browsers that Support it */
+}
+
+div.clear{
+	clear:both;
+	margin:0;padding:0;height:0;width:0;
+}
