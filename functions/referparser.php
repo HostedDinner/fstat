@@ -15,7 +15,7 @@
 				//$tmp = preg_replace("/^.+?=/", "", $tmp);
 				$tmp = strstr($tmp, "=");
 				$tmp = trim($tmp, "=&");
-				$tmp = str_replace("+", " ", $tmp);
+				$tmp = htmlspecialchars(urldecode($tmp));//Hope it's safe now, too
 				//$tmp = addslashes($tmp);
 				
 				$returnar["searchkeys"] = $tmp;
@@ -30,6 +30,7 @@
 				$tmp = $text[0];
 				$tmp = strstr($tmp, "/");
 				$tmp = trim($tmp, "/");
+				$tmp = htmlspecialchars(urldecode($tmp));//Hope it's safe now, too
 				$returnar["domain"] = $tmp;
 			}else{
 				$returnar["domain"] = "";
