@@ -15,32 +15,45 @@ include $prefolder."functions/backend_include.php";
 $cou_arr = array();
 $tmp_sort_c1 = array();
 
-for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
-	$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
-	
-	if(is_file($filename)){
-		$xmldoc = new DOMDocument();
-		$xmldoc->load($filename);
+for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
+	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
+		$m = gmdate("n", $fstat_backend_start_timestamp);
+	}else{
+		$m = 1;
+	}
+	while($m <= 12){
+		for($i = 1; $i <= 31; $i++){//exact days of month would be only slightly faster
+			$filename = $prefolder.$fstat_data_dir."stat/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
+			
+			if(is_file($filename)){
+				$xmldoc = new DOMDocument();
+				$xmldoc->load($filename);
+				
+				$nodelist = $xmldoc->getElementsByTagName("visitor");
+				
+				foreach($nodelist as $visitor){
+					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+					if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+						$name = @$visitor->getElementsByTagName("ucon")->item(0)->nodeValue;
+						$icon = @$visitor->getElementsByTagName("ucoi")->item(0)->nodeValue;
 		
-		$nodelist = $xmldoc->getElementsByTagName("visitor");
-		
-		foreach($nodelist as $visitor){
-			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
-				$name = @$visitor->getElementsByTagName("ucon")->item(0)->nodeValue;
-				$icon = @$visitor->getElementsByTagName("ucoi")->item(0)->nodeValue;
-
-				if(isset($name) and $name != ""){
-					if(!isset($cou_arr[$name]['count'])){
-						$cou_arr[$name]['count'] = 1;
-					}else{
-						$cou_arr[$name]['count'] = $cou_arr[$name]['count'] + 1;
+						if(isset($name) and $name != ""){
+							if(!isset($cou_arr[$name]['count'])){
+								$cou_arr[$name]['count'] = 1;
+							}else{
+								$cou_arr[$name]['count'] = $cou_arr[$name]['count'] + 1;
+							}
+							$cou_arr[$name]['icon'] = $icon;
+						}
 					}
-					$cou_arr[$name]['icon'] = $icon;
 				}
+				
 			}
 		}
-		
+		$m++;
+		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
+			$m = 13;
+		}
 	}
 }
 

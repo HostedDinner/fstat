@@ -15,41 +15,53 @@ include $prefolder."functions/backend_include.php";
 $os_arr = array();
 $tmp_sort_o1 = array();
 
-for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
-	$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
+for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
+	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
+		$m = gmdate("n", $fstat_backend_start_timestamp);
+	}else{
+		$m = 1;
+	}
+	while($m <= 12){
+		for($i = 1; $i <= 31; $i++){//exact days of month would be only slightly faster
+			$filename = $prefolder.$fstat_data_dir."stat/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
 	
-	if(is_file($filename)){
-		$xmldoc = new DOMDocument();
-		$xmldoc->load($filename);
-		
-		$nodelist = $xmldoc->getElementsByTagName("visitor");
-		
-		foreach($nodelist as $visitor){
-			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-			if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
-				$os_fam = @$visitor->getElementsByTagName("ofam")->item(0)->nodeValue;
-				$os_name = @$visitor->getElementsByTagName("onam")->item(0)->nodeValue;
-				$os_icon = @$visitor->getElementsByTagName("oico")->item(0)->nodeValue;
+			if(is_file($filename)){
+				$xmldoc = new DOMDocument();
+				$xmldoc->load($filename);
 				
-				//mit Subverson
-				if(!isset($os_arr[$os_fam][$os_name]['count'])){
-					$os_arr[$os_fam][$os_name]['count'] = 1;
-				}else{
-					$os_arr[$os_fam][$os_name]['count'] = $os_arr[$os_fam][$os_name]['count'] + 1;
-				}
+				$nodelist = $xmldoc->getElementsByTagName("visitor");
 				
-				//Ohne Sub, nur Anzahl
-				if(!isset($os_arr[$os_fam]['all']['count'])){
-					$os_arr[$os_fam]['all']['count'] = 1;
-				}else{
-					$os_arr[$os_fam]['all']['count'] = $os_arr[$os_fam]['all']['count'] + 1;
+				foreach($nodelist as $visitor){
+					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+					if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+						$os_fam = @$visitor->getElementsByTagName("ofam")->item(0)->nodeValue;
+						$os_name = @$visitor->getElementsByTagName("onam")->item(0)->nodeValue;
+						$os_icon = @$visitor->getElementsByTagName("oico")->item(0)->nodeValue;
+						
+						//mit Subverson
+						if(!isset($os_arr[$os_fam][$os_name]['count'])){
+							$os_arr[$os_fam][$os_name]['count'] = 1;
+						}else{
+							$os_arr[$os_fam][$os_name]['count'] = $os_arr[$os_fam][$os_name]['count'] + 1;
+						}
+						
+						//Ohne Sub, nur Anzahl
+						if(!isset($os_arr[$os_fam]['all']['count'])){
+							$os_arr[$os_fam]['all']['count'] = 1;
+						}else{
+							$os_arr[$os_fam]['all']['count'] = $os_arr[$os_fam]['all']['count'] + 1;
+						}
+						//letztes Icon!
+						$os_arr[$os_fam]['all']['icon'] = $os_icon;
+						$os_arr[$os_fam][$os_name]['icon'] = $os_icon;
+					}
 				}
-				//letztes Icon!
-				$os_arr[$os_fam]['all']['icon'] = $os_icon;
-				$os_arr[$os_fam][$os_name]['icon'] = $os_icon;
 			}
 		}
-		
+		$m++;
+		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
+			$m = 13;
+		}
 	}
 }
 
