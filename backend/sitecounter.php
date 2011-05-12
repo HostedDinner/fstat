@@ -16,34 +16,47 @@ $site_arr = array();
 $site_total["bots"] = 0;
 $site_total["people"] = 0;
 
-$pathname = $prefolder.$fstat_data_dir."paths/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/";
-$path_verz = @opendir($pathname);
-if(is_dir($pathname)){
-	while (($file = @readdir($path_verz)) !== FALSE){
-		if((substr($file, -5) == ".path")){
-			$tmp_arr = @file($pathname.$file);
-			if((substr($file, 0, 4) == "bot_")){
-				$botpeople = "bots";
-			}else{
-				$botpeople = "people";
-			}
-			foreach($tmp_arr as $var){
-				if($fstat_use_site_var){
-					list($time, $sitename, $sitevar) = explode("|", trim($var));
-					if(!isset($sitevar)){$sitevar = $sitename;}
-				}else{
-					list($time, $sitename) = explode("|", trim($var));
-					$sitevar = $sitename;
+for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
+	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
+		$m = gmdate("n", $fstat_backend_start_timestamp);
+	}else{
+		$m = 1;
+	}
+	while($m <= 12){
+		$pathname = $prefolder.$fstat_data_dir."paths/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/";
+		$path_verz = @opendir($pathname);
+		if(is_dir($pathname)){
+			while (($file = @readdir($path_verz)) !== FALSE){
+				if((substr($file, -5) == ".path")){
+					$tmp_arr = @file($pathname.$file);
+					if((substr($file, 0, 4) == "bot_")){
+						$botpeople = "bots";
+					}else{
+						$botpeople = "people";
+					}
+					foreach($tmp_arr as $var){
+						if($fstat_use_site_var){
+							list($time, $sitename, $sitevar) = explode("|", trim($var));
+							if(!isset($sitevar)){$sitevar = $sitename;}
+						}else{
+							list($time, $sitename) = explode("|", trim($var));
+							$sitevar = $sitename;
+						}
+						
+						if(!isset($site_arr[$sitename][$sitevar][$botpeople])){
+							$site_arr[$sitename][$sitevar][$botpeople] = 1;
+						}else{
+							$site_arr[$sitename][$sitevar][$botpeople] = $site_arr[$sitename][$sitevar][$botpeople] + 1;
+						}
+							
+						$site_total[$botpeople] = $site_total[$botpeople] + 1;
+					}
 				}
-				
-				if(!isset($site_arr[$sitename][$sitevar][$botpeople])){
-					$site_arr[$sitename][$sitevar][$botpeople] = 1;
-				}else{
-					$site_arr[$sitename][$sitevar][$botpeople] = $site_arr[$sitename][$sitevar][$botpeople] + 1;
-				}
-					
-				$site_total[$botpeople] = $site_total[$botpeople] + 1;
 			}
+		}
+		$m++;
+		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
+			$m = 13;
 		}
 	}
 }

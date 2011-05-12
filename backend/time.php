@@ -17,39 +17,51 @@ $count_people[24] = 0;//alle
 
 //0-> 00:00 - 01:00; 1->01:00-02:00; usw; 24->alle
 
-for($i = 1; $i <= gmdate("t", $fstat_backend_timestamp); $i++){
-	$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".str_pad($fstat_backend_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
-	
-	if(is_file($filename)){
-		$xmldoc = new DOMDocument();
-		$xmldoc->load($filename);
-		
-		$nodelist = $xmldoc->getElementsByTagName("visitor");
-		
-		foreach($nodelist as $visitor){
-			$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-			$timestr = @$visitor->getElementsByTagName("uti")->item(0)->nodeValue;
-			$time = date("G", $timestr);//hier kein gmdate, da hier das erste mal konvertiert wird :P
+for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
+	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
+		$m = gmdate("n", $fstat_backend_start_timestamp);
+	}else{
+		$m = 1;
+	}
+	while($m <= 12){
+		for($i = 1; $i <= 31; $i++){//exact days of month would be only slightly faster
+			$filename = $prefolder.$fstat_data_dir."stat/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
 			
-			if($typ == "Robot"){
-				if(!isset($count_bots[$time])){
-					$count_bots[$time] = 1;
-				}else{
-					$count_bots[$time] = $count_bots[$time] + 1;
+			if(is_file($filename)){
+				$xmldoc = new DOMDocument();
+				$xmldoc->load($filename);
+				
+				$nodelist = $xmldoc->getElementsByTagName("visitor");
+				
+				foreach($nodelist as $visitor){
+					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+					$timestr = @$visitor->getElementsByTagName("uti")->item(0)->nodeValue;
+					$time = date("G", $timestr);//hier kein gmdate, da hier das erste mal konvertiert wird :P
+					
+					if($typ == "Robot"){
+						if(!isset($count_bots[$time])){
+							$count_bots[$time] = 1;
+						}else{
+							$count_bots[$time] = $count_bots[$time] + 1;
+						}
+						$count_bots[24] = $count_bots[24] + 1;
+					}else{
+						if(!isset($count_people[$time])){
+							$count_people[$time] = 1;
+						}else{
+							$count_people[$time] = $count_people[$time] + 1;
+						}
+						$count_people[24] = $count_people[24] + 1;
+					}
 				}
-				$count_bots[24] = $count_bots[24] + 1;
-			}else{
-				if(!isset($count_people[$time])){
-					$count_people[$time] = 1;
-				}else{
-					$count_people[$time] = $count_people[$time] + 1;
-				}
-				$count_people[24] = $count_people[24] + 1;
 			}
+		}
+		$m++;
+		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
+			$m = 13;
 		}
 	}
 }
-
 
 //Ausgabe vorbereiten:
 $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
