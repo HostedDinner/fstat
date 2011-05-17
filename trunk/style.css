@@ -198,7 +198,16 @@ hr{
 	width:100px;
 	position:relative;
 }
-.menuentry a{
+.menuentryR{
+	z-index:9;/*fix for IE!*/
+	margin:0;
+	padding:0;
+	float:right;
+	width:100px;
+	position:relative;
+	text-align:right;
+}
+.menuentry a, .menuentryR a{
 	text-decoration:none
 }
 

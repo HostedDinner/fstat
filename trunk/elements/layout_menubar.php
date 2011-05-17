@@ -77,6 +77,9 @@
 ?>
 			</div>
 		</div>
+		<div class="menuentryR">
+			<a href="<?php echo "./?".URL_AddShow("about").URL_AddLang(); ?>"><?php echo "".FLANG_H_ABOUT; ?></a>
+		</div>
 		<div class="clear"></div>
 	</div>
 	

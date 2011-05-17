@@ -22,12 +22,14 @@
 	define('FLANG_NEXT_MONTH', "N&auml;chster Monat");
 	
 	//Headers:
+	define('FLANG_H_ABOUT_FSTAT', "&Uuml;ber FStat");
 	define('FLANG_H_LAST', "Auflistung der letzen");
 	define('FLANG_H_STATFOR', "Statistik f&uuml;r");
 	define('FLANG_H_OVERVIEW', "&Uuml;bersicht");
 	define('FLANG_H_DIST_VISIT', "Besucherverteilung");
 	define('FLANG_H_DIST_TIME', "Zeitverteilung");
 	
+	define('FLANG_H_ABOUT', "&Uuml;ber");
 	define('FLANG_H_BOT', "Bots");
 	define('FLANG_H_BROWSER', "Browser");
 	define('FLANG_H_COUNTRY', "L&auml;nder");
@@ -68,8 +70,9 @@
 	define('FLANG_VISITTIME_B', "Bots am");
 	define('FLANG_CLOCK', "Uhr");
 	
-	//Footer
+	//Footer/About
 	define('FLANG_H_USEDBY', "Diese Statistik benutzt die");
+	define('FLANG_FEEDBACK', "Bitte sende Fehler und Feedback an:");
 	
 	
 	

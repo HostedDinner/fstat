@@ -1,0 +1,52 @@
+(Options Main site)
+show:
+	overview  - Shows the overview, a dashboard, ... (default)
+	last      - Shows last 'length' (default 50, max 200) visitors.
+	about     - Shows information about FStat.
+
+
+(Additional Options)
+year:
+	The year in YYYY format for showing in statstic. (default is current year)
+	
+month:
+	The month in MM or M format for showing in statstic. (default is current month)
+
+lang:
+	Langauge shortcode. (at the moment de/en)
+
+length:
+	The length of a list. (at the moment only for last visitors)
+
+offset:
+	Not in use, reserved for lists with offset.
+
+
+(experimental Options)
+(use only for backend or the gui will look strange ;) )
+start:
+	Unixtimestamp of the first month to analyse (year and month will be overitten)
+end:
+	Unixtimestamp of the last month (including) to anaylse (year and month will be overitten)
+
+
+
+(Use of Backend)
+The backend is located at "./backend/"...
+Files available are
+	* bots.php         - lists count of bot visits
+	* br_os.php        - lists used Browser and Operation System in one file (same as os.php and browser.php together)
+	* browser.php      - lists used Browsers, categorised by Browser Family
+	* counter.php      - show the count for each day
+	* country.php      - lists the countries from the visitors
+	* last.php         - lists last ... visitors
+	* os.php           - lists used Operation System, categorised by OS Family
+	* referer.php      - lists referers
+	* search.php       - lists search strings of referrers
+	* sitecounter.php  - lists count of sites and their subsites
+	* time.php         - makes a timetable, when the visitos where there
+Return is always an xml file and input options are set via url parameter (see above).
+Root-element is always list, for more info look at the bottom of each script...
+
+An Advanced option using the backend is to set the options via $fstat_backend_[name], set $is_include = true
+and include the file (try to using ob_start, ob_get_contents, ob_end_clean ;) )
