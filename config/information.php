@@ -1,3 +1,3 @@
 <?php
-	$fstat_fstat_version = "0.5 alpha";
+	$fstat_fstat_version = "0.6 alpha";
 ?>
