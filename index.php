@@ -15,14 +15,17 @@
 	
 	
 	switch ($show_cat){
-	case "last":
-		$fstat_title = FLANG_H_LAST." ".$fstat_last_length." ".FLANG_VISITOR_L;
-		break;
-	case "overview":
-	default:
-		$fstat_title = FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;
-		break;
-}
+		case "about":
+			$fstat_title = FLANG_H_ABOUT_FSTAT;
+			break;
+		case "last":
+			$fstat_title = FLANG_H_LAST." ".$fstat_last_length." ".FLANG_VISITOR_L;
+			break;
+		case "overview":
+		default:
+			$fstat_title = FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;
+			break;
+	}
 	
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -35,17 +38,20 @@
 <body>
 <div id="container">
 <?php
-include("./elements/layout_menubar.php");
-
-switch ($show_cat){
-case "last":
-	include("./elements/last.php");
-	break;
-case "overview":
-default:
-	include("./elements/overview.php");
-	break;
-}
+	include("./elements/layout_menubar.php");
+	
+	switch ($show_cat){
+		case "about":
+			include("./elements/about.php");
+			break;
+		case "last":
+			include("./elements/last.php");
+			break;
+		case "overview":
+		default:
+			include("./elements/overview.php");
+			break;
+	}
 
 include("./elements/layout_footer.php");
 ?>
