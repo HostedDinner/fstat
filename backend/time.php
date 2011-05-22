@@ -71,6 +71,10 @@ $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
 $root = $xmlausgabe->createElement("list");
 $root = $xmlausgabe->appendChild($root);
 
+//extra kind of root for Time
+$tim_root = $xmlausgabe->createElement("times");
+$tim_root = $root->appendChild($tim_root);
+
 for($i = 0; $i < 24; $i++){
 	if(isset($count_bots[$i])){
 		$bot_tmp = $count_bots[$i];
@@ -90,37 +94,39 @@ for($i = 0; $i < 24; $i++){
 		$timeadd->setAttribute("period", $timestring);
 		$timeadd->appendChild($xmlausgabe->createElement('bots', $bot_tmp));
 		$timeadd->appendChild($xmlausgabe->createElement('people', $people_tmp));
-	$root->appendChild($timeadd);
+	$tim_root->appendChild($timeadd);
 }
 
 
 $gesamtadd = $xmlausgabe->createElement("total");
 	$gesamtadd->appendChild($xmlausgabe->createElement('bots', $count_bots[24]));
 	$gesamtadd->appendChild($xmlausgabe->createElement('people', $count_people[24]));
-$root->appendChild($gesamtadd);
+$tim_root->appendChild($gesamtadd);
 
 echo $xmlausgabe->saveXML();
 
 //Aufbau der XML Datei
 //<list>
-//  <time period="00:00-01:00">
-//    <bots>3</bots>
-//    <people>3</people>
-//  </time>
-//  <time period="01:00-02:00">
-//    <bots>4</bots>
-//    <people>1</people>
-//  </time>
-//  ...
-//  <time period="17:00-18:00">
-//    <bots>1</bots>
-//    <people>6</people>
-//  </time>
-//  ...
-//  <total>
-//    <bots>15</bots>
-//    <people>27</people>
-//  </total>
+//  <times>
+//    <time period="00:00-01:00">
+//      <bots>3</bots>
+//      <people>3</people>
+//    </time>
+//    <time period="01:00-02:00">
+//      <bots>4</bots>
+//      <people>1</people>
+//    </time>
+//    ...
+//    <time period="17:00-18:00">
+//      <bots>1</bots>
+//      <people>6</people>
+//    </time>
+//    ...
+//    <total>
+//      <bots>15</bots>
+//      <people>27</people>
+//    </total>
+//  </times>
 //</list>
 
 ?>

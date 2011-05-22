@@ -13,7 +13,7 @@ include $prefolder."config/settings.php";
 include $prefolder."functions/backend_include.php";
 
 $bot_arr = array();
-$tmp_sort_o1 = array();
+$tmp_sort_b1 = array();
 
 for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
 	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
@@ -67,9 +67,9 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 
 //Sortieren nach Anzahl:
 foreach($bot_arr as $key => $row) {
-	$tmp_sort_o1[$key]  = $row['all']['count'];
+	$tmp_sort_b1[$key]  = $row['all']['count'];
 }
-array_multisort($tmp_sort_o1, SORT_DESC, $bot_arr);
+array_multisort($tmp_sort_b1, SORT_DESC, $bot_arr);
 
 //Sortiern der Versionen:
 foreach($bot_arr as $arr2 => $temp2){

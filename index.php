@@ -2,6 +2,9 @@
 	error_reporting(0); //keine Fehler anzeigen
 	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
 	//error_reporting(E_ALL); // alle Fehler anzeigen
+	$startzeit = explode(" ", microtime());
+	$startzeit = $startzeit[0]+$startzeit[1];
+	
 	include "./config/settings.php";
 	include "./config/lang.php";
 	include "./config/information.php";
