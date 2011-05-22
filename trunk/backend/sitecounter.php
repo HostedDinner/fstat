@@ -78,6 +78,9 @@ $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
 $root = $xmlausgabe->createElement("list");
 $root = $xmlausgabe->appendChild($root);
 
+//extra kind of root for S-Counter
+$sit_root = $xmlausgabe->createElement("sites");
+$sit_root = $root->appendChild($sit_root);
 
 foreach($site_arr as $name => $inhalt){
 	$siteadd = $xmlausgabe->createElement("site");
@@ -97,39 +100,41 @@ foreach($site_arr as $name => $inhalt){
 			}
 			$siteadd->appendChild($subsiteadd);
 		}
-	$root->appendChild($siteadd);
+	$sit_root->appendChild($siteadd);
 }
 
 $gesamtadd = $xmlausgabe->createElement("total");
 	$gesamtadd->appendChild($xmlausgabe->createElement('bots', $site_total["bots"]));
 	$gesamtadd->appendChild($xmlausgabe->createElement('people', $site_total["people"]));
-$root->appendChild($gesamtadd);
+$sit_root->appendChild($gesamtadd);
 
 echo $xmlausgabe->saveXML();
 
 //Aufbau der XML Datei
 //<list>
-//  <site name="index.php">
-//    <sub name="home">
-//      <bots>1</bots>
-//      <people>5</people>
-//    </sub>
-//    <sub name="project">
-//      <bots>3</bots>
-//      <people>15</people>
-//    </sub>
-//  </site>
-//  <site name="other.php">
-//    <sub name="newsite">
-//      <bots>1</bots>
-//      <people>9</people>
-//    </sub>
-//  </site>
-//  ...
-//  <total>
-//    <bots>10/bots>
-//    <people>27</people>
-//  </total>
+//  <sites>
+//    <site name="index.php">
+//      <sub name="home">
+//        <bots>1</bots>
+//        <people>5</people>
+//      </sub>
+//      <sub name="project">
+//        <bots>3</bots>
+//        <people>15</people>
+//      </sub>
+//    </site>
+//    <site name="other.php">
+//      <sub name="newsite">
+//        <bots>1</bots>
+//        <people>9</people>
+//      </sub>
+//    </site>
+//    ...
+//    <total>
+//      <bots>10/bots>
+//      <people>27</people>
+//    </total>
+//  </sites>
 //</list>
 
 ?>

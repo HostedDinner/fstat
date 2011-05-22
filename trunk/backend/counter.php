@@ -23,6 +23,9 @@ $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
 $root = $xmlausgabe->createElement("list");
 $root = $xmlausgabe->appendChild($root);
 
+//extra kind of root for Counter
+$cot_root = $xmlausgabe->createElement("counter");
+$cot_root = $root->appendChild($cot_root);
 
 for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
 	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
@@ -60,7 +63,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 				$dayadd->appendChild($xmlausgabe->createElement('bots', $tmp_count_bots));
 				$dayadd->appendChild($xmlausgabe->createElement('people', $tmp_count_people));
 			
-			$root->appendChild($dayadd);
+			$cot_root->appendChild($dayadd);
 		}
 		$m++;
 		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
@@ -74,25 +77,27 @@ $gesamtadd = $xmlausgabe->createElement("total");
 	$gesamtadd->appendChild($xmlausgabe->createElement('bots', $count_bots));
 	$gesamtadd->appendChild($xmlausgabe->createElement('people', $count_people));
 
-$root->appendChild($gesamtadd);
+$cot_root->appendChild($gesamtadd);
 
 echo $xmlausgabe->saveXML();
 
 //Aufbau der XML Datei
 //<list>
-//  <day id="1">
-//    <bots>3</bots>
-//    <people>3</people>
-//  </day>
-//  <day id="2">
-//    <bots>4</bots>
-//    <people>1</people>
-//  </day>
-//  ...
-//  <total>
-//    <bots>15</bots>
-//    <people>27</people>
-//  </total>
+//  <counter>
+//    <day id="1">
+//      <bots>3</bots>
+//      <people>3</people>
+//    </day>
+//    <day id="2">
+//      <bots>4</bots>
+//      <people>1</people>
+//    </day>
+//    ...
+//    <total>
+//      <bots>15</bots>
+//      <people>27</people>
+//    </total>
+//  </counter>
 //</list>
 
 ?>

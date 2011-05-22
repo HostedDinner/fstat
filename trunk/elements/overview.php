@@ -1,3 +1,8 @@
+<?php
+	//
+	$xml_all = new DOMDocument();
+	$xml_all->loadXML(get_xml_backend("./backend/all.php"));
+?>
 	<div class="left">
 		<div class="border">
 			<h2><?php echo FLANG_H_OVERVIEW; ?></h2>
@@ -8,23 +13,22 @@
 				<th><?php echo FLANG_BOT_S; ?>:</th>
 			</tr>
 <?php
-	$xml_counter = new DOMDocument();
-	$xml_counter->loadXML(get_xml_backend("./backend/counter.php"));
+	$count_day_max_b = 0;//reset/set
+	$count_day_max_p = 0;//reset/set
 	
-	$nodelist = $xml_counter->getElementsByTagName("day");
-	
-	$count_max_p = 0;//reset/set
-	$count_max_b = 0;//reset/set
+	$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 	
 	foreach($nodelist as $nodeday){
 		$count_b = $nodeday->getElementsByTagName("bots")->item(0)->nodeValue;
 		$count_p = $nodeday->getElementsByTagName("people")->item(0)->nodeValue;
-		if($count_b > $count_max_b){$count_max_b = $count_b;}
-		if($count_p > $count_max_p){$count_max_p = $count_p;}
+		if($count_b > $count_day_max_b){$count_day_max_b = $count_b;}
+		if($count_p > $count_day_max_p){$count_day_max_p = $count_p;}
 		
-		$day = $nodeday->getAttribute("id");
+		$fulldate = $nodeday->getAttribute("id");
+		$day = substr($fulldate, -2, 2);
 		
-		if((gmdate("j") == $day) && (gmdate("m") == $show_month) && (gmdate("Y") == $show_year)){
+		if(gmdate("Y-m-d") == $fulldate){
+		//if((gmdate("j") == $day) && (gmdate("m") == $show_month) && (gmdate("Y") == $show_year)){
 			$td = "<td class=\"high_today\">";
 		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 6){//6 für Samstag
 			$td = "<td class=\"high_Sa\">";
@@ -42,8 +46,8 @@
 		echo "\t\t\t</tr>\n";
 	}
 	
-	$count_all_b =   $xml_counter->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
-	$count_all_p = $xml_counter->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
+	$count_all_b = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
+	$count_all_p = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
 	
 	echo "\t\t\t<tr class=\"table_sum\">\n";
 	echo "\t\t\t\t<td>".FLANG_SUM_S.":</td>\n";
@@ -66,20 +70,18 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_browser = new DOMDocument();
-	$xml_browser->loadXML(get_xml_backend("./backend/browser.php"));
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_browser->getElementsByTagName("all");
+	
+	//count all browsers
+	$nodelist = $xml_all->getElementsByTagName("browser")->item(0)->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
 		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_browser->getElementsByTagName("typ");
+	$nodelist = $xml_all->getElementsByTagName("browser")->item(0)->getElementsByTagName("typ");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $nodebr){
@@ -131,20 +133,18 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_os = new DOMDocument();
-	$xml_os->loadXML(get_xml_backend("./backend/os.php"));
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_os->getElementsByTagName("all");
+	
+	//count all OS's
+	$nodelist = $xml_all->getElementsByTagName("os")->item(0)->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
 		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_os->getElementsByTagName("typ");
+	$nodelist = $xml_all->getElementsByTagName("os")->item(0)->getElementsByTagName("typ");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $nodeos){
@@ -196,20 +196,17 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_bot = new DOMDocument();
-	$xml_bot->loadXML(get_xml_backend("./backend/bots.php"));
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_bot->getElementsByTagName("all");
+	//count all bots
+	$nodelist = $xml_all->getElementsByTagName("bot")->item(0)->getElementsByTagName("all");
 	foreach($nodelist as $nodeall){
 		$tmp = $nodeall->getElementsByTagName("count")->item(0)->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_bot->getElementsByTagName("typ");
+	$nodelist = $xml_all->getElementsByTagName("bot")->item(0)->getElementsByTagName("typ");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $nodebot){
@@ -252,19 +249,20 @@
 			</table>
 			<br />
 <?php 		
-	if($count_max_b > 0){
+	if($count_day_max_b > 0){
 		echo "\t\t\t<table class=\"databoard_50\">\n";
 		echo "\t\t\t\t<tr>\n";
 		
-		$nodelist = $xml_counter->getElementsByTagName("day");
+		$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 		foreach($nodelist as $nodeday){
 			$count_b = $nodeday->getElementsByTagName("bots")->item(0)->nodeValue;
-			//$count_p = $nodeday->getElementsByTagName("people")->item(0)->nodeValue;
-			$day = $nodeday->getAttribute("id");
+			$fulldate = $nodeday->getAttribute("id");
+			$day = substr($fulldate, -2, 2);
+			$month = substr($fulldate, -5, 2);
 			
-			$height = round(($count_b/$count_max_b)*50,0);//50px max
+			$height = round(($count_b/$count_day_max_b)*50,0);//50px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
@@ -283,21 +281,18 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_cou = new DOMDocument();
-	$xml_cou->loadXML(get_xml_backend("./backend/country.php"));
-	
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_cou->getElementsByTagName("count");
+	
+	//count all countrys
+	$nodelist = $xml_all->getElementsByTagName("country")->item(0)->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
 		$tmp = $nodecount->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_cou->getElementsByTagName("cou");
+	$nodelist = $xml_all->getElementsByTagName("country")->item(0)->getElementsByTagName("cou");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $nodecou){
@@ -329,19 +324,20 @@
 		<div class="border">
 			<h2><?php echo FLANG_H_DIST_VISIT; ?></h2>
 <?php 		
-	if($count_max_p > 0){
+	if($count_day_max_p > 0){
 		echo "\t\t\t<table class=\"databoard_100\">\n";
 		echo "\t\t\t\t<tr>\n";
 		
-		$nodelist = $xml_counter->getElementsByTagName("day");
+		$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 		foreach($nodelist as $nodeday){
-			//$count_b = $nodeday->getElementsByTagName("bots")->item(0)->nodeValue;
 			$count_p = $nodeday->getElementsByTagName("people")->item(0)->nodeValue;
-			$day = $nodeday->getAttribute("id");
+			$fulldate = $nodeday->getAttribute("id");
+			$day = substr($fulldate, -2, 2);
+			$month = substr($fulldate, -5, 2);
 			
-			$height = round(($count_p/$count_max_p)*100,0);//100px max
+			$height = round(($count_p/$count_day_max_p)*100,0);//100px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$show_month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
@@ -424,21 +420,18 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_ref = new DOMDocument();
-	$xml_ref->loadXML(get_xml_backend("./backend/referer.php"));
-	
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_ref->getElementsByTagName("count");
+	
+	//count all referes
+	$nodelist = $xml_all->getElementsByTagName("referer")->item(0)->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
 		$tmp = $nodecount->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_ref->getElementsByTagName("ref");
+	$nodelist = $xml_all->getElementsByTagName("referer")->item(0)->getElementsByTagName("ref");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $noderef){
@@ -472,21 +465,18 @@
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
 <?php
-	$xml_search = new DOMDocument();
-	$xml_search->loadXML(get_xml_backend("./backend/search.php"));
-	
-	
 	$count_all = 0;
 	$count_max = 0;
-	//count all
-	$nodelist = $xml_search->getElementsByTagName("count");
+	
+	//count all searchstr
+	$nodelist = $xml_all->getElementsByTagName("search")->item(0)->getElementsByTagName("count");
 	foreach($nodelist as $nodecount){
 		$tmp = $nodecount->nodeValue;
 		if($tmp > $count_max){$count_max = $tmp;}
 		$count_all = $count_all + $tmp;
 	}
 	
-	$nodelist = $xml_search->getElementsByTagName("ref");
+	$nodelist = $xml_all->getElementsByTagName("search")->item(0)->getElementsByTagName("ref");
 	
 	$tmpcount = 0;
 	foreach($nodelist as $nodesearch){
@@ -514,34 +504,30 @@
 		<div class="border">
 			<h2><?php echo FLANG_H_DIST_TIME; ?></h2>
 <?php 		
-	$xml_time = new DOMDocument();
-	$xml_time->loadXML(get_xml_backend("./backend/time.php"));
+	$count_time_max_p = 0;//reset/set
+	$count_time_max_b = 0;//reset/set
 	
-	$nodelist = $xml_time->getElementsByTagName("time");
-	
-	$count_max_time_p = 0;//reset/set
-	$count_max_time_b = 0;//reset/set
+	$nodelist = $xml_all->getElementsByTagName("times")->item(0)->getElementsByTagName("time");
 	
 	foreach($nodelist as $nodetime){
 		$count_b = $nodetime->getElementsByTagName("bots")->item(0)->nodeValue;
 		$count_p = $nodetime->getElementsByTagName("people")->item(0)->nodeValue;
-		if($count_b > $count_max_time_b){$count_max_time_b = $count_b;}
-		if($count_p > $count_max_time_p){$count_max_time_p = $count_p;}
+		if($count_b > $count_time_max_b){$count_time_max_b = $count_b;}
+		if($count_p > $count_time_max_p){$count_time_max_p = $count_p;}
 	}
 	
-	$count_all_time_b =   $xml_time->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
-	$count_all_time_p = $xml_time->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
+	$count_all_time_b = $xml_all->getElementsByTagName("times")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
+	$count_all_time_p = $xml_all->getElementsByTagName("times")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
 	
-	if($count_max_time_p > 0){
+	if($count_time_max_p > 0){
 		echo "\t\t\t<table class=\"databoard_100\">\n";
 		echo "\t\t\t\t<tr>\n";
 		
-		//$nodelist = $xml_counter->getElementsByTagName("time");
 		foreach($nodelist as $nodetime){
 			$count_p = $nodetime->getElementsByTagName("people")->item(0)->nodeValue;
 			$period = $nodetime->getAttribute("period");
 			
-			$height = round(($count_p/$count_max_time_p)*100,0);//100px max
+			$height = round(($count_p/$count_time_max_p)*100,0);//100px max
 			
 			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_T." ".$period." ".FLANG_CLOCK."\"><div style=\"height:".$height."px;\"></div></td>\n";
 		}

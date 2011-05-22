@@ -64,12 +64,15 @@ $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
 $root = $xmlausgabe->createElement("list");
 $root = $xmlausgabe->appendChild($root);
 
+//extra kind of root for Referer
+$ref_root = $xmlausgabe->createElement("referer");
+$ref_root = $root->appendChild($ref_root);
 
 foreach($ref_arr as $ref => $count){
 	$refadd = $xmlausgabe->createElement("ref");
 	$refadd->setAttribute("domain", $ref);
 		$refadd->appendChild($xmlausgabe->createElement("count", $count));
-	$root->appendChild($refadd);
+	$ref_root->appendChild($refadd);
 }
 
 
@@ -78,12 +81,14 @@ echo $xmlausgabe->saveXML();
 
 //Aufbau der XML Datei
 //<list>
-//  <ref domain="localhost">
-//    <count>3</count>
-//  </ref>
-//  <ref domain="www.google.com">
-//    <count>5</count>
-//  </ref>
+//  <referer>
+//    <ref domain="localhost">
+//      <count>3</count>
+//    </ref>
+//    <ref domain="www.google.com">
+//      <count>5</count>
+//    </ref>
+//  </referer>
 //</list>
 
 ?>

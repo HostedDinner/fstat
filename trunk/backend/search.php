@@ -65,12 +65,15 @@ $xmlausgabe = new DOMDocument('1.0', 'UTF-8');
 $root = $xmlausgabe->createElement("list");
 $root = $xmlausgabe->appendChild($root);
 
+//extra kind of root for Search
+$sea_root = $xmlausgabe->createElement("search");
+$sea_root = $root->appendChild($sea_root);
 
 foreach($key_arr as $ref => $count){
 	$refadd = $xmlausgabe->createElement("ref");
 	$refadd->setAttribute("keywords", $ref);
 		$refadd->appendChild($xmlausgabe->createElement("count", $count));
-	$root->appendChild($refadd);
+	$sea_root->appendChild($refadd);
 }
 
 
@@ -79,12 +82,14 @@ echo $xmlausgabe->saveXML();
 
 //Aufbau der XML Datei
 //<list>
-//  <ref keywords="RWCP">
-//    <count>6</count>
-//  </ref>
-//  <ref keywords="Witzbox">
-//    <count>3</count>
-//  </ref>
+//  <search>
+//    <ref keywords="RWCP">
+//      <count>6</count>
+//    </ref>
+//    <ref keywords="Witzbox">
+//      <count>3</count>
+//    </ref>
+//</search>
 //</list>
 
 ?>
