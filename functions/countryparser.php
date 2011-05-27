@@ -1,51 +1,65 @@
 <?php
-	function CountryParse(){
-		$lookupip = getenv("REMOTE_ADDR");
-		$lookupip_long = sprintf("%u", ip2long($lookupip));
+function CountryParse(){
+	$lookupip = getenv("REMOTE_ADDR");
+	$lookupip_long = sprintf("%u", ip2long($lookupip));
 		
-		$c_found = false;
+	$returnar = CountryParseHelper(FSTAT_PATH."ip-to-country-1.csv", $lookupip_long);
 		
-		//part 1
-		$handle = fopen (FSTAT_PATH."ip-to-country-1.csv","r");
+	if($returnar === false){
+		$returnar = CountryParseHelper(FSTAT_PATH."ip-to-country-2.csv", $lookupip_long);
+	}
 		
-		if($handle){
-			while ( ($data = fgetcsv ($handle, 200, ",")) !== FALSE ) {
-				if(($data[0] <= $lookupip_long) and ($lookupip_long <= $data[1])){
-					$returnar['icon'] = strtolower($data[2]).".png";
-					$returnar['name'] = ucwords(strtolower($data[4]));
-					$c_found = true;
-					break;
-				}
-			}
-		}
-		fclose ($handle);
-		
-		//part 2
-		if(!$c_found){
-			$handle2 = fopen (FSTAT_PATH."ip-to-country-2.csv","r");
-		
-			if($handle2){
-				while ( ($data = fgetcsv ($handle2, 200, ",")) !== FALSE ) {
-					if(($data[0] <= $lookupip_long) and ($lookupip_long <= $data[1])){
-						$returnar['icon'] = strtolower($data[2]).".png";
-						$returnar['name'] = ucwords(strtolower($data[4]));
-						break;
-					}
-				}
-			}
-			fclose ($handle2);
-		}
-		
-		
-		
+	if($returnar === false){
 		if(!isset($returnar['icon'])){
 			$returnar['icon'] = "fam.png";
 		}
 		if(!isset($returnar['name'])){
-			$returnar['name'] = "unknown";
+			$returnar['name'] = "Unknown";
 		}
-		
-		
-		return $returnar;
 	}
+		
+	return $returnar;
+}
+	
+	
+function CountryParseHelper($filename, $lookupip_long){
+	$handle = fopen($filename,"r");
+		
+	if($handle){
+		//Seek to the end
+		fseek($handle, 0, SEEK_END);
+		$high = ftell($handle);
+		$low = 0;
+		
+		while ($low <= $high) {
+			$mid = floor(($low + $high) / 2);
+	
+			fseek($handle, $mid);
+
+			if($mid != 0){
+				//Read a line to move to eol
+				$line = fgets($handle);
+			}
+       
+			//Read a line to get data
+			$data = fgetcsv ($handle, 200, ",");
+			
+			if(($data[0] <= $lookupip_long) and ($lookupip_long <= $data[1])){
+				$returnar['icon'] = strtolower($data[2]).".png";
+				$returnar['name'] = ucwords(strtolower($data[4]));
+				fclose($handle);
+				return $returnar;
+			}else{
+				if ($lookupip_long < $data[0]){
+					$high = $mid - 1;
+				}else{
+					$low = $mid + 1;
+				}
+			}
+		}
+	}
+	fclose($handle);
+	return false;
+}
+	
 ?>
