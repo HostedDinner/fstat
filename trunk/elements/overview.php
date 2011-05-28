@@ -64,8 +64,7 @@
 			<h2><?php echo FLANG_H_BROWSER; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_BROWSER; ?>:</th>
+				<th colspan="2"><?php echo FLANG_BROWSER; ?>:</th>
 				<th><?php echo FLANG_COUNT; ?>:</th>
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
@@ -127,8 +126,7 @@
 			<h2><?php echo FLANG_H_OS; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_OS; ?>:</th>
+				<th colspan="2"><?php echo FLANG_OS; ?>:</th>
 				<th><?php echo FLANG_COUNT; ?>:</th>
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
@@ -190,8 +188,7 @@
 			<h2><?php echo FLANG_H_BOT; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_BOT_S; ?>:</th>
+				<th colspan="2"><?php echo FLANG_BOT_S; ?>:</th>
 				<th><?php echo FLANG_COUNT; ?>:</th>
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
@@ -275,8 +272,7 @@
 			<h2><?php echo FLANG_H_COUNTRY; ?></h2>
 			<table class="Auflistung">
 			<tr>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_COUNTRY; ?>:</th>
+				<th colspan="2"><?php echo FLANG_COUNTRY; ?>:</th>
 				<th><?php echo FLANG_COUNT; ?>:</th>
 				<th><?php echo FLANG_GRAPH; ?>:</th>
 			</tr>
@@ -385,7 +381,7 @@
 		if($parentssite != $last_parent_site){
 			$last_parent_site = $parentssite;
 			echo "\t\t\t<tr>\n";
-			echo "\t\t\t\t<th colspan=\"4\">".$parentssite."</th>\n";
+			echo "\t\t\t\t<th class=\"center\" colspan=\"4\">".$parentssite."</th>\n";
 			echo "\t\t\t</tr>\n";
 		}
 		
