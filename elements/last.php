@@ -4,12 +4,9 @@
 				<th>&nbsp;</th>
 				<th><?php echo FLANG_DATE; ?>:</th>
 				<th><?php echo FLANG_TIME; ?>:</th>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_BROWSER; ?>:</th>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_OS; ?>:</th>
-				<th>&nbsp;</th>
-				<th><?php echo FLANG_COUNTRY; ?>:</th>
+				<th colspan="2"><?php echo FLANG_COUNTRY; ?>:</th>
+				<th colspan="2"><?php echo FLANG_OS; ?>:</th>
+				<th colspan="2"><?php echo FLANG_BROWSER; ?>:</th>
 				<th><?php echo FLANG_DOMAIN; ?>:</th>
 				<th><?php echo FLANG_H_SITE; ?>:</th>
 			</tr>
@@ -48,12 +45,12 @@
 		echo "\t\t\t\t<td title=\"".$v_uip."\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td>".date("d.m.y", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ufam."\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\"></td>\n";
-		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_unam."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ofam."\"><img src=\"".$fstat_ico_dir."os/".$v_oico."\" alt=\"*\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\" title=\"".$v_ucon."\"></td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uip."\">".$v_ucon."</td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$v_oico."\" alt=\"*\" title=\"".$v_ofam."\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_onam."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\" title=\"".$v_ucon."\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\"></td>\n";
-		echo "\t\t\t\t<td>".$v_ucon."</td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\" title=\"".$v_ufam."\"></td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_unam."</td>\n";
 		echo "\t\t\t\t<td title=\"".$v_rkey."\">".$v_rdom."</td>\n";
 		
 		$tmp_last_1 = "";
