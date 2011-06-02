@@ -377,12 +377,14 @@
 	foreach($nodelist as $nodesite){
 		$tmpcount++;
 		
-		$parentssite = $nodesite->parentNode->getAttribute("name");
-		if($parentssite != $last_parent_site){
-			$last_parent_site = $parentssite;
-			echo "\t\t\t<tr>\n";
-			echo "\t\t\t\t<th class=\"center\" colspan=\"4\">".$parentssite."</th>\n";
-			echo "\t\t\t</tr>\n";
+		if($fstat_use_site_var == true){
+			$parentssite = $nodesite->parentNode->getAttribute("name");
+			if($parentssite != $last_parent_site){
+				$last_parent_site = $parentssite;
+				echo "\t\t\t<tr>\n";
+				echo "\t\t\t\t<th class=\"center\" colspan=\"4\">".$parentssite."</th>\n";
+				echo "\t\t\t</tr>\n";
+			}
 		}
 		
 		$name = $nodesite->getAttribute("name");
