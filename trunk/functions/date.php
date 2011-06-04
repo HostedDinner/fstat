@@ -10,10 +10,10 @@
 	if(isset($_GET['month'])){
 		$show_month = preg_replace('#[^0-9]#i','',$_GET['month']);//alles ausser 0-9 mit nichts ersetzten
 		if(($show_month > 12) || ($show_month==0)){
-			$show_month = gmdate("m");
+			$show_month = gmdate("n");
 		}
 	}else{
-		$show_month = gmdate("m");
+		$show_month = gmdate("n");
 	}
 	
 	$show_timestamp = gmmktime(1, 1, 1, $show_month, 1, $show_year);
