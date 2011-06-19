@@ -1,0 +1,67 @@
+body{
+	font-size:12px;
+}
+
+td, th{
+	padding:1px 2px;
+}
+
+#container{
+	width:95%;
+	margin:0 auto;
+}
+
+.left{
+	margin:0 0 2px 0;
+	padding:0;
+	width:100%;
+}
+
+.right{
+	margin:0 0 2px 0;
+	padding:0;
+	width:100%;
+}
+
+.middle{
+	margin:0 0 2px 0;
+	padding:0;
+	width:100%;
+}
+
+.menubar{
+	margin:0 0 2px 0;
+	padding:2px 8px;
+	
+	border:solid 1px #F90;
+	background:#FFE4BB;
+	border-radius:6px;
+}
+
+.menuentry{
+	margin:2px 0;
+	padding:0;
+	width:100%;
+}
+.menuentryR{
+	margin:2px 0;
+	padding:0;
+	width:100%;
+}
+.menuentry a, .menuentryR a{
+	text-decoration:none;
+}
+
+
+.submenu a, .submenu span{
+	padding:5px;
+}
+
+.menuentry .submenu{	
+	margin:0px;
+	padding:4px;
+	
+	background:#FFF;
+	border:solid 1px #F90;
+	border-radius:6px;
+}
