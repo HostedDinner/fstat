@@ -60,7 +60,7 @@
 			echo "\t\t\t\t<td title=\"";
 			foreach($sitenodelist as $v_sites){
 				$val = $v_sites->nodeValue;
-				list($val1, $val2) = explode("/", trim($val));
+				list($val1, $val2) = explode("/", trim($val), 2);
 				
 				if($tmp_last_1 != $val1){
 					echo $val1.": ".$val2.", ";

@@ -169,7 +169,8 @@
 		foreach($tmp_sitevar_array as $tmp_sitevar){
 			$tmp_sitevar = trim($tmp_sitevar);
 			if(isset($_GET[$tmp_sitevar])){
-				$site_name = $_GET[$tmp_sitevar];
+				$site_name = htmlspecialchars($_GET[$tmp_sitevar]);
+				$site_name = str_replace("|", "&#124;", $site_name); //to prevent corruption of table ;)
 				break;//use first one from config
 			}
 		}
