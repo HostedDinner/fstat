@@ -76,6 +76,7 @@
 	define('FLANG_H_IPBY', "IP-to-Country Database by");
 	define('FLANG_H_FLAGBY', "and Flag Icons from");
 	define('FLANG_FEEDBACK', "Please send errors and feedback to:");
+	define('FLANG_LAST_UPDATE', "Last Update on");
 	
 	
 	

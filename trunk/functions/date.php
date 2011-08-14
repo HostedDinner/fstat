@@ -17,4 +17,13 @@
 	}
 	
 	$show_timestamp = gmmktime(1, 1, 1, $show_month, 1, $show_year);
+	
+	
+	//lastupdate of uasdata
+	if (file_exists($fstat_cache_dir."cache.ini")) {
+		$cacheIni = parse_ini_file($fstat_cache_dir."cache.ini");
+		$uasdata_date = date($fstat_date_format, $cacheIni['lastupdate']);
+	}else{
+		$uasdata_date = "";
+	}
 ?>
