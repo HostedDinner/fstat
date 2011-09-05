@@ -56,7 +56,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 				
 				foreach($nodelist as $visitor){
 					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-					if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+					if(($fstat_show_bots_as_visitors) or ($typ != "Robot" and $typ != "Validator")){
 						FamAndSub_Build($visitor, "u", $br_arr);
 						FamAndSub_Build($visitor, "o", $os_arr);
 						
@@ -66,7 +66,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 						
 						$cot_arr[$y."-".$m_pad."-".$i_pad]['people'] = $cot_arr[$y."-".$m_pad."-".$i_pad]['people'] + 1;
 						$cot_arr['all']['people'] = $cot_arr['all']['people'] + 1;
-					}elseif($typ == "Robot"){
+					}else{
 						FamAndSub_Build($visitor, "u", $bot_arr);
 						
 						$cot_arr[$y."-".$m_pad."-".$i_pad]['bots'] = $cot_arr[$y."-".$m_pad."-".$i_pad]['bots'] + 1;

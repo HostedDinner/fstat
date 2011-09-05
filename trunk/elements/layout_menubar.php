@@ -54,7 +54,10 @@
 			</div>
 		</div>
 		<div class="menuentry">
-			<a href="<?php echo "./?".URL_AddShow("last").URL_AddLang(); ?>"><?php echo FLANG_LAST." ".$fstat_last_length; ?></a>
+			<a href="<?php echo "./?".URL_AddShow("last").URL_AddLang(); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_VISITOR_S; ?></a>
+		</div>
+		<div class="menuentry">
+			<a href="<?php echo "./?".URL_AddShow("lastbots").URL_AddLang(); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_BOT_S; ?></a>
 		</div>
 		<div class="menuentry">
 			<a href="#"><?php echo FLANG_LANG; ?></a>

@@ -156,7 +156,7 @@
 		return 0;
 		exit;//zur Absicherung
 	}
-	if($browser_typ == "Robot"){
+	if($browser_typ == "Robot" or $browser_typ == "Validator"){
 		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
 	}else{
 		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
