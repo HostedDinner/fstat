@@ -20,6 +20,11 @@ length:
 
 offset:
 	Not in use, reserved for lists with offset.
+	
+list:
+	Used in backend file all.php . Gives a list seperated by | to tell which should be shown.
+	br|browser   |os   |bot|bots   |ref|referer   |key|search   |cou|country   |cot|counter   |tim|time   |all
+	(internal name is $fstat_backend_get_list)
 
 
 (experimental Options)
@@ -34,12 +39,15 @@ end:
 (Use of Backend)
 The backend is located at "./backend/"...
 Files available are
+	* all.php          - lists quiete everything (browser, os, bot, referer, search, country, counter, times)
+	                     use var "list" for less
 	* bots.php         - lists count of bot visits
 	* br_os.php        - lists used Browser and Operation System in one file (same as os.php and browser.php together)
 	* browser.php      - lists used Browsers, categorised by Browser Family
 	* counter.php      - show the count for each day
 	* country.php      - lists the countries from the visitors
 	* last.php         - lists last ... visitors
+	* lastbots.php     - lists last ... bots
 	* os.php           - lists used Operation System, categorised by OS Family
 	* referer.php      - lists referers
 	* search.php       - lists search strings of referrers
