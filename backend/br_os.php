@@ -36,7 +36,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 				
 				foreach($nodelist as $visitor){
 					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-					if(($fstat_show_bots_as_visitors) or ($typ != "Robot")){
+					if(($fstat_show_bots_as_visitors) or ($typ != "Robot" and $typ != "Validator")){
 						//***************************
 						//Browser Section
 						//***************************

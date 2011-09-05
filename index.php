@@ -24,6 +24,9 @@
 		case "last":
 			$fstat_title = FLANG_H_LAST." ".$fstat_last_length." ".FLANG_VISITOR_L;
 			break;
+		case "lastbots":
+			$fstat_title = FLANG_H_LAST." ".$fstat_last_length." ".FLANG_BOT_L;
+			break;
 		case "overview":
 		default:
 			$fstat_title = FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;
@@ -49,6 +52,9 @@
 			break;
 		case "last":
 			include("./elements/last.php");
+			break;
+		case "lastbots":
+			include("./elements/lastbots.php");
 			break;
 		case "overview":
 		default:

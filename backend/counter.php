@@ -50,6 +50,9 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 				$query = 'count(//typ[.="Robot"])';
 				$tmp_count_bots = $xpath->evaluate($query, $xmldoc);
 				$count_bots = $count_bots + $tmp_count_bots;
+				$query = 'count(//typ[.="Validator"])';
+				$tmp_count_bots = $xpath->evaluate($query, $xmldoc);
+				$count_bots = $count_bots + $tmp_count_bots;
 				
 				//People
 				$query = 'count(//typ[.!="Robot"])';

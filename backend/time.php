@@ -38,7 +38,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 					$timestr = @$visitor->getElementsByTagName("uti")->item(0)->nodeValue;
 					$time = date("G", $timestr);//hier kein gmdate, da hier das erste mal konvertiert wird :P
 					
-					if($typ == "Robot"){
+					if($typ == "Robot" or $typ == "Validator"){
 						if(!isset($count_bots[$time])){
 							$count_bots[$time] = 1;
 						}else{
