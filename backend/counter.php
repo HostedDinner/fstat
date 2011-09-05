@@ -38,6 +38,7 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 			$filename = $prefolder.$fstat_data_dir."stat/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
 		
 			$tmp_count_bots = 0;
+			$tmp_count_bots2 = 0;
 			$tmp_count_people = 0;
 			
 			if(is_file($filename)){
@@ -51,19 +52,20 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 				$tmp_count_bots = $xpath->evaluate($query, $xmldoc);
 				$count_bots = $count_bots + $tmp_count_bots;
 				$query = 'count(//typ[.="Validator"])';
-				$tmp_count_bots = $xpath->evaluate($query, $xmldoc);
-				$count_bots = $count_bots + $tmp_count_bots;
+				$tmp_count_bots2 = $xpath->evaluate($query, $xmldoc);
+				$count_bots = $count_bots + $tmp_count_bots2;
 				
 				//People
-				$query = 'count(//typ[.!="Robot"])';
-				$tmp_count_people = $xpath->evaluate($query, $xmldoc);
+				$query = 'count(//visitor)';
+				$tmp_count = $xpath->evaluate($query, $xmldoc);
+				$tmp_count_people = $tmp_count - $tmp_count_bots - $tmp_count_bots2;
 				$count_people = $count_people + $tmp_count_people;
 				
 			}
 			
 			$dayadd = $xmlausgabe->createElement("day");
 				$dayadd->setAttribute("id", $i);
-				$dayadd->appendChild($xmlausgabe->createElement('bots', $tmp_count_bots));
+				$dayadd->appendChild($xmlausgabe->createElement('bots', ($tmp_count_bots + $tmp_count_bots2)));
 				$dayadd->appendChild($xmlausgabe->createElement('people', $tmp_count_people));
 			
 			$cot_root->appendChild($dayadd);
