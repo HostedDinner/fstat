@@ -1,6 +1,6 @@
 <?php
 if(isset($_GET['show'])){
-	$show_cat = preg_replace('#[^0-9^a-z]#i','',$_GET['show']);//alles ausser 0-9 mit nichts ersetzten
+	$show_cat = preg_replace('#[^0-9a-z]#i','',$_GET['show']);//alles ausser 0-9 und A-Z mit nichts ersetzten
 }else{
 	$show_cat = "overview";
 }

@@ -116,6 +116,7 @@
 			$newvisitor->appendChild($xmldoc->createElement('typ', htmlspecialchars($uaa['typ'])));
 			$newvisitor->appendChild($xmldoc->createElement('uas', htmlspecialchars($_SERVER['HTTP_USER_AGENT'])));
 			$newvisitor->appendChild($xmldoc->createElement('uip', htmlspecialchars($ip)));
+			$newvisitor->appendChild($xmldoc->createElement('uhost', htmlspecialchars(gethostbyaddr($ip))));
 			$newvisitor->appendChild($xmldoc->createElement('uti', $user_timestamp));
 			$newvisitor->appendChild($xmldoc->createElement('ufam', htmlspecialchars($uaa['ua_family'])));
 			$newvisitor->appendChild($xmldoc->createElement('unam', htmlspecialchars($uaa['ua_name'])));

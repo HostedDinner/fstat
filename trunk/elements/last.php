@@ -23,6 +23,7 @@
 		$v_typ = @$row->getElementsByTagName("typ")->item(0)->nodeValue;
 		$v_uas = @$row->getElementsByTagName("uas")->item(0)->nodeValue;
 		$v_uip = @$row->getElementsByTagName("uip")->item(0)->nodeValue;
+		$v_uhost = @$row->getElementsByTagName("uhost")->item(0)->nodeValue; if($v_uhost == ""){$v_uhost = $v_uip;};
 		$v_uti = @$row->getElementsByTagName("uti")->item(0)->nodeValue;
 		$v_ufam = @$row->getElementsByTagName("ufam")->item(0)->nodeValue;
 		$v_unam = @$row->getElementsByTagName("unam")->item(0)->nodeValue;
@@ -42,11 +43,11 @@
 			}
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td title=\"".$v_uip."\">".$tmpcount.".</td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td>".date("d.m.y", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\" title=\"".$v_ucon."\"></td>\n";
-		echo "\t\t\t\t<td title=\"".$v_uip."\">".$v_ucon."</td>\n";
+		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$v_ucon."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$v_oico."\" alt=\"*\" title=\"".$v_ofam."\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_onam."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\" title=\"".$v_ufam."\"></td>\n";
