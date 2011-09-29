@@ -65,6 +65,11 @@ hr{
 	font-weight:bold;
 }
 
+.table_sum2 td{
+	border-top:dashed 1px #F40;
+	font-weight:bold;
+}
+
 .databoard_100{
 	width:100%;
 	height:100px;
@@ -83,11 +88,21 @@ hr{
 	padding:1px;
 	padding-bottom:0;
 }
-.databoard_100 td div, .databoard_50 td div{
+.databoard_100 td div.graph, .databoard_50 td div.graph{
+	position:relative;
+	top:2px; /*fix the problem with the dots*/
 	background:#F90;
 }
-.databoard_100 td div:hover, .databoard_50 td div:hover{
+.databoard_100 td div.graph:hover, .databoard_50 td div.graph:hover{
 	background:#BF8630;
+}
+.databoard_100 td div.dots, .databoard_50 td div.dots{
+	height:2px;
+	width:2px;
+	position:relative;
+	z-index:8; /* just to be over all, but under the mnenu ;)*/
+	left:50%;
+	background-color:#000;
 }
 
 .Auflistung{

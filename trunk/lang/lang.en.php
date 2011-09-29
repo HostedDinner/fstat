@@ -61,8 +61,6 @@
 	
 	define('FLANG_LAST', "Last");
 	
-	define('FLANG_SUM_S', "S");
-	
 	define('FLANG_NODATA', "No data available!");
 	
 	//Tooltips

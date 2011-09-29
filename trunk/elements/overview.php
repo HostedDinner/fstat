@@ -15,10 +15,12 @@
 <?php
 	$count_day_max_b = 0;//reset/set
 	$count_day_max_p = 0;//reset/set
+	$count_days = 0;
 	
 	$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 	
 	foreach($nodelist as $nodeday){
+		$count_days++;
 		$count_b = $nodeday->getElementsByTagName("bots")->item(0)->nodeValue;
 		$count_p = $nodeday->getElementsByTagName("people")->item(0)->nodeValue;
 		if($count_b > $count_day_max_b){$count_day_max_b = $count_b;}
@@ -39,6 +41,9 @@
 		}
 		
 		if($day % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
+		if(gmdate("Y-m-d") == $fulldate){
+			$day = "&#x25BA;&nbsp;".$day;
+		}
 		//echo "\t\t<tr>\n";
 		echo "\t\t\t\t".$td.$day."</td>\n";
 		echo "\t\t\t\t".$td.$count_p."</td>\n";
@@ -49,10 +54,24 @@
 	$count_all_b = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("bots")->item(0)->nodeValue;
 	$count_all_p = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;
 	
+	if($count_days != 0){
+		$counter_av_p = round($count_all_p/$count_days, 1);
+		$counter_av_b = round($count_all_b/$count_days, 1);
+	}else{
+		$counter_av_p = 0;
+		$counter_av_b = 0;
+	}
+	
 	echo "\t\t\t<tr class=\"table_sum\">\n";
-	echo "\t\t\t\t<td>".FLANG_SUM_S.":</td>\n";
+	echo "\t\t\t\t<td>&sum;</td>\n";
 	echo "\t\t\t\t<td>".$count_all_p."</td>\n";
 	echo "\t\t\t\t<td>".$count_all_b."</td>\n";
+	echo "\t\t\t</tr>\n";
+	
+	echo "\t\t\t<tr class=\"table_sum2\">\n";
+	echo "\t\t\t\t<td>&Oslash;</td>\n";
+	echo "\t\t\t\t<td>".$counter_av_p."</td>\n";
+	echo "\t\t\t\t<td>".$counter_av_b."</td>\n";
 	echo "\t\t\t</tr>\n";
 	
 ?>
@@ -250,16 +269,24 @@
 		echo "\t\t\t<table class=\"databoard_50\">\n";
 		echo "\t\t\t\t<tr>\n";
 		
+		$count_b_last = 0;
+		$count_b_all = 0;
+		$count_b_count = 0;
+		
 		$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 		foreach($nodelist as $nodeday){
 			$count_b = $nodeday->getElementsByTagName("bots")->item(0)->nodeValue;
+			$count_b_all = $count_b_all + $count_b;
+			$count_b_count++;
 			$fulldate = $nodeday->getAttribute("id");
 			$day = substr($fulldate, -2, 2);
 			$month = substr($fulldate, -5, 2);
 			
 			$height = round(($count_b/$count_day_max_b)*50,0);//50px max
+			$height2 = round((($count_b_all/$count_b_count)/$count_day_max_b)*50,0) - 1; //50px max //bars come down 2px ;)
 			
-			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$month-1]." (".sprintf("%+d", $count_b-$count_b_last)." ".FLANG_BOT_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
+			$count_b_last = $count_b;
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
@@ -324,17 +351,25 @@
 		echo "\t\t\t<table class=\"databoard_100\">\n";
 		echo "\t\t\t\t<tr>\n";
 		
+		$count_p_last = 0;
+		$count_p_all = 0;
+		$count_p_count = 0;
+		
 		$nodelist = $xml_all->getElementsByTagName("counter")->item(0)->getElementsByTagName("day");
 		foreach($nodelist as $nodeday){
 			$count_p = $nodeday->getElementsByTagName("people")->item(0)->nodeValue;
+			$count_p_all = $count_p_all + $count_p;
+			$count_p_count++;
 			$fulldate = $nodeday->getAttribute("id");
 			$day = substr($fulldate, -2, 2);
 			$month = substr($fulldate, -5, 2);
 			
 			$height = round(($count_p/$count_day_max_p)*100,0);//100px max
+			$height2 = round((($count_p_all/$count_p_count)/$count_day_max_p)*100,0) - 1; //100px max //bars come down 2px ;)
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$month-1]."\"><div style=\"height:".$height."px;\"></div></td>\n";
-		}
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$month-1]." (".sprintf("%+d", $count_p-$count_p_last)." ".FLANG_VISITOR_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
+			$count_p_last = $count_p;
+			}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
 	}else{
@@ -527,7 +562,7 @@
 			
 			$height = round(($count_p/$count_time_max_p)*100,0);//100px max
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_T." ".$period." ".FLANG_CLOCK."\"><div style=\"height:".$height."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_T." ".$period." ".FLANG_CLOCK."\"><div class=\"graph\" style=\"height:".$height."px; top:0px;\"></div></td>\n"; //top:0, becasue there are no dots ;)
 		}
 		echo "\t\t\t\t</tr>\n";
 		echo "\t\t\t</table>\n";
