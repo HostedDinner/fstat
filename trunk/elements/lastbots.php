@@ -37,10 +37,11 @@
 			}else{
 				$sitenodelist = NULL;
 			}
+		$c_filename = $fstat_data_dir."stat/".date("Y/m/d", $v_uti).".xml";
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$tmpcount.".</td>\n";
-		echo "\t\t\t\t<td>".date("d.m.y", $v_uti)."</td>\n";
+		echo "\t\t\t\t<td><a href=\"".$c_filename."\">".date("d.m.y", $v_uti)."</a></td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\" title=\"".$v_ucon."\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$v_ucon."</td>\n";
