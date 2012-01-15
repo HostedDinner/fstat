@@ -12,6 +12,15 @@ year:
 month:
 	The month in MM or M format for showing in statstic. (default is current month)
 
+day:
+	The day in DD or D format for showing in statstic. (default is no day/Today)
+
+modus:
+	The modus will be choosen by year, month and day or you can force it
+		0: Only 1 Day Statistics
+		1: 1 Month Statistics (default)
+		2: 1 Year Statistics
+
 lang:
 	Langauge shortcode. (at the moment de/en)
 
@@ -26,15 +35,7 @@ list:
 	br|browser   |os   |bot|bots   |ref|referer   |key|search   |cou|country   |cot|counter   |tim|time   |all
 	(internal name is $fstat_backend_get_list)
 
-
-(experimental Options)
-(use only for backend or the gui will look strange ;) )
-start:
-	Unixtimestamp of the first month to analyse (year and month will be overitten)
-end:
-	Unixtimestamp of the last month (including) to anaylse (year and month will be overitten)
-
-
+	
 
 (Use of Backend)
 The backend is located at "./backend/"...

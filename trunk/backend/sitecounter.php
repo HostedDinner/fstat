@@ -16,33 +16,37 @@ $site_arr = array();
 $site_total["bots"] = 0;
 $site_total["people"] = 0;
 
-for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
-	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
-		$m = gmdate("n", $fstat_backend_start_timestamp);
-	}else{
-		$m = 1;
-	}
-	while($m <= 12){
-		$pathname = $prefolder.$fstat_data_dir."paths/".$y."/".str_pad($m,2,"0",STR_PAD_LEFT)."/";
-		$path_verz = @opendir($pathname);
-		if(is_dir($pathname)){
-			while (($file = @readdir($path_verz)) !== FALSE){
-				if((substr($file, -5) == ".path")){
-					$tmp_arr = @file($pathname.$file);
-					if((substr($file, 0, 4) == "bot_")){
-						$botpeople = "bots";
+if($fstat_backend_modus >= 2){
+	$m = 1;
+	$m_end = 12;
+}else{
+	$m = $fstat_backend_month;
+	$m_end = $fstat_backend_month;
+}
+
+for(; $m <= $m_end; $m++){
+	$pathname = $prefolder.$fstat_data_dir."paths/".$fstat_backend_year."/".str_pad($m, 2, "0", STR_PAD_LEFT)."/";
+	$path_verz = @opendir($pathname);
+	if(is_dir($pathname)){
+		while (($file = @readdir($path_verz)) !== FALSE){
+			if((substr($file, -5) == ".path")){
+				$tmp_arr = @file($pathname.$file);
+				if((substr($file, 0, 4) == "bot_")){
+					$botpeople = "bots";
+				}else{
+					$botpeople = "people";
+				}
+				foreach($tmp_arr as $var){
+					if($fstat_use_site_var){
+						list($time, $sitename, $sitevar) = explode("|", trim($var));
+						if(!isset($sitevar)){$sitevar = $sitename;}
 					}else{
-						$botpeople = "people";
+						list($time, $sitename) = explode("|", trim($var));
+						$sitevar = $sitename;
 					}
-					foreach($tmp_arr as $var){
-						if($fstat_use_site_var){
-							list($time, $sitename, $sitevar) = explode("|", trim($var));
-							if(!isset($sitevar)){$sitevar = $sitename;}
-						}else{
-							list($time, $sitename) = explode("|", trim($var));
-							$sitevar = $sitename;
-						}
-						
+					
+					//test if modus year/month OR if it's the right day
+					if(($fstat_backend_modus > 0) || (gmdate("j", $time) == $fstat_backend_day)){
 						if(!isset($site_arr[$sitename][$sitevar][$botpeople])){
 							$site_arr[$sitename][$sitevar][$botpeople] = 1;
 						}else{
@@ -53,10 +57,6 @@ for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_b
 					}
 				}
 			}
-		}
-		$m++;
-		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
-			$m = 13;
 		}
 	}
 }
