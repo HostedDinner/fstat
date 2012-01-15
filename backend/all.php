@@ -97,63 +97,67 @@ if($all_show_tim == true){
 	$tim_arr['all']['people'] = 0;
 }
 
-for($y = gmdate("Y", $fstat_backend_start_timestamp); $y <= gmdate("Y", $fstat_backend_end_timestamp); $y++){
-	if($y == gmdate("Y", $fstat_backend_start_timestamp)){
-		$m = gmdate("n", $fstat_backend_start_timestamp);
+if($fstat_backend_modus >= 2){
+	$m = 1;
+	$m_end = 12;
+}else{
+	$m = $fstat_backend_month;
+	$m_end = $fstat_backend_month;
+}
+
+for(; $m <= $m_end; $m++){
+	$m_pad = str_pad($m, 2, "0", STR_PAD_LEFT);
+	
+	if($fstat_backend_modus >= 1){
+		$d = 1;
+		$d_end = gmdate("t", gmmktime(0, 0, 0, $m, 1, $fstat_backend_year));
 	}else{
-		$m = 1;
+		$d = $fstat_backend_day;
+		$d_end = $fstat_backend_day;
 	}
-	while($m <= 12){
-		$m_pad = str_pad($m,2,"0",STR_PAD_LEFT);
-		$timestr_m_start = gmmktime(0, 0, 0, $m, 1, $y);
+	
+	for(; $d <= $d_end; $d++){
+		$d_pad = str_pad($d, 2, "0", STR_PAD_LEFT);
 		
-		for($i = 1; $i <= gmdate("t", $timestr_m_start); $i++){
-			$i_pad = str_pad($i,2,"0",STR_PAD_LEFT);
+		$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".$m_pad."/".$d_pad.".xml";
+		
+		if($all_show_cot == true){
+			$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] = 0;
+			$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] = 0;
+		}
 			
-			$filename = $prefolder.$fstat_data_dir."stat/".$y."/".$m_pad."/".$i_pad.".xml";
+		if(is_file($filename)){
+			$xmldoc = new DOMDocument();
+			$xmldoc->load($filename);
 			
-			if($all_show_cot == true){
-				$cot_arr[$y."-".$m_pad."-".$i_pad]['bots'] = 0;
-				$cot_arr[$y."-".$m_pad."-".$i_pad]['people'] = 0;
-			}
+			$nodelist = $xmldoc->getElementsByTagName("visitor");
 			
-			if(is_file($filename)){
-				$xmldoc = new DOMDocument();
-				$xmldoc->load($filename);
-				
-				$nodelist = $xmldoc->getElementsByTagName("visitor");
-				
-				foreach($nodelist as $visitor){
-					$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
-					if(($fstat_show_bots_as_visitors) or ($typ != "Robot" and $typ != "Validator")){
-						if($all_show_br  == true){FamAndSub_Build($visitor, "u", $br_arr);}
-						if($all_show_os  == true){FamAndSub_Build($visitor, "o", $os_arr);}
-						
-						if($all_show_ref == true){Normal_Build($visitor, "rdom", $ref_arr);}
-						if($all_show_key == true){Normal_Build($visitor, "rkey", $key_arr);}
-						if($all_show_cou == true){Normal_Build($visitor, "ucon", $cou_arr, "ucoi", true);}
-						
-						if($all_show_cot == true){
-							$cot_arr[$y."-".$m_pad."-".$i_pad]['people'] = $cot_arr[$y."-".$m_pad."-".$i_pad]['people'] + 1;
-							$cot_arr['all']['people'] = $cot_arr['all']['people'] + 1;
-						}
-					}else{
-						if($all_show_bot == true){FamAndSub_Build($visitor, "u", $bot_arr);}
-						
-						if($all_show_cot == true){
-							$cot_arr[$y."-".$m_pad."-".$i_pad]['bots'] = $cot_arr[$y."-".$m_pad."-".$i_pad]['bots'] + 1;
-							$cot_arr['all']['bots'] = $cot_arr['all']['bots'] + 1;
-						}
+			foreach($nodelist as $visitor){
+				$typ = @$visitor->getElementsByTagName("typ")->item(0)->nodeValue;
+				if(($fstat_show_bots_as_visitors) or ($typ != "Robot" and $typ != "Validator")){
+					if($all_show_br  == true){FamAndSub_Build($visitor, "u", $br_arr);}
+					if($all_show_os  == true){FamAndSub_Build($visitor, "o", $os_arr);}
+					
+					if($all_show_ref == true){Normal_Build($visitor, "rdom", $ref_arr);}
+					if($all_show_key == true){Normal_Build($visitor, "rkey", $key_arr);}
+					if($all_show_cou == true){Normal_Build($visitor, "ucon", $cou_arr, "ucoi", true);}
+					
+					if($all_show_cot == true){
+						$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] = $cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] + 1;
+						$cot_arr['all']['people'] = $cot_arr['all']['people'] + 1;
 					}
-					if($all_show_tim == true){Time_Build($visitor, $tim_arr, $typ);}
+				}else{
+					if($all_show_bot == true){FamAndSub_Build($visitor, "u", $bot_arr);}
+					
+					if($all_show_cot == true){
+						$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] = $cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] + 1;
+						$cot_arr['all']['bots'] = $cot_arr['all']['bots'] + 1;
+					}
 				}
-				
+				if($all_show_tim == true){Time_Build($visitor, $tim_arr, $typ);}
 			}
 		}
-		$m++;
-		if($y == gmdate("Y", $fstat_backend_end_timestamp) and $m > gmdate("n", $fstat_backend_end_timestamp)){
-			$m = 13;//just bigger than 12
-		}
+
 	}
 }
 
