@@ -43,9 +43,9 @@
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td><a href=\"".$c_filename."\">".date("d.m.y", $v_uti)."</a></td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\" title=\"".$v_ucon."\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$v_ucoi."\" alt=\"*\" title=\"".$v_ucon."\" width=\"16\" height=\"11\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$v_ucon."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\" title=\"".$v_ufam."\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\" title=\"".$v_ufam."\" width=\"16\" height=\"16\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_unam."</td>\n";
 		echo "\t\t\t\t<td title=\"".$v_rkey."\">".$v_rdom."</td>\n";
 		

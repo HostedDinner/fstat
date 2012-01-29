@@ -113,7 +113,7 @@
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('b_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
@@ -127,7 +127,7 @@
 			$count = $nodesub->getElementsByTagName("count")->item(0)->nodeValue;
 			
 			if($tmpcount % 2 == 0){echo "\t\t\t<tr class=\"b_".$namestrip."\" style=\"display:none;\">\n";}else{echo "\t\t\t<tr class=\"backhigh b_".$namestrip."\" style=\"display:none;\">\n";}
-			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
+			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 			echo "\t\t\t\t<td>".$name."</td>\n";
 			echo "\t\t\t\t<td>".$count."</td>\n";
 			echo "\t\t\t\t<td>&nbsp;</td>\n";
@@ -175,7 +175,7 @@
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$icon."\" alt=\"*\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('o_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
@@ -189,7 +189,7 @@
 			$count = $nodesub->getElementsByTagName("count")->item(0)->nodeValue;
 			
 			if($tmpcount % 2 == 0){echo "\t\t\t<tr class=\"o_".$namestrip."\" style=\"display:none;\">\n";}else{echo "\t\t\t<tr class=\"backhigh o_".$namestrip."\" style=\"display:none;\">\n";}
-			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$icon."\" alt=\"*\"></td>\n";
+			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."os/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 			echo "\t\t\t\t<td>".$name."</td>\n";
 			echo "\t\t\t\t<td>".$count."</td>\n";
 			echo "\t\t\t\t<td>&nbsp;</td>\n";
@@ -236,7 +236,7 @@
 		$namestrip = preg_replace('#[^a-z0-9]#i','',$name);
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 		echo "\t\t\t\t<td><a href=\"javascript:showhide('b_".$namestrip."');\">".$name."</a></td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
@@ -250,7 +250,7 @@
 			$count = $nodesub->getElementsByTagName("count")->item(0)->nodeValue;
 			
 			if($tmpcount % 2 == 0){echo "\t\t\t<tr class=\"b_".$namestrip."\" style=\"display:none;\">\n";}else{echo "\t\t\t<tr class=\"backhigh b_".$namestrip."\" style=\"display:none;\">\n";}
-			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\"></td>\n";
+			echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$icon."\" alt=\"*\" width=\"16\" height=\"16\"></td>\n";
 			echo "\t\t\t\t<td>".$name."</td>\n";
 			echo "\t\t\t\t<td>".$count."</td>\n";
 			echo "\t\t\t\t<td>&nbsp;</td>\n";
@@ -329,7 +329,7 @@
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$icon."\" alt=\"*\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$icon."\" alt=\"*\" width=\"16\" height=\"11\"></td>\n";
 		echo "\t\t\t\t<td>".$country."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
