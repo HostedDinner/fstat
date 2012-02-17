@@ -38,6 +38,7 @@
 	
 	$is_new = true;
 	$ip = getenv("REMOTE_ADDR");
+	$ip_write = str_replace(":", "_", $ip);//IPv6 Adresses have Problems on Win (no : allowed)
 	
 	//"Alte" Dateien im IP.Verzeichniss loeschen:
 	//+ gleichzeitig neu finden
@@ -54,7 +55,7 @@
 				unlink(FSTAT_PATH.$fstat_cache_dir."ip/".$file);
 				continue;
 			//wenn ip übereinstimmt
-			}elseif($file == $ip.".ip"){
+			}elseif($file == $ip_write.".ip"){
 				$user_timestamp = $timestamp;
 				$ua = trim(fgets($f_cont));//zweite zeile UA
 				$browser_typ = trim(fgets($f_cont));//dritte Zeile Typ (Browser, Bot, ...)
@@ -93,7 +94,7 @@
 		//Country Parser
 		$country = CountryParse();
 	
-	//Daten in XML schreiben:
+		//Daten in XML schreiben:
 	
 		$tmp_filename = FSTAT_PATH.$fstat_data_dir."stat/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$day.".xml";
 		
@@ -137,7 +138,7 @@
 		$browser_typ = $uaa['typ'];
 		
 	//IP Cache schreiben:
-		$f_cont = @fopen(FSTAT_PATH.$fstat_cache_dir."ip/".$ip.".ip", 'w');
+		$f_cont = @fopen(FSTAT_PATH.$fstat_cache_dir."ip/".$ip_write.".ip", 'w');
 		$tmp = $user_timestamp."\n".$_SERVER['HTTP_USER_AGENT']."\n".$browser_typ;
 		fputs($f_cont, $tmp);
 		fclose($f_cont);
@@ -158,9 +159,9 @@
 		exit;//zur Absicherung
 	}
 	if($browser_typ == "Robot" or $browser_typ == "Validator"){
-		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
+		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/bot_".$ip_write."_".gmdate("d_H",$user_timestamp).".path", 'a');
 	}else{
-		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$ip."_".gmdate("d_H",$user_timestamp).".path", 'a');
+		$f_cont = @fopen(FSTAT_PATH.$fstat_data_dir."paths/".$year."/".str_pad($month,2,"0",STR_PAD_LEFT)."/".$ip_write."_".gmdate("d_H",$user_timestamp).".path", 'a');
 	}
 	
 	if($fstat_use_site_var){
