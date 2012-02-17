@@ -55,14 +55,15 @@ while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 				$typ = @$newnode->getElementsByTagName("typ")->item(0)->nodeValue;
 				$timestamp = @$newnode->getElementsByTagName("uti")->item(0)->nodeValue;
 				$ip = @$newnode->getElementsByTagName("uip")->item(0)->nodeValue;
+					$ip_read = str_replace(":", "_", $ip);//IPv6 Adresses have Problems on Win (no : allowed)
 				//don't show bots
 				if((!$fstat_show_bots_as_visitors) and ($typ == "Robot" or $typ == "Validator")){
 					continue;
 				}
 				if($typ == "Robot" or $typ == "Validator"){
-					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/bot_".$ip."_".gmdate("d_H",$timestamp).".path";
+					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/bot_".$ip_read."_".gmdate("d_H",$timestamp).".path";
 				}else{
-					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".$ip."_".gmdate("d_H",$timestamp).".path";
+					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".$ip_read."_".gmdate("d_H",$timestamp).".path";
 				}
 				
 				if($file2_cont = @file($filename2)){
