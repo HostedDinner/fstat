@@ -27,6 +27,7 @@ function LookupLang($short){
 	switch ($short){
 		case "de": return "Deutsch";
 		case "en": return "English";
+		case "hu": return "Magyar";
 		default: return $short;
 	}
 }
