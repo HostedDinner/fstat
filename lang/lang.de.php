@@ -60,7 +60,10 @@
 	
 	define('FLANG_LAST', "Letzten");
 	
+	define('FLANG_RELOAD', "Neu laden");
+	
 	define('FLANG_NODATA', "Keine Daten vorhanden!");
+	define('FLANG_CACHED', "Dies ist aus dem Cach vom");
 	
 	//Tooltips
 	define('FLANG_VISITTIME_D', "Besucher am");
