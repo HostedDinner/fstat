@@ -60,6 +60,16 @@ hr{
 	padding:1px 5px;
 }
 
+.infobox{
+	margin:2px;
+	padding:2px;
+	text-align:center;
+	
+	background:#FFE4BB;
+	border:solid 1px #F90;
+	border-radius:6px;
+}
+
 .table_sum td{
 	border-top:solid 2px #F40;
 	font-weight:bold;

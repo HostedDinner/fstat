@@ -378,7 +378,17 @@
 ?>
 		</div>
 		<div class="border">
+<?php
+	$xml_sites = new DOMDocument();
+	$xml_sites->loadXML(get_xml_backend("./backend/sitecounter.php"));
+	$updatetime = $xml_sites->getElementsByTagName("sites")->item(0)->getAttribute("update");
+?>
 			<h2><?php echo FLANG_H_SITE; ?></h2>
+			<div class="infobox"><?php
+				echo FLANG_CACHED." ";
+				echo date_format(date_create_from_format('Y-m-d?H:i:sP', $updatetime),$fstat_date_format)." ";
+				echo "<a href=\"./?".URL_Default().URL_AddRefresh()."\">".FLANG_RELOAD."</a>";
+			?></div>
 			<table class="Auflistung">
 			<tr>
 				<th><?php echo FLANG_SITE; ?>:</th>
@@ -387,10 +397,6 @@
 				<th><?php echo FLANG_BOT_L; ?>:</th>
 			</tr>
 <?php
-	$xml_sites = new DOMDocument();
-	$xml_sites->loadXML(get_xml_backend("./backend/sitecounter.php"));
-	
-	
 	//count all
 	$count_all_p = 0;//reset
 	$count_all_p = $xml_sites->getElementsByTagName("total")->item(0)->getElementsByTagName("people")->item(0)->nodeValue;

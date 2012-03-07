@@ -32,7 +32,9 @@ function LookupLang($short){
 	}
 }
 
-
+function URL_AddRefresh(){
+	return "&amp;refresh=1";
+}
 
 function URL_AddLang($newlang = NULL){
 	global $show_lang;
@@ -65,6 +67,15 @@ function URL_AddShow($newcat = NULL){
 		$newcat = $show_cat;
 	}
 	return "show=".$newcat;
+}
+
+function URL_Default(){
+	global $show_cat;
+	if($show_cat == "overview"){
+		return URL_AddShow().URL_AddYear().URL_AddMonth().URL_AddLang();
+	}else{
+		return URL_AddShow().URL_AddLang();
+	}
 }
 
 ?>

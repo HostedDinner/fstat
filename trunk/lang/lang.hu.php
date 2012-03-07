@@ -61,7 +61,10 @@
 	
 	define('FLANG_LAST', "Utolsó");
 	
+	define('FLANG_RELOAD', "Reload");
+	
 	define('FLANG_NODATA', "Nincsen elérhető adat!");
+	define('FLANG_CACHED', "This is a cached version from");
 	
 	//Tooltips
 	define('FLANG_VISITTIME_D', "Látogatók");
