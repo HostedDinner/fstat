@@ -386,7 +386,10 @@
 			<h2><?php echo FLANG_H_SITE; ?></h2>
 			<div class="infobox"><?php
 				echo FLANG_CACHED." ";
-				echo date_format(date_create_from_format('Y-m-d?H:i:sP', $updatetime),$fstat_date_format)." ";
+				//echo date_format(date_create_from_format('Y-m-d?H:i:sP', $updatetime),$fstat_date_format)." ";
+				$datearray = array();
+				preg_match("/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*?/i", $updatetime, $datearray);
+				echo $datearray[3].".".$datearray[2].".".$datearray[1]." ";
 				echo "<a href=\"./?".URL_Default().URL_AddRefresh()."\">".FLANG_RELOAD."</a>";
 			?></div>
 			<table class="Auflistung">
