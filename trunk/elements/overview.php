@@ -329,7 +329,7 @@
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><div class=\"country_icon\" style=\"background-position: 0px ".Country::$countryOffset[$icon]."px;\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><div class=\"country_icon\" style=\"background-position: 0px ".Country::getCountryOffset($icon)."px;\"></div></td>\n";
 		echo "\t\t\t\t<td>".$country."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
