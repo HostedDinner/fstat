@@ -1,184 +1,191 @@
 body{
-	background:#EEE;
-	color:#F90;
-	font-family:"Arial", sans-serif;
+    background:#EEE;
+    color:#F90;
+    font-family:"Arial", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6{
-	text-align:center;
-	color:#F90;
-	font-family:"Tahoma", "Geneva", sans-serif;
+    text-align:center;
+    color:#F90;
+    font-family:"Tahoma", "Geneva", sans-serif;
 }
 
 h2{
-	margin-bottom:3px;
-	margin-top:1px;
+    margin-bottom:3px;
+    margin-top:1px;
 }
 
 a{
-	color:#F40;
+    color:#F40;
 }
 a:hover{
-	color:#BF8630;
+    color:#BF8630;
 }
 
 hr{
-	height:1px;
-	border:0;
-	color:#F90;background-color:#F90;
+    height:1px;
+    border:0;
+    color:#F90;background-color:#F90;
 }
 
 .high_Sa{
-	color:#0BF;
-	font-weight:bold;
+    color:#0BF;
+    font-weight:bold;
 }
 .high_Su{
-	color:#F40;
-	font-weight:bold;
+    color:#F40;
+    font-weight:bold;
 }
 .high_today{
-	color:#FFF;
-	background:#FB4;
+    color:#FFF;
+    background:#FB4;
 }
 .backhigh{
-	background:#FFE4BB;
+    background:#FFE4BB;
 }
 
 .border{
-	margin:0 0 2px 0;
-	padding:4px 0;
-	
-	text-align:center;
-	
-	background:#FFF;
-	border:solid 1px #F90;
-	border-radius:6px;
-	/*box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);*/
+    margin:0 0 2px 0;
+    padding:4px 0;
+
+    text-align:center;
+
+    background:#FFF;
+    border:solid 1px #F90;
+    border-radius:6px;
+    /*box-shadow:1px 1px 2px rgba(0, 0, 0, 0.5);*/
 }
 
 .border div.text{
-	padding:1px 5px;
+    padding:1px 5px;
 }
 
 .infobox{
-	margin:2px;
-	padding:2px;
-	text-align:center;
-	
-	background:#FFE4BB;
-	border:solid 1px #F90;
-	border-radius:6px;
+    margin:2px;
+    padding:2px;
+    text-align:center;
+
+    background:#FFE4BB;
+    border:solid 1px #F90;
+    border-radius:6px;
 }
 
 .table_sum td{
-	border-top:solid 2px #F40;
-	font-weight:bold;
+    border-top:solid 2px #F40;
+    font-weight:bold;
 }
 
 .table_sum2 td{
-	border-top:dashed 1px #F40;
-	font-weight:bold;
+    border-top:dashed 1px #F40;
+    font-weight:bold;
 }
 
 .databoard_100{
-	width:100%;
-	height:100px;
-	border-collapse:collapse;
+    width:100%;
+    height:100px;
+    border-collapse:collapse;
 }
 .databoard_50{
-	width:100%;
-	height:50px;
-	border-collapse:collapse;
+    width:100%;
+    height:50px;
+    border-collapse:collapse;
 }
 .databoard_100 tr, .databoard_50 tr{
-	border-bottom:1px solid #F90;
+    border-bottom:1px solid #F90;
 }
 .databoard_100 td, .databoard_50 td{
-	vertical-align:bottom;
-	padding:1px;
-	padding-bottom:0;
+    vertical-align:bottom;
+    padding:1px;
+    padding-bottom:0;
 }
 .databoard_100 td div.graph, .databoard_50 td div.graph{
-	position:relative;
-	top:2px; /*fix the problem with the dots*/
-	background:#F90;
+    position:relative;
+    top:2px; /*fix the problem with the dots*/
+    background:#F90;
 }
 .databoard_100 td div.graph:hover, .databoard_50 td div.graph:hover{
-	background:#BF8630;
+    background:#BF8630;
 }
 .databoard_100 td div.dots, .databoard_50 td div.dots{
-	height:2px;
-	width:2px;
-	position:relative;
-	z-index:8; /* just to be over all, but under the mnenu ;)*/
-	left:50%;
-	background-color:#000;
+    height:2px;
+    width:2px;
+    position:relative;
+    z-index:8; /* just to be over all, but under the mnenu ;)*/
+    left:50%;
+    background-color:#000;
 }
 
 .Auflistung{
-	margin-left:auto;
-	margin-right:auto;
-	width:100%;
-	
-	text-align:left;
-	
-	border-collapse:collapse;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+
+    text-align:left;
+
+    border-collapse:collapse;
 }
 
 .Auflistung a{
-	text-decoration:none;
+    text-decoration:none;
 }
 
 .Auflistung th{
-	text-align:left;
-	color:#FFF;
-	background:#F90;
-	font-size:110%;
+    text-align:left;
+    color:#FFF;
+    background:#F90;
+    font-size:110%;
 }
 .Auflistung th.center{
-	text-align:center;
+    text-align:center;
 }
 
 .Auflistung .perc div{
-	height:14px;
-	/*font-size:50%;
-	overflow:hidden;*/
-	margin:1px;
-	background:#F90;
+    height:14px;
+    /*font-size:50%;
+    overflow:hidden;*/
+    margin:1px;
+    background:#F90;
 }
 .Auflistung .perc div:hover{
-	background:#BF8630;
+    background:#BF8630;
 }
 
 .Auflistung .icell{
-	vertical-align:middle;
-	text-align:center;
-	padding:0;
-	margin:0;
-	line-height:16px;/*for the 16x16 icons*/
+    vertical-align:middle;
+    text-align:center;
+    padding:0 4px;
+    margin:0;
+    width:16px;
+    line-height:16px;/*for the 16x16 icons*/
 }
 
 .Auflistung .icell img{
-	vertical-align: middle;
+    vertical-align: middle;
+}
+
+.Auflistung .icell .country_icon{
+    width:16px;
+    height:11px;
+    background:url(./icons/country/flags.png) no-repeat;
 }
 
 .Auflistung .text{
-	text-align:center;
+    text-align:center;
 }
 
 
 .footer{
-	font-size:80%;
-	margin-top:20px;
-	padding-top:20px;
-	padding-bottom:20px;
-	text-align:center;
-	clear:both;
-	
-	border-top:solid 2px #F90;
+    font-size:80%;
+    margin-top:20px;
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align:center;
+    clear:both;
+
+    border-top:solid 2px #F90;
 }
 
 div.clear{
-	clear:both;
-	margin:0;padding:0;height:0;width:0;
+    clear:both;
+    margin:0;padding:0;height:0;width:0;
 }

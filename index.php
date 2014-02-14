@@ -5,6 +5,8 @@
 	$startzeit = explode(" ", microtime());
 	$startzeit = $startzeit[0]+$startzeit[1];
 	
+        require_once "./classes/country.php";
+        
 	include "./config/settings.php";
 	include "./config/lang.php";
 	include "./config/information.php";

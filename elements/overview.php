@@ -32,9 +32,9 @@
 		if(gmdate("Y-m-d") == $fulldate){
 		//if((gmdate("j") == $day) && (gmdate("m") == $show_month) && (gmdate("Y") == $show_year)){
 			$td = "<td class=\"high_today\">";
-		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 6){//6 für Samstag
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 6){//6 fÃ¼r Samstag
 			$td = "<td class=\"high_Sa\">";
-		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){//0 für Sonntag
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){//0 fÃ¼r Sonntag
 			$td = "<td class=\"high_Su\">";
 		}else{
 			$td = "<td>";
@@ -329,7 +329,7 @@
 		
 		
 		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
-		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."country/".$icon."\" alt=\"*\" width=\"16\" height=\"11\"></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><div class=\"country_icon\" style=\"background-position: 0px ".Country::$countryOffset[$icon]."px;\"></div></td>\n";
 		echo "\t\t\t\t<td>".$country."</td>\n";
 		echo "\t\t\t\t<td>".$count."</td>\n";
 		echo "\t\t\t\t<td class=\"perc\" title=\"".$perc." %\"><div style=\"width:".$perc_relative."%;\"></div></td>\n";
