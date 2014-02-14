@@ -74,6 +74,7 @@
 	
 	//Footer/About
 	define('FLANG_H_USEDBY', "This statistic uses the");
+	define('FLANG_H_DATA_FROM', "and Data from");
 	define('FLANG_H_IPBY', "IP-to-Country Database by");
 	define('FLANG_H_FLAGBY', "and Flag Icons from");
 	define('FLANG_FEEDBACK', "Please send errors and feedback to:");

@@ -43,7 +43,7 @@
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td><a href=\"".$c_filename."\">".date("d.m.y", $v_uti)."</a></td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
-		echo "\t\t\t\t<td class=\"icell\"><div class=\"country_icon\" style=\"background-position: 0px ".Country::$countryOffset[$v_ucoi]."px;\" title=\"".$v_ucon."\"></div></td>\n";
+		echo "\t\t\t\t<td class=\"icell\"><div class=\"country_icon\" style=\"background-position: 0px ".Country::getCountryOffset($v_ucoi)."px;\" title=\"".$v_ucon."\"></div></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$v_ucon."</td>\n";
 		echo "\t\t\t\t<td class=\"icell\"><img src=\"".$fstat_ico_dir."agent/".$v_uico."\" alt=\"*\" title=\"".$v_ufam."\" width=\"16\" height=\"16\"></td>\n";
 		echo "\t\t\t\t<td title=\"".$v_uas."\">".$v_unam."</td>\n";

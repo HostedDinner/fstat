@@ -91,7 +91,7 @@ if ($is_new == true) {
     //ReferParser
     $ra = ReferParse();
     //Country Parser
-    $country = new Country(FSTAT_PATH."ip-to-country-1.csv", FSTAT_PATH."ip-to-country-2.csv");
+    $country = new Country(FSTAT_PATH."dbip-country-1.csv", FSTAT_PATH."dbip-country-2.csv", FSTAT_PATH."dbip-country-3.csv");
     $country->parse(getenv("REMOTE_ADDR"));
 
     //Daten in XML schreiben:
