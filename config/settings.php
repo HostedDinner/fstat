@@ -20,4 +20,5 @@
 	$fstat_show_bots_as_visitors = false; //shows all bots in the visitor section
 	
 	$fstat_update_interval = 604800;//in sec: 7 Days
+        $fstat_update_auto = true;
 ?>
