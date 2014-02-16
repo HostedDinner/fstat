@@ -12,9 +12,7 @@ include FSTAT_PATH . "functions/referparser.php";
 //require FSTAT_PATH . "functions/UASparser.php";
 
 // Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
-//$parser = new UASparser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, false);
-$parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, true);
-
+$parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
 
 function CheckDir($dirname) {
     if (!is_dir($dirname)) {
