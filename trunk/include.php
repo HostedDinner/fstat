@@ -6,14 +6,15 @@ if (!defined(FSTAT_PATH)) {
 include FSTAT_PATH . "config/settings.php";
 
 require_once FSTAT_PATH . "classes/country.php";
+require_once FSTAT_PATH . "classes/UASparser.php";
 
 include FSTAT_PATH . "functions/referparser.php";
-require FSTAT_PATH . "functions/UASparser.php";
+//require FSTAT_PATH . "functions/UASparser.php";
 
-// Creates a new UASparser object and set cache dir (this php script must right write to cache dir)
-$parser = new UASparser();
-$parser->SetCacheDir(FSTAT_PATH . $fstat_cache_dir);
-$parser->updateInterval = $fstat_update_interval;
+// Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
+//$parser = new UASparser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, false);
+$parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, true);
+
 
 function CheckDir($dirname) {
     if (!is_dir($dirname)) {
