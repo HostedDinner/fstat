@@ -6,13 +6,9 @@ if (!defined(FSTAT_PATH)) {
 include FSTAT_PATH . "config/settings.php";
 
 require_once FSTAT_PATH . "classes/country.php";
+require_once FSTAT_PATH . "classes/reference.php";
 require_once FSTAT_PATH . "classes/UASparser.php";
 
-include FSTAT_PATH . "functions/referparser.php";
-//require FSTAT_PATH . "functions/UASparser.php";
-
-// Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
-$parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
 
 function CheckDir($dirname) {
     if (!is_dir($dirname)) {
@@ -85,10 +81,14 @@ if ($is_new == true) {
         return 0;
         exit; //zur Absicherung
     }//fragt nicht warum man das nicht in einem machen kann
+    
     //User Agent Parser
+    // Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
+    $parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
     $uaa = $parser->Parse();
     //ReferParser
-    $ra = ReferParse();
+    $ref = new Reference(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "");
+    $ref->parse();
     //Country Parser
     $country = new Country(FSTAT_PATH."dbip-country-1.csv", FSTAT_PATH."dbip-country-2.csv", FSTAT_PATH."dbip-country-3.csv");
     $country->parse(getenv("REMOTE_ADDR"));
@@ -126,8 +126,8 @@ if ($is_new == true) {
     $newvisitor->appendChild($xmldoc->createElement('oico', htmlspecialchars($uaa['os_icon'])));
     $newvisitor->appendChild($xmldoc->createElement('ucoi', htmlspecialchars($country->getCountryShort())));
     $newvisitor->appendChild($xmldoc->createElement('ucon', htmlspecialchars($country->getCountry())));
-    $newvisitor->appendChild($xmldoc->createElement('rkey', htmlspecialchars($ra['searchkeys'])));
-    $newvisitor->appendChild($xmldoc->createElement('rdom', htmlspecialchars($ra['domain'])));
+    $newvisitor->appendChild($xmldoc->createElement('rkey', htmlspecialchars($ref->getKeywords())));
+    $newvisitor->appendChild($xmldoc->createElement('rdom', htmlspecialchars($ref->getDomain())));
     $root->appendChild($newvisitor);
 
     $xmldoc->formatOutput = true;

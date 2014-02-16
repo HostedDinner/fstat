@@ -7,12 +7,12 @@
  */
 class Country {
     private $filenames;
-    private $country;
-    private $countryShort;
+    
+    private $country = "Unknown";
+    private $countryShort= "fam";
+    
     
     public function __construct() {
-        $this->country = "Unknown";
-        $this->countryShort = "fam";
         $this->filenames = func_get_args();
     }
     
