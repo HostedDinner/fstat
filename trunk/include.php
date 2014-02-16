@@ -1,33 +1,19 @@
 <?php
+include __DIR__ . "/config/settings.php";
 
-if (!defined(FSTAT_PATH)) {
-    define(FSTAT_PATH, "./");
-}
-include FSTAT_PATH . "config/settings.php";
+require_once __DIR__ . "/classes/dirHelper.php";
+require_once __DIR__ . "/classes/country.php";
+require_once __DIR__ . "/classes/reference.php";
+require_once __DIR__ . "/classes/UASparser.php";
 
-require_once FSTAT_PATH . "classes/country.php";
-require_once FSTAT_PATH . "classes/reference.php";
-require_once FSTAT_PATH . "classes/UASparser.php";
-
-
-function CheckDir($dirname) {
-    if (!is_dir($dirname)) {
-        if (mkdir($dirname) == false) {
-            echo "Konnte Verzeichnis " . $dirname . " f&uuml;r F-Stat nicht &ouml;ffnen/erstellen!";
-            return false;
-        }
-    }
-    return true;
-}
-
-if (CheckDir(FSTAT_PATH . $fstat_data_dir) == false) {
+if(
+    (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir) == false) ||
+    (DirHelper::checkExists(__DIR__ . "/" . $fstat_cache_dir) == false) ||
+    (DirHelper::checkExists(__DIR__ . "/" . $fstat_cache_dir . "ip/") == false)
+){
     return 0;
-    exit; //zur Absicherung
 }
-if (CheckDir(FSTAT_PATH . $fstat_cache_dir . "ip/") == false) {
-    return 0;
-    exit; //zur Absicherung
-}
+
 
 $year = gmdate("Y");
 $month = gmdate("m");
@@ -38,16 +24,16 @@ $ip = getenv("REMOTE_ADDR");
 $ip_write = str_replace(":", "_", $ip); //IPv6 Adresses have Problems on Win (no : allowed)
 //"Alte" Dateien im IP.Verzeichniss loeschen:
 //+ gleichzeitig neu finden
-$ipdir = opendir(FSTAT_PATH . $fstat_cache_dir . "ip/");
+$ipdir = opendir(__DIR__ . "/" . $fstat_cache_dir . "ip/");
 while (($file = readdir($ipdir)) !== FALSE) {
     if ((substr($file, -3) == ".ip")) {
         //$file;
-        $f_cont = @fopen(FSTAT_PATH . $fstat_cache_dir . "ip/" . $file, 'r');
+        $f_cont = @fopen(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $file, 'r');
         $timestamp = trim(fgets($f_cont)); //erste Zeile Timestamp
         //loeschen, wenn zu alt
         if ($timestamp < (time() - $fstat_new_user)) {
             fclose($f_cont);
-            unlink(FSTAT_PATH . $fstat_cache_dir . "ip/" . $file);
+            unlink(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $file);
             continue;
             //wenn ip �bereinstimmt
         } elseif ($file == $ip_write . ".ip") {
@@ -69,33 +55,33 @@ if ($is_new == true) {
     //Daten auswerten
     $user_timestamp = time();
 
-    if (CheckDir(FSTAT_PATH . $fstat_data_dir . "stat") == false) {
+    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat") == false) {
         return 0;
         exit; //zur Absicherung
     }
-    if (CheckDir(FSTAT_PATH . $fstat_data_dir . "stat/" . $year) == false) {
+    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat/" . $year) == false) {
         return 0;
         exit; //zur Absicherung
     }
-    if (CheckDir(FSTAT_PATH . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
+    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
         return 0;
         exit; //zur Absicherung
     }//fragt nicht warum man das nicht in einem machen kann
     
     //User Agent Parser
     // Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
-    $parser = new UAS\Parser(FSTAT_PATH.$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
+    $parser = new UAS\Parser(__DIR__ . "/".$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
     $uaa = $parser->Parse();
     //ReferParser
     $ref = new Reference(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "");
     $ref->parse();
     //Country Parser
-    $country = new Country(FSTAT_PATH."dbip-country-1.csv", FSTAT_PATH."dbip-country-2.csv", FSTAT_PATH."dbip-country-3.csv");
+    $country = new Country(__DIR__ . "/dbip-country-1.csv", __DIR__ . "/dbip-country-2.csv", __DIR__ . "/dbip-country-3.csv");
     $country->parse(getenv("REMOTE_ADDR"));
 
     //Daten in XML schreiben:
 
-    $tmp_filename = FSTAT_PATH . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $day . ".xml";
+    $tmp_filename = __DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $day . ".xml";
 
     if (file_exists($tmp_filename)) {
         $xmldoc = new DOMDocument();
@@ -137,29 +123,29 @@ if ($is_new == true) {
     $browser_typ = $uaa['typ'];
 
     //IP Cache schreiben:
-    $f_cont = @fopen(FSTAT_PATH . $fstat_cache_dir . "ip/" . $ip_write . ".ip", 'w');
+    $f_cont = @fopen(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $ip_write . ".ip", 'w');
     $tmp = $user_timestamp . "\n" . $_SERVER['HTTP_USER_AGENT'] . "\n" . $browser_typ;
     fputs($f_cont, $tmp);
     fclose($f_cont);
 }
 //Daten ausgewertet...
 //Pfade notieren
-if (CheckDir(FSTAT_PATH . $fstat_data_dir . "paths") == false) {
+if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths") == false) {
     return 0;
     exit; //zur Absicherung
 }
-if (CheckDir(FSTAT_PATH . $fstat_data_dir . "paths/" . $year) == false) {
+if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year) == false) {
     return 0;
     exit; //zur Absicherung
 }
-if (CheckDir(FSTAT_PATH . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
+if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
     return 0;
     exit; //zur Absicherung
 }
 if ($browser_typ == "Robot" or $browser_typ == "Validator") {
-    $f_cont = @fopen(FSTAT_PATH . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/bot_" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
+    $f_cont = @fopen(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/bot_" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
 } else {
-    $f_cont = @fopen(FSTAT_PATH . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
+    $f_cont = @fopen(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
 }
 
 if ($fstat_use_site_var) {
