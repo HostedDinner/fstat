@@ -1,87 +1,60 @@
 <?php
 include __DIR__ . "/config/settings.php";
 
+require_once __DIR__ . "/classes/user.php";
 require_once __DIR__ . "/classes/dirHelper.php";
 require_once __DIR__ . "/classes/country.php";
 require_once __DIR__ . "/classes/reference.php";
 require_once __DIR__ . "/classes/UASparser.php";
 
+$user = new User(getenv("REMOTE_ADDR"), $_SERVER['HTTP_USER_AGENT']);
+$dirhelper = new DirHelper(__DIR__);
+
 if(
-    (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir) == false) ||
-    (DirHelper::checkExists(__DIR__ . "/" . $fstat_cache_dir) == false) ||
-    (DirHelper::checkExists(__DIR__ . "/" . $fstat_cache_dir . "ip/") == false)
+    ($dirhelper->checkExists($fstat_data_dir) == false) ||
+    ($dirhelper->checkExists($fstat_cache_dir) == false) ||
+    ($dirhelper->checkExists($fstat_cache_dir . "ip/") == false)
 ){
     return 0;
 }
 
+//Delete old entrys in the Ip directory
+$dirhelper->deleteOldIPs($fstat_cache_dir."ip", $fstat_new_user);
+//get the user from cache, on success it is a old user is_new is false then
+$user->getFromCache(__DIR__ . "/" . $fstat_cache_dir . "ip");
 
 $year = gmdate("Y");
 $month = gmdate("m");
 $day = gmdate("d");
 
-$is_new = true;
-$ip = getenv("REMOTE_ADDR");
-$ip_write = str_replace(":", "_", $ip); //IPv6 Adresses have Problems on Win (no : allowed)
-//"Alte" Dateien im IP.Verzeichniss loeschen:
-//+ gleichzeitig neu finden
-$ipdir = opendir(__DIR__ . "/" . $fstat_cache_dir . "ip/");
-while (($file = readdir($ipdir)) !== FALSE) {
-    if ((substr($file, -3) == ".ip")) {
-        //$file;
-        $f_cont = @fopen(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $file, 'r');
-        $timestamp = trim(fgets($f_cont)); //erste Zeile Timestamp
-        //loeschen, wenn zu alt
-        if ($timestamp < (time() - $fstat_new_user)) {
-            fclose($f_cont);
-            unlink(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $file);
-            continue;
-            //wenn ip �bereinstimmt
-        } elseif ($file == $ip_write . ".ip") {
-            $user_timestamp = $timestamp;
-            $ua = trim(fgets($f_cont)); //zweite zeile UA
-            $browser_typ = trim(fgets($f_cont)); //dritte Zeile Typ (Browser, Bot, ...)
-            fclose($f_cont);
-            if ($ua == $_SERVER['HTTP_USER_AGENT']) {//und wenn der Useragent stimmt:
-                $is_new = false;
-            }
-        } else {
-            fclose($f_cont);
-        }
-    }
-}
-closedir($ipdir);
-
-if ($is_new == true) {
+if ($user->is_new == true) {
     //Daten auswerten
-    $user_timestamp = time();
 
-    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat") == false) {
+    $current_folder = __DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT);
+    
+    if (
+        ($dirhelper->checkExists($fstat_data_dir . "stat") == false) ||
+        ($dirhelper->checkExists($fstat_data_dir . "stat/" . $year) == false) ||
+        ($dirhelper->checkExists($current_folder, true) == false)
+    ){
+        //quit the execution here
         return 0;
-        exit; //zur Absicherung
     }
-    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat/" . $year) == false) {
-        return 0;
-        exit; //zur Absicherung
-    }
-    if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
-        return 0;
-        exit; //zur Absicherung
-    }//fragt nicht warum man das nicht in einem machen kann
+    
     
     //User Agent Parser
-    // Creates a new UASparser object and set cache dir (this php script must have write right to cache dir)
     $parser = new UAS\Parser(__DIR__ . "/".$fstat_cache_dir, $fstat_update_interval, false, $fstat_update_auto);
-    $uaa = $parser->Parse();
+    $uaa = $parser->Parse($user->agent);
     //ReferParser
     $ref = new Reference(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "");
     $ref->parse();
     //Country Parser
     $country = new Country(__DIR__ . "/dbip-country-1.csv", __DIR__ . "/dbip-country-2.csv", __DIR__ . "/dbip-country-3.csv");
-    $country->parse(getenv("REMOTE_ADDR"));
-
+    $country->parse($user->ip);
+    
+    
     //Daten in XML schreiben:
-
-    $tmp_filename = __DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $day . ".xml";
+    $tmp_filename = $current_folder . "/" . $day . ".xml";
 
     if (file_exists($tmp_filename)) {
         $xmldoc = new DOMDocument();
@@ -95,15 +68,15 @@ if ($is_new == true) {
         $xmldoc->preserveWhiteSpace = false;
         $xmldoc->formatOutput = true;
         $root = $xmldoc->createElement("list");
-        $root = $xmldoc->appendChild($root);
+            $xmldoc->appendChild($root);
     }
 
     $newvisitor = $xmldoc->createElement("visitor");
     $newvisitor->appendChild($xmldoc->createElement('typ', htmlspecialchars($uaa['typ'])));
-    $newvisitor->appendChild($xmldoc->createElement('uas', htmlspecialchars($_SERVER['HTTP_USER_AGENT'])));
-    $newvisitor->appendChild($xmldoc->createElement('uip', htmlspecialchars($ip)));
-    $newvisitor->appendChild($xmldoc->createElement('uhost', htmlspecialchars(gethostbyaddr($ip))));
-    $newvisitor->appendChild($xmldoc->createElement('uti', $user_timestamp));
+    $newvisitor->appendChild($xmldoc->createElement('uas', htmlspecialchars($user->agent)));
+    $newvisitor->appendChild($xmldoc->createElement('uip', htmlspecialchars($user->ip)));
+    $newvisitor->appendChild($xmldoc->createElement('uhost', htmlspecialchars(gethostbyaddr($user->ip))));
+    $newvisitor->appendChild($xmldoc->createElement('uti', $user->time));
     $newvisitor->appendChild($xmldoc->createElement('ufam', htmlspecialchars($uaa['ua_family'])));
     $newvisitor->appendChild($xmldoc->createElement('unam', htmlspecialchars($uaa['ua_name'])));
     $newvisitor->appendChild($xmldoc->createElement('uico', htmlspecialchars($uaa['ua_icon'])));
@@ -120,32 +93,27 @@ if ($is_new == true) {
     $xmldoc->save($tmp_filename, LIBXML_NOEMPTYTAG);
 
     //Browser Typ ist bis jetzt nicht deklariert
-    $browser_typ = $uaa['typ'];
+    $user->type = $uaa['typ'];
 
     //IP Cache schreiben:
-    $f_cont = @fopen(__DIR__ . "/" . $fstat_cache_dir . "ip/" . $ip_write . ".ip", 'w');
-    $tmp = $user_timestamp . "\n" . $_SERVER['HTTP_USER_AGENT'] . "\n" . $browser_typ;
-    fputs($f_cont, $tmp);
-    fclose($f_cont);
+    $user->writeToCache(__DIR__ . "/" . $fstat_cache_dir . "ip");
 }
+
 //Daten ausgewertet...
 //Pfade notieren
-if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths") == false) {
+$current_folder = __DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT);
+if (
+    ($dirhelper->checkExists($fstat_data_dir . "paths") == false) ||
+    ($dirhelper->checkExists($fstat_data_dir . "paths/" . $year) == false) ||
+    ($dirhelper->checkExists($current_folder, true) == false)
+){
     return 0;
-    exit; //zur Absicherung
 }
-if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year) == false) {
-    return 0;
-    exit; //zur Absicherung
-}
-if (DirHelper::checkExists(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT)) == false) {
-    return 0;
-    exit; //zur Absicherung
-}
-if ($browser_typ == "Robot" or $browser_typ == "Validator") {
-    $f_cont = @fopen(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/bot_" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
+
+if ($user->type == "Robot" or $user->type == "Validator") {
+    $f_cont = @fopen($current_folder . "/bot_" . $user->escapedIP . "_" . gmdate("d_H", $user->time) . ".path", 'a');
 } else {
-    $f_cont = @fopen(__DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT) . "/" . $ip_write . "_" . gmdate("d_H", $user_timestamp) . ".path", 'a');
+    $f_cont = @fopen($current_folder . "/" . $user->escapedIP . "_" . gmdate("d_H", $user->time) . ".path", 'a');
 }
 
 if ($fstat_use_site_var) {
