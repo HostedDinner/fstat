@@ -11,7 +11,7 @@
 			</tr>
 <?php
 	$xml_last = new DOMDocument();
-	$xml_last->loadXML(get_xml_backend("./backend/lastbots.php"));
+        $xml_last->loadXML(Backend::getXML("./backend/lastbots.php"));
 	
 	$nodelist = $xml_last->getElementsByTagName("visitor");
 	
