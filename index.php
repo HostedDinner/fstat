@@ -7,6 +7,7 @@
 	
         require_once "./classes/country.php";
         require_once "./classes/displayTime.php";
+        require_once "./classes/urlbuilder.php";
         
         
 	include "./config/settings.php";
@@ -16,6 +17,8 @@
         $displayTime = new DisplayTime();
         $displayTime->setUnsafeStartDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
         $displayTime->setUnsafeEndDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
+        
+        $urlBuilder = new URLBuilder(isset($_GET['show']) ? $_GET['show'] : null, $show_lang);
         
 	include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
         
@@ -31,7 +34,7 @@
 	}
 	
 	
-	switch ($show_cat){
+	switch ($urlBuilder->getPage()){
 		case "about":
 			$fstat_title = FLANG_H_ABOUT_FSTAT;
 			break;
@@ -60,7 +63,7 @@
 <?php
 	include("./elements/layout_menubar.php");
 	
-	switch ($show_cat){
+	switch ($urlBuilder->getPage()){
 		case "about":
 			include("./elements/about.php");
 			break;

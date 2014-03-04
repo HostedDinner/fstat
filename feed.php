@@ -115,7 +115,7 @@ if(is_file($c_filename)){
 	$tmp = gmdate("c", filemtime($c_filename));
 	$entry_root->appendChild($xmlausgabe->createElement("updated", $tmp));
 	//link
-	$tmp = "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."/?".URL_AddShow("overview").URL_AddYear($tmp_year).URL_AddMonth($tmp_month);
+	$tmp = "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."/?site=overview&amp;year=".$tmp_year."&amp;month=".$tmp_month;
 	$linknode2 = $xmlausgabe->createElement("link");
 		$linknode2->setAttribute("rel", "alternate");
 		$linknode2->setAttribute("href", $tmp);
