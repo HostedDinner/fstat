@@ -6,9 +6,11 @@ error_reporting(0); //keine Fehler anzeigen
 //error_reporting(E_ALL); // alle Fehler anzeigen
 	
 	
+require_once "./classes/display/language.php";
+$lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
+
 include "./config/settings.php";
 include "./config/information.php";
-include "./config/lang.php";
 $monthnames = array(FLANG_JAN, FLANG_FEB, FLANG_MAR, FLANG_APR, FLANG_MAY, FLANG_JUN, FLANG_JUL, FLANG_AUG, FLANG_SEP, FLANG_OKT, FLANG_NOV, FLANG_DEC);
 include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
 
