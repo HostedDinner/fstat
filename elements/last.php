@@ -12,7 +12,7 @@
 			</tr>
 <?php
 	$xml_last = new DOMDocument();
-	$xml_last->loadXML(get_xml_backend("./backend/last.php"));
+        $xml_last->loadXML(Backend::getXML("./backend/last.php"));
 	
 	$nodelist = $xml_last->getElementsByTagName("visitor");
 	

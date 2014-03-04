@@ -1,7 +1,7 @@
 <?php
 	//
 	$xml_all = new DOMDocument();
-	$xml_all->loadXML(get_xml_backend("./backend/all.php"));
+        $xml_all->loadXML(Backend::getXML("./backend/all.php"));
 ?>
 	<div class="left">
 		<div class="border">
@@ -380,7 +380,7 @@
 		<div class="border">
 <?php
 	$xml_sites = new DOMDocument();
-	$xml_sites->loadXML(get_xml_backend("./backend/sitecounter.php"));
+        $xml_sites->loadXML(Backend::getXML("./backend/sitecounter.php"));
 	$updatetime = $xml_sites->getElementsByTagName("sites")->item(0)->getAttribute("update");
 ?>
 			<h2><?php echo FLANG_H_SITE; ?></h2>

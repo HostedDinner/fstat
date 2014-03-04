@@ -66,6 +66,22 @@ class Language {
         return $this->current;
     }
 
+    
+    public static function getAllLanguages(){
+        $list = array();
+        $langdir = opendir(__DIR__ . "/../../lang/");
+        while (($file = readdir($langdir)) !== FALSE) {
+            if ((substr($file, -4) == ".php")) {
+                $langcode = substr($file, -6, 2);
+                $langstr = self::lookupLang($langcode);
+                
+                $list[] = array('short' => $langcode, 'long' => $langstr);
+            }
+        }
+        closedir($langdir);
+        return $list;
+    }
+    
 
     public static function lookupLang($short){
         $longname = $short;

@@ -11,9 +11,10 @@ error_reporting(0); //keine Fehler anzeigen
 require_once "./classes/display/language.php";
 $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
 
+require_once "./classes/backend.php";
+
 include "./config/settings.php";
 include "./config/information.php";
-include_once "./functions/main_include.php";//defines get_xml_backend
 
 
 $tmp_month = gmdate("m");
@@ -31,7 +32,7 @@ function WriteLastMonth($filename){
 	
 	$handle = @fopen($filename, "w");
 	if($handle){
-		fputs($handle, get_xml_backend("./backend/counter.php", $tmp_year, $tmp_month));
+		fputs($handle, Backend::getXML("./backend/counter.php", $tmp_year, $tmp_month));
 	}
 	@fclose($handle);
 }
