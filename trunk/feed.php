@@ -4,15 +4,16 @@ header('Content-type: application/atom+xml');
 error_reporting(0); //keine Fehler anzeigen
 //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
 //error_reporting(E_ALL); // alle Fehler anzeigen
-	
-	
+
+
+//The language class is special, it includes the language defines at init time of the first var
+//therefor "new Language" must be called once!
 require_once "./classes/display/language.php";
 $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
 
 include "./config/settings.php";
 include "./config/information.php";
-$monthnames = array(FLANG_JAN, FLANG_FEB, FLANG_MAR, FLANG_APR, FLANG_MAY, FLANG_JUN, FLANG_JUL, FLANG_AUG, FLANG_SEP, FLANG_OKT, FLANG_NOV, FLANG_DEC);
-include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
+include_once "./functions/main_include.php";//defines get_xml_backend
 
 
 $tmp_month = gmdate("m");
@@ -109,7 +110,7 @@ if(is_file($c_filename)){
 	$tmp = "tag:".$_SERVER['HTTP_HOST'].",".$tmp_year."-".str_pad($tmp_month,2,"0",STR_PAD_LEFT).":".trim(dirname($_SERVER['PHP_SELF']), '/\\')."#entry";
 	$entry_root->appendChild($xmlausgabe->createElement("id", $tmp));
 	//Title
-	$tmp = htmlspecialchars(html_entity_decode(FLANG_H_STATFOR." ".$monthnames[$tmp_month-1]." ".$tmp_year, ENT_COMPAT, "UTF-8"));
+	$tmp = htmlspecialchars(html_entity_decode(FLANG_H_STATFOR." ".$lang->monthnames[$tmp_month-1]." ".$tmp_year, ENT_COMPAT, "UTF-8"));
 	$titlenode = $xmlausgabe->createElement("title", $tmp);
 		$titlenode->setAttribute("type", "html");
 	$entry_root->appendChild($titlenode);

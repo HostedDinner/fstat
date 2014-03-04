@@ -285,7 +285,7 @@
 			$height = round(($count_b/$count_day_max_b)*50,0);//50px max
 			$height2 = round((($count_b_all/$count_b_count)/$count_day_max_b)*50,0) - 1; //50px max //bars come down 2px ;)
 			
-			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$monthnames[$month-1]." (".sprintf("%+d", $count_b-$count_b_last)." ".FLANG_BOT_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_b." ".FLANG_VISITTIME_B." ".$day.". ".$lang->monthnames[$month-1]." (".sprintf("%+d", $count_b-$count_b_last)." ".FLANG_BOT_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
 			$count_b_last = $count_b;
 		}
 		echo "\t\t\t\t</tr>\n";
@@ -367,7 +367,7 @@
 			$height = round(($count_p/$count_day_max_p)*100,0);//100px max
 			$height2 = round((($count_p_all/$count_p_count)/$count_day_max_p)*100,0) - 1; //100px max //bars come down 2px ;)
 			
-			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$monthnames[$month-1]." (".sprintf("%+d", $count_p-$count_p_last)." ".FLANG_VISITOR_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
+			echo "\t\t\t\t\t<td title=\"".$count_p." ".FLANG_VISITTIME_D." ".$day.". ".$lang->monthnames[$month-1]." (".sprintf("%+d", $count_p-$count_p_last)." ".FLANG_VISITOR_S.")\"><div class=\"graph\" style=\"height:".$height."px;\"></div><div class=\"dots\" style=\"top:-".$height2."px;\"></div></td>\n";
 			$count_p_last = $count_p;
 			}
 		echo "\t\t\t\t</tr>\n";
