@@ -5,6 +5,7 @@ if(isset($_GET['show'])){
 	$show_cat = "overview";
 }
 
+
 function get_xml_backend($filename, $year = 0, $month = 0){
     if (is_file($filename)){
 	
@@ -45,17 +46,17 @@ function URL_AddLang($newlang = NULL){
 }
 
 function URL_AddMonth($newmonth = NULL){
-	global $show_month;
+	global $displayTime;
 	if ($newmonth === NULL){
-		$newmonth = $show_month;
+		$newmonth = $displayTime->getStartMonth();
 	}
 	return "&amp;month=".$newmonth;
 }
 
 function URL_AddYear($newyear = NULL){
-	global $show_year;
+	global $displayTime;
 	if ($newyear === NULL){
-		$newyear = $show_year;
+		$newyear = $displayTime->getStartYear();
 	}
 	return "&amp;year=".$newyear;
 }

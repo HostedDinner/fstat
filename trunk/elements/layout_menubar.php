@@ -7,31 +7,20 @@
 	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear(gmdate("Y")).URL_AddMonth(gmdate("m")).URL_AddLang()."\">".FLANG_TODAY."</a>\n";
 	echo "\t\t\t\t<hr>\n";
 	
-	$prev_month = $show_month - 1;
-	$prev_year = $show_year;
-	if($prev_month == 0){
-		$prev_month = 12;
-		$prev_year = $prev_year - 1;
-	}
+        $prev = $displayTime->getPreviousStartMonth();
+        $next = $displayTime->getNextStartMonth();
 	
-	$next_month = $show_month + 1;
-	$next_year = $show_year;
-	if($next_month == 13){
-		$next_month = 1;
-		$next_year = $next_year + 1;
-	}
-	
-	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($prev_year).URL_AddMonth($prev_month).URL_AddLang()."\">".FLANG_PREV_MONTH."</a>\n";
-	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($next_year).URL_AddMonth($next_month).URL_AddLang()."\">".FLANG_NEXT_MONTH."</a>\n";
+	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($prev['year']).URL_AddMonth($prev['month']).URL_AddLang()."\">".FLANG_PREV_MONTH."</a>\n";
+	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($next['year']).URL_AddMonth($next['month']).URL_AddLang()."\">".FLANG_NEXT_MONTH."</a>\n";
 ?>
 				<hr>
 <?php
 	for($i = 0; $i < 12; $i++){
 	
-		if($i != ($show_month-1)){
+		if($i != ($displayTime->getStartMonth()-1)){
 			$string = "<a href=\"./?".URL_AddShow("overview").URL_AddYear().URL_AddMonth($i+1).URL_AddLang()."\">".$monthnames[$i]."</a>";
 		}else{
-			$string = "<span>".$monthnames[$show_month-1]."</span>";
+			$string = "<span>".$monthnames[$displayTime->getStartMonth()-1]."</span>";
 		}
 		echo "\t\t\t\t".$string."\n";
 	}
@@ -44,9 +33,9 @@
 <?php
 	for($i = -3; $i <= 3; $i++){
 		if($i == 0){
-			$string = "<span>".$show_year."</span>";
+			$string = "<span>".$displayTime->getStartYear()."</span>";
 		}else{
-			$string = "<a href=\"./?".URL_AddShow("overview").URL_AddYear(($show_year+$i)).URL_AddMonth().URL_AddLang()."\">".($show_year+$i)."</a>";
+			$string = "<a href=\"./?".URL_AddShow("overview").URL_AddYear(($displayTime->getStartYear()+$i)).URL_AddMonth().URL_AddLang()."\">".($displayTime->getStartYear()+$i)."</a>";
 		}
 		echo "\t\t\t\t".$string."\n";
 	}

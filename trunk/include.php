@@ -23,18 +23,14 @@ $dirhelper->deleteOldIPs($fstat_cache_dir."ip", $fstat_new_user);
 //get the user from cache, on success it is a old user is_new is false then
 $user->getFromCache(__DIR__ . "/" . $fstat_cache_dir . "ip");
 
-$year = gmdate("Y");
-$month = gmdate("m");
-$day = gmdate("d");
-
-if ($user->is_new == true) {
+if ($user->is_new) {
     //Daten auswerten
 
-    $current_folder = __DIR__ . "/" . $fstat_data_dir . "stat/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT);
+    $current_folder = __DIR__ . "/" . $fstat_data_dir . "stat/" . gmdate("Y", $user->time) . "/" . gmdate("m", $user->time);
     
     if (
         ($dirhelper->checkExists($fstat_data_dir . "stat") == false) ||
-        ($dirhelper->checkExists($fstat_data_dir . "stat/" . $year) == false) ||
+        ($dirhelper->checkExists($fstat_data_dir . "stat/" . gmdate("Y", $user->time)) == false) ||
         ($dirhelper->checkExists($current_folder, true) == false)
     ){
         //quit the execution here
@@ -54,7 +50,7 @@ if ($user->is_new == true) {
     
     
     //Daten in XML schreiben:
-    $tmp_filename = $current_folder . "/" . $day . ".xml";
+    $tmp_filename = $current_folder . "/" . gmdate("d", $user->time) . ".xml";
 
     if (file_exists($tmp_filename)) {
         $xmldoc = new DOMDocument();
@@ -101,10 +97,10 @@ if ($user->is_new == true) {
 
 //Daten ausgewertet...
 //Pfade notieren
-$current_folder = __DIR__ . "/" . $fstat_data_dir . "paths/" . $year . "/" . str_pad($month, 2, "0", STR_PAD_LEFT);
+$current_folder = __DIR__ . "/" . $fstat_data_dir . "paths/" . gmdate("Y", $user->time) . "/" . gmdate("m", $user->time);
 if (
     ($dirhelper->checkExists($fstat_data_dir . "paths") == false) ||
-    ($dirhelper->checkExists($fstat_data_dir . "paths/" . $year) == false) ||
+    ($dirhelper->checkExists($fstat_data_dir . "paths/" . gmdate("Y", $user->time)) == false) ||
     ($dirhelper->checkExists($current_folder, true) == false)
 ){
     return 0;
