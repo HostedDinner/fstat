@@ -6,13 +6,25 @@
 	$startzeit = $startzeit[0]+$startzeit[1];
 	
         require_once "./classes/country.php";
+        require_once "./classes/displayTime.php";
+        
         
 	include "./config/settings.php";
 	include "./config/lang.php";
 	include "./config/information.php";
-	include_once "./functions/date.php";//defines $monthnames, $show_year, $show_month, $show_timestamp
-	include_once "./functions/main_include.php";//defines $show_cat and needs date.php
+        
+        $displayTime = new DisplayTime();
+        $displayTime->setUnsafeStartDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
+        $displayTime->setUnsafeEndDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
+        
+	include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
+        
+        
+        //TODO nur zum Übergang hier:
+        $monthnames = array(FLANG_JAN, FLANG_FEB, FLANG_MAR, FLANG_APR, FLANG_MAY, FLANG_JUN, FLANG_JUL, FLANG_AUG, FLANG_SEP, FLANG_OKT, FLANG_NOV, FLANG_DEC);
 	
+        
+        
 	if(isset($_GET['length'])){
 		$fstat_last_length = preg_replace('#[^0-9]#i','',$_GET['length']);//alles ausser 0-9 mit nichts ersetzten
 		if($fstat_last_length > 200){$fstat_last_length = 200;}//Schutz vor zu langen Listen
@@ -31,7 +43,7 @@
 			break;
 		case "overview":
 		default:
-			$fstat_title = FLANG_H_STATFOR." ".$monthnames[$show_month-1]." ".$show_year;
+			$fstat_title = FLANG_H_STATFOR." ".$monthnames[$displayTime->getStartMonth()-1]." ".$displayTime->getStartYear();
 			break;
 	}
 	

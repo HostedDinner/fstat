@@ -9,8 +9,8 @@ error_reporting(0); //keine Fehler anzeigen
 include "./config/settings.php";
 include "./config/information.php";
 include "./config/lang.php";
-include_once "./functions/date.php";//defines $monthnames, $show_year, $show_month, $show_timestamp
-include_once "./functions/main_include.php";//defines $show_cat and needs date.php
+$monthnames = array(FLANG_JAN, FLANG_FEB, FLANG_MAR, FLANG_APR, FLANG_MAY, FLANG_JUN, FLANG_JUL, FLANG_AUG, FLANG_SEP, FLANG_OKT, FLANG_NOV, FLANG_DEC);
+include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
 
 
 $tmp_month = gmdate("m");

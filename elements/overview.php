@@ -30,11 +30,11 @@
 		$day = substr($fulldate, -2, 2);
 		
 		if(gmdate("Y-m-d") == $fulldate){
-		//if((gmdate("j") == $day) && (gmdate("m") == $show_month) && (gmdate("Y") == $show_year)){
+		//if((gmdate("j") == $day) && (gmdate("m") == $displayTime->getStartMonth()) && (gmdate("Y") == $displayTime->getStartYear())){
 			$td = "<td class=\"high_today\">";
-		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 6){//6 für Samstag
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $displayTime->getStartMonth(), $day, $displayTime->getStartYear())) == 6){//6 für Samstag
 			$td = "<td class=\"high_Sa\">";
-		}elseif(gmdate("w", gmmktime(1, 1, 1, $show_month, $day, $show_year)) == 0){//0 für Sonntag
+		}elseif(gmdate("w", gmmktime(1, 1, 1, $displayTime->getStartMonth(), $day, $displayTime->getStartYear())) == 0){//0 für Sonntag
 			$td = "<td class=\"high_Su\">";
 		}else{
 			$td = "<td>";
