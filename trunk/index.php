@@ -1,25 +1,26 @@
 <?php
 	error_reporting(0); //keine Fehler anzeigen
 	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-	//error_reporting(E_ALL); // alle Fehler anzeigen
+	error_reporting(E_ALL); // alle Fehler anzeigen
 	$startzeit = explode(" ", microtime());
 	$startzeit = $startzeit[0]+$startzeit[1];
 	
+        
+        require_once "./classes/display/language.php";
+        $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
         require_once "./classes/analyse/country.php";
         require_once "./classes/display/displayTime.php";
         require_once "./classes/display/urlbuilder.php";
-        require_once "./classes/display/language.php";
         
         
-	include "./config/settings.php";
-	include "./config/lang.php";
+	include_once "./config/settings.php";
 	include "./config/information.php";
         
         $displayTime = new DisplayTime();
         $displayTime->setUnsafeStartDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
         $displayTime->setUnsafeEndDate(isset($_GET['year']) ? $_GET['year'] : null, isset($_GET['month']) ? $_GET['month'] : null);
         
-        $urlBuilder = new URLBuilder(isset($_GET['show']) ? $_GET['show'] : null, $show_lang);
+        $urlBuilder = new URLBuilder(isset($_GET['show']) ? $_GET['show'] : null, $lang->getLanguage());
         
 	include_once "./functions/main_include.php";//defines $show_cat and needs $displayTime variable
         
