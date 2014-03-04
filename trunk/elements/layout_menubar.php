@@ -4,21 +4,21 @@
 			<a href="#"><?php echo FLANG_MONTH; ?></a>
 			<div class="submenu">
 <?php
-	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear(gmdate("Y")).URL_AddMonth(gmdate("m")).URL_AddLang()."\">".FLANG_TODAY."</a>\n";
+        echo "\t\t\t\t<a href=\"./".$urlBuilder->build('overview', gmdate("Y"), gmdate("n"))."\">".FLANG_TODAY."</a>\n";
 	echo "\t\t\t\t<hr>\n";
 	
         $prev = $displayTime->getPreviousStartMonth();
         $next = $displayTime->getNextStartMonth();
 	
-	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($prev['year']).URL_AddMonth($prev['month']).URL_AddLang()."\">".FLANG_PREV_MONTH."</a>\n";
-	echo "\t\t\t\t<a href=\"./?".URL_AddShow("overview").URL_AddYear($next['year']).URL_AddMonth($next['month']).URL_AddLang()."\">".FLANG_NEXT_MONTH."</a>\n";
+	echo "\t\t\t\t<a href=\"./".$urlBuilder->build('overview', $prev['year'], $prev['month'])."\">".FLANG_PREV_MONTH."</a>\n";
+	echo "\t\t\t\t<a href=\"./".$urlBuilder->build('overview', $next['year'], $next['month'])."\">".FLANG_NEXT_MONTH."</a>\n";
 ?>
 				<hr>
 <?php
 	for($i = 0; $i < 12; $i++){
 	
 		if($i != ($displayTime->getStartMonth()-1)){
-			$string = "<a href=\"./?".URL_AddShow("overview").URL_AddYear().URL_AddMonth($i+1).URL_AddLang()."\">".$monthnames[$i]."</a>";
+			$string = "<a href=\"./".$urlBuilder->build('overview', $displayTime->getStartYear(), $i+1)."\">".$monthnames[$i]."</a>";
 		}else{
 			$string = "<span>".$monthnames[$displayTime->getStartMonth()-1]."</span>";
 		}
@@ -35,7 +35,7 @@
 		if($i == 0){
 			$string = "<span>".$displayTime->getStartYear()."</span>";
 		}else{
-			$string = "<a href=\"./?".URL_AddShow("overview").URL_AddYear(($displayTime->getStartYear()+$i)).URL_AddMonth().URL_AddLang()."\">".($displayTime->getStartYear()+$i)."</a>";
+			$string = "<a href=\"./".$urlBuilder->build('overview', $displayTime->getStartYear()+$i, $displayTime->getStartMonth())."\">".($displayTime->getStartYear()+$i)."</a>";
 		}
 		echo "\t\t\t\t".$string."\n";
 	}
@@ -43,10 +43,10 @@
 			</div>
 		</div>
 		<div class="menuentry">
-			<a href="<?php echo "./?".URL_AddShow("last").URL_AddLang(); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_VISITOR_S; ?></a>
+			<a href="<?php echo "./".$urlBuilder->build('last'); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_VISITOR_S; ?></a>
 		</div>
 		<div class="menuentry">
-			<a href="<?php echo "./?".URL_AddShow("lastbots").URL_AddLang(); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_BOT_S; ?></a>
+			<a href="<?php echo "./".$urlBuilder->build('lastbots'); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_BOT_S; ?></a>
 		</div>
 		<div class="menuentry">
 			<a href="#"><?php echo FLANG_LANG; ?></a>
@@ -57,10 +57,10 @@
 		if((substr($file, -4) == ".php")){
 			$langcode = substr($file, -6, 2);
 			$langstr = LookupLang($langcode);
-			if($show_cat == "last"){
-				$string = "<a href=\"./?".URL_AddShow().URL_AddLang($langcode)."\">".$langstr."</a>";
+			if($urlBuilder->getPage() == 'overview'){
+                                $string = "<a href=\"./".$urlBuilder->build(null, $displayTime->getStartYear(), $displayTime->getStartMonth(), $langcode)."\">".$langstr."</a>";
 			}else{
-				$string = "<a href=\"./?".URL_AddShow().URL_AddYear().URL_AddMonth().URL_AddLang($langcode)."\">".$langstr."</a>";
+				$string = "<a href=\"./".$urlBuilder->build(null, null, null, $langcode)."\">".$langstr."</a>";
 			}
 			echo "\t\t\t\t".$string."\n";
 		}
@@ -70,7 +70,7 @@
 			</div>
 		</div>
 		<div class="menuentryR">
-			<a href="<?php echo "./?".URL_AddShow("about").URL_AddLang(); ?>"><?php echo "".FLANG_H_ABOUT; ?></a>
+			<a href="<?php echo "./".$urlBuilder->build('about'); ?>"><?php echo "".FLANG_H_ABOUT; ?></a>
 		</div>
 		<div class="clear"></div>
 	</div>

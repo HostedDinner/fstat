@@ -390,7 +390,7 @@
 				$datearray = array();
 				preg_match("/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*?/i", $updatetime, $datearray);
 				echo $datearray[3].".".$datearray[2].".".$datearray[1]." ";
-				echo "<a href=\"./?".URL_Default().URL_AddRefresh()."\">".FLANG_RELOAD."</a>";
+				echo "<a href=\"./".$urlBuilder->build(null, $displayTime->getStartYear(), $displayTime->getStartMonth())."&amp;refresh=1\">".FLANG_RELOAD."</a>";
 			?></div>
 			<table class="Auflistung">
 			<tr>
