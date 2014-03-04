@@ -8,6 +8,7 @@
         require_once "./classes/analyse/country.php";
         require_once "./classes/display/displayTime.php";
         require_once "./classes/display/urlbuilder.php";
+        require_once "./classes/display/language.php";
         
         
 	include "./config/settings.php";
