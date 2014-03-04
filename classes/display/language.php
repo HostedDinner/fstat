@@ -13,6 +13,8 @@ class Language {
     private static $languageSet = false; //protect double setting the language
     private $current;
     
+    public $monthnames = array();
+    
     public function __construct($lang = null) {
         $this->setLanguage($lang);
     }
@@ -41,6 +43,21 @@ class Language {
                 //if this fails, then the config should be changed...
                 include_once __DIR__ . "/../../lang/lang.".$fstat_default_lang.".php";
             }
+            
+            $this->monthnames = array(
+                FLANG_JAN,
+                FLANG_FEB,
+                FLANG_MAR,
+                FLANG_APR,
+                FLANG_MAY,
+                FLANG_JUN,
+                FLANG_JUL,
+                FLANG_AUG,
+                FLANG_SEP,
+                FLANG_OKT,
+                FLANG_NOV,
+                FLANG_DEC
+            );
         }
     }
     

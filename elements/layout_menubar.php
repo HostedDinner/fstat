@@ -18,9 +18,9 @@
 	for($i = 0; $i < 12; $i++){
 	
 		if($i != ($displayTime->getStartMonth()-1)){
-			$string = "<a href=\"./".$urlBuilder->build('overview', $displayTime->getStartYear(), $i+1)."\">".$monthnames[$i]."</a>";
+			$string = "<a href=\"./".$urlBuilder->build('overview', $displayTime->getStartYear(), $i+1)."\">".  $lang->monthnames[$i]."</a>";
 		}else{
-			$string = "<span>".$monthnames[$displayTime->getStartMonth()-1]."</span>";
+			$string = "<span>".$lang->monthnames[$displayTime->getStartMonth()-1]."</span>";
 		}
 		echo "\t\t\t\t".$string."\n";
 	}
