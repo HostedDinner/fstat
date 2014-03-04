@@ -12,13 +12,23 @@ if(!isset($is_include)){
 include $prefolder."config/settings.php";
 include $prefolder."functions/backend_include.php";
 
+require_once $prefolder."classes/dirHelper.php";
+
+$dirhelper = new DirHelper($prefolder);
+
 $use_cached = false;
 
 if($fstat_backend_modus == 1){ //Month
-	$cache_filename = $prefolder.$fstat_data_dir."paths/".$fstat_backend_year."/".str_pad($fstat_backend_month, 2, "0", STR_PAD_LEFT)."/cache.xml";
+        $path = $fstat_data_dir."paths/".$fstat_backend_year;
+        $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
+        $path = $path."/".str_pad($fstat_backend_month, 2, "0", STR_PAD_LEFT);
+        $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
+	$cache_filename = $prefolder.$path."/cache.xml";
 	if(is_file($cache_filename)){$use_cached = true;}
 }elseif($fstat_backend_modus == 2){ //Year
-	$cache_filename = $prefolder.$fstat_data_dir."paths/".$fstat_backend_year."/cache.xml";
+        $path = $fstat_data_dir."paths/".$fstat_backend_year;
+        $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
+	$cache_filename = $prefolder.$path."/cache.xml";
 	if(is_file($cache_filename)){$use_cached = true;}
 }//else 0 - Day (not cached)
 
