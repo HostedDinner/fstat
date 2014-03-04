@@ -1,11 +1,11 @@
 <?php
 include __DIR__ . "/config/settings.php";
 
-require_once __DIR__ . "/classes/user.php";
+require_once __DIR__ . "/classes/analyse/user.php";
 require_once __DIR__ . "/classes/dirHelper.php";
-require_once __DIR__ . "/classes/country.php";
-require_once __DIR__ . "/classes/reference.php";
-require_once __DIR__ . "/classes/UASparser.php";
+require_once __DIR__ . "/classes/analyse/country.php";
+require_once __DIR__ . "/classes/analyse/reference.php";
+require_once __DIR__ . "/classes/analyse/UASparser.php";
 
 $user = new User(getenv("REMOTE_ADDR"), $_SERVER['HTTP_USER_AGENT']);
 $dirhelper = new DirHelper(__DIR__);

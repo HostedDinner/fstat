@@ -5,9 +5,9 @@
 	$startzeit = explode(" ", microtime());
 	$startzeit = $startzeit[0]+$startzeit[1];
 	
-        require_once "./classes/country.php";
-        require_once "./classes/displayTime.php";
-        require_once "./classes/urlbuilder.php";
+        require_once "./classes/analyse/country.php";
+        require_once "./classes/display/displayTime.php";
+        require_once "./classes/display/urlbuilder.php";
         
         
 	include "./config/settings.php";
