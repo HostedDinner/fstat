@@ -56,7 +56,7 @@
 	while (($file = readdir($langdir)) !== FALSE){
 		if((substr($file, -4) == ".php")){
 			$langcode = substr($file, -6, 2);
-			$langstr = LookupLang($langcode);
+			$langstr = Language::lookupLang($langcode);
 			if($urlBuilder->getPage() == 'overview'){
                                 $string = "<a href=\"./".$urlBuilder->build(null, $displayTime->getStartYear(), $displayTime->getStartMonth(), $langcode)."\">".$langstr."</a>";
 			}else{
