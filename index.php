@@ -1,7 +1,7 @@
 <?php
     error_reporting(0); //keine Fehler anzeigen
     //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-    error_reporting(E_ALL); // alle Fehler anzeigen
+    //error_reporting(E_ALL); // alle Fehler anzeigen
 
     $startzeit = explode(" ", microtime());
     $startzeit = $startzeit[0] + $startzeit[1];
@@ -29,13 +29,9 @@
 
     $urlBuilder = new URLBuilder(isset($_GET['show']) ? $_GET['show'] : null, $lang->getLanguage());
 
-    //TODO: pack in some class?
-    if (isset($_GET['length'])) {
-        $fstat_last_length = preg_replace('#[^0-9]#i', '', $_GET['length']); //alles ausser 0-9 mit nichts ersetzten
-        //protection against too long lists
-        if ($fstat_last_length > 200) {
-            $fstat_last_length = 200;
-        }
+    $backend = new Backend();
+    if(isset($_GET['length'])){
+        $backend->setUnsafeListLength($_GET['length']);
     }
 
 
@@ -45,10 +41,10 @@
             $fstat_title = FLANG_H_ABOUT_FSTAT;
             break;
         case "last":
-            $fstat_title = FLANG_H_LAST . " " . $fstat_last_length . " " . FLANG_VISITOR_L;
+            $fstat_title = FLANG_H_LAST . " " . $backend->getListLength() . " " . FLANG_VISITOR_L;
             break;
         case "lastbots":
-            $fstat_title = FLANG_H_LAST . " " . $fstat_last_length . " " . FLANG_BOT_L;
+            $fstat_title = FLANG_H_LAST . " " . $backend->getListLength() . " " . FLANG_BOT_L;
             break;
         case "overview":
         default:
