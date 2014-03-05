@@ -34,10 +34,10 @@
             </div>
         </div>
         <div class="menuentry">
-            <a href="<?php echo "./".$urlBuilder->build('last'); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_VISITOR_S; ?></a>
+            <a href="<?php echo "./".$urlBuilder->build('last'); ?>"><?php echo FLANG_LAST." ".$backend->getListLength()." ".FLANG_VISITOR_S; ?></a>
         </div>
         <div class="menuentry">
-            <a href="<?php echo "./".$urlBuilder->build('lastbots'); ?>"><?php echo FLANG_LAST." ".$fstat_last_length." ".FLANG_BOT_S; ?></a>
+            <a href="<?php echo "./".$urlBuilder->build('lastbots'); ?>"><?php echo FLANG_LAST." ".$backend->getListLength()." ".FLANG_BOT_S; ?></a>
         </div>
         <div class="menuentry">
             <a href="#"><?php echo FLANG_LANG; ?></a>

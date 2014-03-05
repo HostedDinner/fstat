@@ -1,39 +1,36 @@
 <?php
 if(!isset($is_include)){
-	header('Content-type: text/xml');
-	error_reporting(0); //keine Fehler anzeigen
-	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-	//error_reporting(E_ALL); // alle Fehler anzeigen
-	$prefolder = "./../";
-}else{
-	$prefolder = "./";
+    header('Content-type: text/xml');
+    error_reporting(0); //keine Fehler anzeigen
+    //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
+    //error_reporting(E_ALL); // alle Fehler anzeigen
 }
 
-include $prefolder."config/settings.php";
-include $prefolder."functions/backend_include.php";
+include __DIR__ . "/../config/settings.php";
+include __DIR__ . "/../functions/backend_include.php"; //(re)defines $backend
 
-require_once $prefolder."classes/dirHelper.php";
+require_once __DIR__ . "/../classes/dirHelper.php";
 
-$dirhelper = new DirHelper($prefolder);
+$dirhelper = new DirHelper(__DIR__ . "/../");
 
 $use_cached = false;
 
-if($fstat_backend_modus == 1){ //Month
-        $path = $fstat_data_dir."paths/".$fstat_backend_year;
+if($backend->getModus() == Backend::MODUS_MONTH){
+        $path = $fstat_data_dir."paths/".$backend->getTime()->getStartYear();
         $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
-        $path = $path."/".str_pad($fstat_backend_month, 2, "0", STR_PAD_LEFT);
+        $path = $path."/".str_pad($backend->getTime()->getStartMonth(), 2, "0", STR_PAD_LEFT);
         $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
-	$cache_filename = $prefolder.$path."/cache.xml";
+	$cache_filename = __DIR__ . "/../".$path."/cache.xml";
 	if(is_file($cache_filename)){$use_cached = true;}
-}elseif($fstat_backend_modus == 2){ //Year
-        $path = $fstat_data_dir."paths/".$fstat_backend_year;
+}elseif($backend->getModus() == Backend::MODUS_YEAR){
+        $path = $fstat_data_dir."paths/".$backend->getTime()->getStartYear();
         $dirhelper->checkExists($path, false); //actually does nothing than creating, if not exists
-	$cache_filename = $prefolder.$path."/cache.xml";
+	$cache_filename = __DIR__ . "/../".$path."/cache.xml";
 	if(is_file($cache_filename)){$use_cached = true;}
-}//else 0 - Day (not cached)
+}//else MODUS_DAY (not cached)
 
 //force refresh
-if($fstat_backend_refresh == 1){
+if($backend->getForceRefresh() == true){
 	$use_cached = false;
 }
 
@@ -42,16 +39,16 @@ if($use_cached == false){
 	$site_total["bots"] = 0;
 	$site_total["people"] = 0;
 	
-	if($fstat_backend_modus >= 2){
+	if($backend->getModus() >= Backend::MODUS_YEAR){
 		$m = 1;
 		$m_end = 12;
 	}else{
-		$m = $fstat_backend_month;
-		$m_end = $fstat_backend_month;
+		$m = $backend->getTime()->getStartMonth();
+		$m_end = $backend->getTime()->getStartMonth();
 	}
 	
 	for(; $m <= $m_end; $m++){
-		$pathname = $prefolder.$fstat_data_dir."paths/".$fstat_backend_year."/".str_pad($m, 2, "0", STR_PAD_LEFT)."/";
+		$pathname = __DIR__ . "/../".$fstat_data_dir."paths/".$backend->getTime()->getStartYear()."/".str_pad($m, 2, "0", STR_PAD_LEFT)."/";
 		$path_verz = @opendir($pathname);
 		if(is_dir($pathname)){
 			while (($file = @readdir($path_verz)) !== FALSE){
@@ -72,7 +69,7 @@ if($use_cached == false){
 						}
 						
 						//test if modus year/month OR if it's the right day
-						if(($fstat_backend_modus > 0) || (gmdate("j", $time) == $fstat_backend_day)){
+						if(($backend->getModus() > Backend::MODUS_DAY) || (gmdate("j", $time) == $backend->getTime()->getStartDay())){
 							if(!isset($site_arr[$sitename][$sitevar][$botpeople])){
 								$site_arr[$sitename][$sitevar][$botpeople] = 1;
 							}else{

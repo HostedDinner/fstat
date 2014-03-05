@@ -1,5 +1,6 @@
 <?php
 	//
+        //var_dump(Backend::getXML("./backend/all.php"));
 	$xml_all = new DOMDocument();
         $xml_all->loadXML(Backend::getXML("./backend/all.php"));
 ?>

@@ -1,18 +1,15 @@
 <?php
 if(!isset($is_include)){
-	header('Content-type: text/xml');
-	error_reporting(0); //keine Fehler anzeigen
-	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-	//error_reporting(E_ALL); // alle Fehler anzeigen
-	$prefolder = "./../";
-}else{
-	$prefolder = "./";
+    header('Content-type: text/xml');
+    error_reporting(0); //keine Fehler anzeigen
+    //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
+    //error_reporting(E_ALL); // alle Fehler anzeigen
 }
 
-include $prefolder."config/settings.php";
-include $prefolder."functions/backend_include.php";
+include __DIR__ . "/../config/settings.php";
+include __DIR__ . "/../functions/backend_include.php"; //(re)defines $backend
 
-$back_counter = $fstat_backend_length;
+$back_counter = $backend->getListLength();
 $back_year = gmdate("Y");
 $back_month = gmdate("m");
 
@@ -27,9 +24,9 @@ $root = $xmlausgabe->appendChild($root);
 
 //Das alteste Jahr finden
 $back_oldest_year = $back_year;
-if ($handle = @opendir($prefolder.$fstat_data_dir."stat/")){
+if ($handle = @opendir(__DIR__ ."/../".$fstat_data_dir."stat/")){
 	while (false !== ($file = readdir($handle))) {
-		if(is_dir($prefolder.$fstat_data_dir."stat/".$file) && $file != "." && $file != ".."){
+		if(is_dir(__DIR__ ."/../".$fstat_data_dir."stat/".$file) && $file != "." && $file != ".."){
 			if($file < $back_oldest_year){$back_oldest_year = $file;}
 		}
     }
@@ -40,7 +37,7 @@ if ($handle = @opendir($prefolder.$fstat_data_dir."stat/")){
 while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 	$back_timestamp = gmmktime(1, 1, 1, $back_month, 1, $back_year);
 	for($i = gmdate("t", $back_timestamp); $i >= 1; $i--){
-		$filename = $prefolder.$fstat_data_dir."stat/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
+		$filename = __DIR__ ."/../".$fstat_data_dir."stat/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".str_pad($i,2,"0",STR_PAD_LEFT).".xml";
 		
 		if(is_file($filename)){
 			$xmldoc = new DOMDocument();
@@ -61,9 +58,9 @@ while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 					continue;
 				}
 				if($typ == "Robot" or $typ == "Validator"){
-					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/bot_".$ip_read."_".gmdate("d_H",$timestamp).".path";
+					$filename2 = __DIR__ ."/../".$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/bot_".$ip_read."_".gmdate("d_H",$timestamp).".path";
 				}else{
-					$filename2 = $prefolder.$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".$ip_read."_".gmdate("d_H",$timestamp).".path";
+					$filename2 = __DIR__ ."/../".$fstat_data_dir."paths/".$back_year."/".str_pad($back_month,2,"0",STR_PAD_LEFT)."/".$ip_read."_".gmdate("d_H",$timestamp).".path";
 				}
 				
 				if($file2_cont = @file($filename2)){
@@ -107,9 +104,9 @@ while(true){//braucht keine Bedingung, da das Jahr abbricht... (Hoffentlich)
 
 
 if($back_counter == 0){
-	$tmp = $fstat_backend_length;
+	$tmp = $backend->getListLength();
 }else{
-	$tmp = $fstat_backend_length - $back_counter;
+	$tmp = $backend->getListLength() - $back_counter;
 }
 
 $root->setAttribute("last", $tmp);

@@ -1,19 +1,16 @@
 <?php
-if(!isset($is_include)){
-	if(!headers_sent()){
-		header('Content-type: text/xml');
-	}
-	error_reporting(0); //keine Fehler anzeigen
-	//error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
-	//error_reporting(E_ALL); // alle Fehler anzeigen
-	$prefolder = "./../";
-}else{
-	$prefolder = "./";
+if (!isset($is_include)) {
+    if (!headers_sent()) {
+        header('Content-type: text/xml');
+    }
+    error_reporting(0); //keine Fehler anzeigen
+    //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
+    //error_reporting(E_ALL); // alle Fehler anzeigen
 }
 
-include $prefolder."config/settings.php";
-include $prefolder."functions/backend_include.php";
-include $prefolder."functions/backend_functions.php";
+include __DIR__ . "/../config/settings.php";
+include_once __DIR__ . "/../functions/backend_include.php";
+include_once __DIR__ . "/../functions/backend_functions.php"; //(re)defines $backend
 
 
 $all_show_br  = false; //Browser
@@ -25,7 +22,7 @@ $all_show_cou = false; //Country
 $all_show_cot = false; //Counter
 $all_show_tim = false; //Time
 
-$all_shows = explode("|", $fstat_backend_get_list);
+$all_shows = explode("|", $backend->getShowList());
 
 foreach($all_shows as $show){
 	$show = trim($show);
@@ -97,33 +94,33 @@ if($all_show_tim == true){
 	$tim_arr['all']['people'] = 0;
 }
 
-if($fstat_backend_modus >= 2){
+if($backend->getModus() >= Backend::MODUS_YEAR){
 	$m = 1;
 	$m_end = 12;
 }else{
-	$m = $fstat_backend_month;
-	$m_end = $fstat_backend_month;
+	$m = $backend->getTime()->getStartMonth();
+	$m_end = $backend->getTime()->getStartMonth();
 }
 
 for(; $m <= $m_end; $m++){
 	$m_pad = str_pad($m, 2, "0", STR_PAD_LEFT);
 	
-	if($fstat_backend_modus >= 1){
+	if($backend->getModus() >= Backend::MODUS_MONTH){
 		$d = 1;
-		$d_end = gmdate("t", gmmktime(0, 0, 0, $m, 1, $fstat_backend_year));
+		$d_end = gmdate("t", gmmktime(0, 0, 0, $m, 1, $backend->getTime()->getStartYear()));
 	}else{
-		$d = $fstat_backend_day;
-		$d_end = $fstat_backend_day;
+		$d = $backend->getTime()->getStartDay();
+		$d_end = $backend->getTime()->getStartDay();
 	}
 	
 	for(; $d <= $d_end; $d++){
 		$d_pad = str_pad($d, 2, "0", STR_PAD_LEFT);
 		
-		$filename = $prefolder.$fstat_data_dir."stat/".$fstat_backend_year."/".$m_pad."/".$d_pad.".xml";
+		$filename = __DIR__ . "/../".$fstat_data_dir."stat/".$backend->getTime()->getStartYear()."/".$m_pad."/".$d_pad.".xml";
 		
 		if($all_show_cot == true){
-			$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] = 0;
-			$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] = 0;
+			$cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['bots'] = 0;
+			$cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['people'] = 0;
 		}
 			
 		if(is_file($filename)){
@@ -143,14 +140,14 @@ for(; $m <= $m_end; $m++){
 					if($all_show_cou == true){Normal_Build($visitor, "ucon", $cou_arr, "ucoi", true);}
 					
 					if($all_show_cot == true){
-						$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] = $cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['people'] + 1;
+						$cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['people'] = $cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['people'] + 1;
 						$cot_arr['all']['people'] = $cot_arr['all']['people'] + 1;
 					}
 				}else{
 					if($all_show_bot == true){FamAndSub_Build($visitor, "u", $bot_arr);}
 					
 					if($all_show_cot == true){
-						$cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] = $cot_arr[$fstat_backend_year."-".$m_pad."-".$d_pad]['bots'] + 1;
+						$cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['bots'] = $cot_arr[$backend->getTime()->getStartYear()."-".$m_pad."-".$d_pad]['bots'] + 1;
 						$cot_arr['all']['bots'] = $cot_arr['all']['bots'] + 1;
 					}
 				}
