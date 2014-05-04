@@ -76,6 +76,7 @@
 	define('FLANG_H_DATA_FROM', "und Daten von");
 	define('FLANG_H_IPBY', "IP-to-Country Datenbank von");
 	define('FLANG_H_FLAGBY', "und Flaggen Icons von");
+	define('FLANG_H_LICENSE', "Freigegeben unter");
 	define('FLANG_FEEDBACK', "Bitte sende Fehler und Feedback an:");
 	define('FLANG_LAST_UPDATE', "Letztes Update am");
 	
