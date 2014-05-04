@@ -11,6 +11,7 @@
             <div class="text">
                 <h2><a href="http://code.google.com/p/fstat/">FStat</a> Version <?php echo $fstat_fstat_version; ?></h2>
                 &copy; F-Soft by <a href="http://www.fabian-neffgen.de/">Fabian Neffgen</a><br>
+                <?php echo FLANG_H_LICENSE; ?> <a href="https://www.gnu.org/licenses/gpl.html">GNU GPL v3</a><br>
                 <br>
                 <?php echo FLANG_H_USEDBY; ?> <a href="http://user-agent-string.info/">UAString Api</a> (<?php echo FLANG_LAST_UPDATE . " " . $uasdata_date; ?>),<br>
                 <?php echo FLANG_H_IPBY; ?> <a href="http://db-ip.com/db/download/country">DB-IP.com</a><br>
