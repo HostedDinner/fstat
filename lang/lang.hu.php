@@ -77,6 +77,7 @@
 	define('FLANG_H_DATA_FROM', "and Data from");
 	define('FLANG_H_IPBY', "IP-to-Country Database by");
 	define('FLANG_H_FLAGBY', "and Flag Icons from");
+	define('FLANG_H_LICENSE', "Released under");
 	define('FLANG_FEEDBACK', "Hiba jelentése vagy visszajelzés küldése ide:");
 	define('FLANG_LAST_UPDATE', "Last Update on");
 	
