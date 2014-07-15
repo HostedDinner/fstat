@@ -40,8 +40,12 @@ hr{
     color:#FFF;
     background:#FB4;
 }
-.backhigh{
+.backhigh, .striped tr:nth-of-type(2n-1){
     background:#FFE4BB;
+}
+
+.today_arrow{
+    font-size:80%;
 }
 
 .border{
