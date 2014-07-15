@@ -16,7 +16,9 @@
 	
 	$nodelist = $xml_last->getElementsByTagName("visitor");
 	
+	$tmpcount = 0;
 	foreach($nodelist as $row){
+		$tmpcount++;
 		
 		$v_typ = @$row->getElementsByTagName("typ")->item(0)->nodeValue;
 		$v_uas = @$row->getElementsByTagName("uas")->item(0)->nodeValue;
