@@ -88,7 +88,11 @@ if($use_cached == false){
 	foreach($site_arr as $sitename2 => $tmp){
 		$tmp_sort1 = array();//reset
 		foreach($tmp as $sitevar2 => $tmp2){
-			$tmp_sort1[$sitevar2] = $tmp2['people'];
+			if(isset($tmp2['people'])){
+				$tmp_sort1[$sitevar2] = $tmp2['people'];
+			}else{
+				$tmp_sort1[$sitevar2] = 0;
+			}
 		}
 		array_multisort($tmp_sort1, SORT_DESC, $site_arr[$sitename2]);
 	}
