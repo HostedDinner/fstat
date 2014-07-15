@@ -5,7 +5,9 @@
 
     $startzeit = explode(" ", microtime());
     $startzeit = $startzeit[0] + $startzeit[1];
-
+    
+    session_start();
+    
     //The language class is special, it includes the language defines at init time of the first var
     //therefor "new Language" must be called once!
     require_once "./classes/display/language.php";
