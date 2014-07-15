@@ -1,5 +1,5 @@
 	<div class="border">
-		<table class="Auflistung">
+		<table class="Auflistung striped">
 			<tr>
 				<th>&nbsp;</th>
 				<th><?php echo FLANG_DATE; ?>:</th>
@@ -16,9 +16,7 @@
 	
 	$nodelist = $xml_last->getElementsByTagName("visitor");
 	
-	$tmpcount = 0;
 	foreach($nodelist as $row){
-		$tmpcount++;
 		
 		$v_typ = @$row->getElementsByTagName("typ")->item(0)->nodeValue;
 		$v_uas = @$row->getElementsByTagName("uas")->item(0)->nodeValue;
@@ -43,7 +41,7 @@
 			}
 		$c_filename = $fstat_data_dir."stat/".date("Y/m/d", $v_uti).".xml";
 		
-		if($tmpcount % 2 == 0){echo "\t\t\t<tr>\n";}else{echo "\t\t\t<tr class=\"backhigh\">\n";}
+		echo "\t\t\t<tr>\n";
 		echo "\t\t\t\t<td title=\"".$v_uip." (".$v_uhost.")\">".$tmpcount.".</td>\n";
 		echo "\t\t\t\t<td><a href=\"".$c_filename."\">".date("d.m.y", $v_uti)."</a></td>\n";
 		echo "\t\t\t\t<td>".date("H:i", $v_uti)."</td>\n";
