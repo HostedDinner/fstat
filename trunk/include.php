@@ -83,6 +83,7 @@ if ($user->is_new) {
     $newvisitor->appendChild($xmldoc->createElement('ucon', htmlspecialchars($country->getCountry())));
     $newvisitor->appendChild($xmldoc->createElement('rkey', htmlspecialchars($ref->getKeywords())));
     $newvisitor->appendChild($xmldoc->createElement('rdom', htmlspecialchars($ref->getDomain())));
+    $newvisitor->appendChild($xmldoc->createElement('host', htmlspecialchars($_SERVER['HTTP_HOST']))); // the requested host
     $root->appendChild($newvisitor);
 
     $xmldoc->formatOutput = true;

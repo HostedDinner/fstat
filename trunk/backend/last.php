@@ -129,6 +129,7 @@ echo $xmlausgabe->saveXML();
 //    <ucon>Germany</ucon>
 //    <rkey>bla blub</rkey>
 //    <rdom>www.google.com</rdom>
+//    <host>www.example.com</host>
 //    <path>
 //      <site>start</site>
 //      <site>help</site>

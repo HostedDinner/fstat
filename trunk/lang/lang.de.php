@@ -42,6 +42,7 @@
 	define('FLANG_COUNTRY', "Land");
 	define('FLANG_DATE', "Datum");
 	define('FLANG_DOMAIN', "Domain");
+	define('FLANG_HOST', "Host");
 	define('FLANG_OS', "OS");
 	define('FLANG_SEARCHW', "Suchwort");
 	define('FLANG_SITE', "Seite");

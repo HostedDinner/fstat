@@ -1,17 +1,18 @@
     <div class="border">
         <table class="Auflistung striped">
+            <thead>
             <tr>
                 <th>&nbsp;</th>
                 <th><?php echo FLANG_DATE; ?>:</th>
                 <th><?php echo FLANG_TIME; ?>:</th>
                 <th colspan="2"><?php echo FLANG_COUNTRY; ?>:</th>
-<?php if($urlBuilder->getPage() == 'last'): ?>
-                <th colspan="2"><?php echo FLANG_OS; ?>:</th>
-<?php endif; ?>
-                <th colspan="2"><?php echo FLANG_BROWSER; ?>:</th>
+                <th><?php echo FLANG_BROWSER." / ".FLANG_OS; ?>:</th>
                 <th><?php echo FLANG_DOMAIN; ?>:</th>
                 <th><?php echo FLANG_H_SITE; ?>:</th>
+                <th><?php echo FLANG_HOST; ?>:</th>
             </tr>
+            </thead>
+            <tbody>
 <?php
     require_once __DIR__ . "/../classes/xpathHelper.php";
 
@@ -29,7 +30,7 @@
     $tmpcount = 0;
 ?>
 <?php foreach ($nodelist as $row) :
-        $tmpcount++;
+        //$tmpcount++;
 
         $v_typ = $xpath->evaluate('string(./typ/text())', $row);
         $v_uas = $xpath->evaluate('string(./uas/text())', $row);
@@ -47,28 +48,39 @@
         $v_ucon = $xpath->evaluate('string(./ucon/text())', $row);
         $v_rkey = $xpath->evaluate('string(./rkey/text())', $row);
         $v_rdom = $xpath->evaluate('string(./rdom/text())', $row);
+        $v_host = $xpath->evaluate('string(./host/text())', $row);
         $sitenodelist = $xpath->query('./path/site', $row);
         $c_filename = $fstat_data_dir . "stat/" . date("Y/m/d", $v_uti) . ".xml";
 ?>
             <tr>
-                <td title="<?php echo $v_uip." (".$v_uhost.")"; ?>"><?php echo $tmpcount; ?></td>
+                <td title="<?php echo $v_uip." (".$v_uhost.")"; ?>"><?php echo ++$tmpcount."."; ?></td>
                 <td><a href="<?php echo $c_filename; ?>"><?php echo date("d.m.y", $v_uti); ?></a></td>
                 <td><?php echo date("H:i", $v_uti); ?></td>
                 <td class="icell"><div class="country_icon" style="background-position: 0px <?php echo Country::getCountryOffset($v_ucoi); ?>px" title="<?php echo $v_ucon; ?>"></div></td>
                 <td title="<?php echo $v_uip." (".$v_uhost.")"; ?>"><?php echo $v_ucon; ?></td>
+                <td title="<?php echo $v_uas;?>">
+                    <table class="Auflistung" style="width:100%;">
 <?php if($urlBuilder->getPage() == 'last'): ?>
-                <td class="icell"><img src="<?php echo $fstat_ico_dir . "os/" . $v_oico; ?>" alt="*" title="<?php echo $v_ofam; ?>" width="16" height="16"></td>
-                <td title="<?php echo $v_uas; ?>"><?php echo $v_onam; ?></td>
+                        <tr>
+                            <td class="icell"><img src="<?php echo $fstat_ico_dir . "os/" . $v_oico; ?>" alt="*" title="<?php echo $v_ofam; ?>" width="16" height="16"></td>
+                            <td><?php echo $v_onam; ?></td>
+                        </tr>
 <?php endif; ?>
-                <td class="icell"><img src="<?php echo $fstat_ico_dir . "agent/" . $v_uico; ?>" alt="*" title="<?php echo $v_ufam; ?>" width="16" height="16"></td>
-                <td title="<?php echo $v_uas; ?>"><?php echo $v_unam; ?></td>
+                        <tr>
+                            <td class="icell"><img src="<?php echo $fstat_ico_dir . "agent/" . $v_uico; ?>" alt="*" title="<?php echo $v_ufam; ?>" width="16" height="16"></td>
+                            <td><?php echo $v_unam; ?> </td>
+                        </tr>
+                    </table>
+                </td>
                 <td title="<?php echo $v_rkey; ?>"><?php echo $v_rdom; ?></td>
 <?php if ($sitenodelist->length != 0) : ?>
                 <td title="<?php echo XPathHelper::listSiteNodeValues($sitenodelist); ?>"><?php echo FLANG_H_SITE; ?></td>
 <?php else : ?>
                 <td></td>
 <?php endif; ?>
+                <td><?php echo $v_host; ?></td>
             </tr>
 <?php endforeach; ?>
+            </tbody>
         </table>
     </div>

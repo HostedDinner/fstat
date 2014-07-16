@@ -18,11 +18,14 @@
         <div class="border">
             <h2><?php echo FLANG_H_OVERVIEW; ?></h2>
             <table class="Auflistung striped" style="text-align:right;">
+                <thead>
                 <tr>
                     <th><?php echo FLANG_DAY; ?>:</th>
                     <th><?php echo FLANG_VISITOR_S; ?>:</th>
                     <th><?php echo FLANG_BOT_S; ?>:</th>
                 </tr>
+                </thead>
+                <tbody>
 <?php
     
     //here we do not use the fancy xpath to find the highest, because anyway we have to travel the dom
@@ -69,6 +72,8 @@
     $counter_av_p = $count_days != 0 ? round($count_all_p/$count_days, 1) : 0;
     $counter_av_b = $count_days != 0 ? round($count_all_b/$count_days, 1) : 0;
 ?>
+                </tbody>
+                <tfoot>
                 <tr class="table_sum">
                     <td>&sum;</td>
                     <td><?php echo $count_all_p; ?></td>
@@ -79,6 +84,7 @@
                     <td><?php echo $counter_av_p; ?></td>
                     <td><?php echo $counter_av_b; ?></td>
                 </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -111,6 +117,12 @@
     $overview->country_list();
 ?>
         </div>
+        <div class="border">
+            <h2><?php echo FLANG_HOST; ?></h2>
+<?php 
+    $overview->ovlist2('hosts', FLANG_HOST, 'host', 'host');
+?>
+        </div>
     </div>
     <div class="middle">
         <div class="border">
@@ -134,12 +146,15 @@
                 echo "<a href=\"./".$urlBuilder->build(null, $displayTime->getStartYear(), $displayTime->getStartMonth())."&amp;refresh=1\">".FLANG_RELOAD."</a>";
             ?></div>
             <table class="Auflistung striped">
+                <thead>
                 <tr>
                     <th><?php echo FLANG_SITE; ?>:</th>
                     <th><?php echo FLANG_VISITOR_L; ?>:</th>
                     <th><?php echo FLANG_GRAPH; ?>:</th>
                     <th><?php echo FLANG_BOT_L; ?>:</th>
                 </tr>
+                </thead>
+                <tbody>
 <?php
     //count all
     $count_all_p = $sites_xpath->evaluate('string(//sites[1]/total[1]/people[1]/text())');
@@ -182,6 +197,7 @@
 <?php if($count_all_p == 0 and $count_all_b == 0): ?>
                 <tr><td colspan="4"><div class="text"><?php echo FLANG_NODATA; ?></div></td></tr>
 <?php endif; ?>
+                </tbody>
             </table>
         </div>
         <div class="border">

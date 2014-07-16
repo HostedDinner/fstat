@@ -47,6 +47,7 @@ Files available are
 	* browser.php      - lists used Browsers, categorised by Browser Family
 	* counter.php      - show the count for each day
 	* country.php      - lists the countries from the visitors
+	* host.php         - lists all hosts, under which the visitors requested
 	* last.php         - lists last ... visitors
 	* lastbots.php     - lists last ... bots
 	* os.php           - lists used Operation System, categorised by OS Family
