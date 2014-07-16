@@ -73,10 +73,9 @@
             include("./elements/about.php");
             break;
         case "last":
-            include("./elements/last.php");
-            break;
         case "lastbots":
-            include("./elements/lastbots.php");
+            //checked in last.php what schould be diplayed
+            include("./elements/last.php");
             break;
         case "overview":
         default:
