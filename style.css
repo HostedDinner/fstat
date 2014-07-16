@@ -40,7 +40,7 @@ hr{
     color:#FFF;
     background:#FB4;
 }
-.backhigh, .striped tr:nth-of-type(2n-1){
+.backhigh, .striped > tbody > tr:nth-of-type(2n-1){
     background:#FFE4BB;
 }
 

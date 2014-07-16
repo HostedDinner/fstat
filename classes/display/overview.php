@@ -30,11 +30,14 @@ class Overview {
     public function ovlist($type, $icontype, $header2, $ico_dir){
 ?>
             <table class="Auflistung">
+                <thead>
                 <tr>
                     <th colspan="2"><?php echo $header2; ?>:</th>
                     <th><?php echo FLANG_COUNT; ?>:</th>
                     <th><?php echo FLANG_GRAPH; ?>:</th>
                 </tr>
+                </thead>
+                <tbody>
 <?php
     $count_all = $this->xpath->evaluate('sum(//'.$type.'/typ/all/count/text())');
     $count_max = $this->xpath->evaluate('string(//'.$type.'/typ/all/count[not(//'.$type.'/typ/all/count > text())]/text())');
@@ -79,6 +82,7 @@ class Overview {
 <?php if($count_all == 0): ?>
                 <tr><td colspan="4"><div class="text"><?php echo FLANG_NODATA; ?></div></td></tr>
 <?php endif; ?>
+                </tbody>
             </table>
 <?php
     }
@@ -93,19 +97,22 @@ class Overview {
      * $header2 (for example FLANG_SEARCHW, FLANG_DOMAIN)
      * $attribute (for example "keywords", "domain")
      */
-    public function ovlist2($type, $header2, $attribute){
+    public function ovlist2($type, $header2, $attribute, $type2 = "ref"){
 ?>
             <table class="Auflistung striped">
+                <thead>
                 <tr>
                     <th><?php echo $header2; ?>:</th>
                     <th><?php echo FLANG_COUNT; ?>:</th>
                     <th><?php echo FLANG_GRAPH; ?>:</th>
                 </tr>
+                </thead>
+                <tbody>
 <?php
-    $count_all = $this->xpath->evaluate('sum(//'.$type.'/ref/count/text())');
-    $count_max = $this->xpath->evaluate('string(//'.$type.'/ref/count[not(//'.$type.'/ref/count > text())]/text())');
+    $count_all = $this->xpath->evaluate('sum(//'.$type.'/'.$type2.'/count/text())');
+    $count_max = $this->xpath->evaluate('string(//'.$type.'/'.$type2.'/count[not(//'.$type.'/ref/count > text())]/text())');
 
-    $nodelist = $this->xpath->query('//'.$type.'/ref');
+    $nodelist = $this->xpath->query('//'.$type.'/'.$type2);
 
     foreach($nodelist as $node){
 
@@ -126,6 +133,7 @@ class Overview {
 <?php if($count_all == 0): ?>
                 <tr><td colspan="3"><div class="text"><?php echo FLANG_NODATA; ?></div></td></tr>
 <?php endif; ?>
+                </tbody>
             </table>
 <?php
     }
@@ -145,6 +153,7 @@ class Overview {
     public function distribution($count_day_max, $databoard_height, $type, $text_name, $text_visit, $lang){
 if($count_day_max > 0): ?>
             <table class="databoard_<?php echo $databoard_height; ?>">
+                <tbody>
                 <tr>
 <?php
     $count_last = 0;
@@ -173,6 +182,7 @@ if($count_day_max > 0): ?>
     endforeach;
 ?>
                 </tr>
+                </tbody>
             </table>
 <?php else: ?>
             <div class="text"><?php echo FLANG_NODATA; ?></div>
@@ -192,6 +202,7 @@ if($count_day_max > 0): ?>
     public function time_distribution($count_time_max, $databoard_height, $type, $text_name, $text_visit){
 if($count_time_max > 0): ?>
             <table class="databoard_<?php echo $databoard_height; ?>">
+                <tbody>
                 <tr>
 <?php
     $count_all = 0;
@@ -211,6 +222,7 @@ if($count_time_max > 0): ?>
     endforeach;
 ?>
                 </tr>
+                </tbody>
             </table>
 <?php else: ?>
             <div class="text"><?php echo FLANG_NODATA; ?></div>
@@ -227,11 +239,14 @@ if($count_time_max > 0): ?>
 ?>
             <h2><?php echo FLANG_H_COUNTRY; ?></h2>
             <table class="Auflistung">
+                <thead>
                 <tr>
                     <th colspan="2"><?php echo FLANG_COUNTRY; ?>:</th>
                     <th><?php echo FLANG_COUNT; ?>:</th>
                     <th><?php echo FLANG_GRAPH; ?>:</th>
                 </tr>
+                </thead>
+                <tbody>
 <?php
     $count_all = $this->xpath->evaluate('sum(//country/cou/count/text())');
     $count_max = $this->xpath->evaluate('string(//country/cou/count[not(//country/cou/count > text())]/text())');
@@ -259,7 +274,9 @@ if($count_time_max > 0): ?>
 <?php if($count_all == 0): ?>
                 <tr><td colspan="4"><div class="text"><?php echo FLANG_NODATA; ?></div></td></tr>
 <?php endif; ?>
+                </tbody>
             </table>
 <?php
     }
 }
+?>

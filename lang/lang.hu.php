@@ -43,6 +43,7 @@
 	define('FLANG_COUNTRY', "Ország");
 	define('FLANG_DATE', "Dátum");
 	define('FLANG_DOMAIN', "Domain");
+	define('FLANG_HOST', "Host");
 	define('FLANG_OS', "OS");
 	define('FLANG_SEARCHW', "Keresett kifejezés");
 	define('FLANG_SITE', "Oldal");

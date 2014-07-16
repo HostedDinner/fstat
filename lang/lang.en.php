@@ -43,6 +43,7 @@
 	define('FLANG_COUNTRY', "Country");
 	define('FLANG_DATE', "Date");
 	define('FLANG_DOMAIN', "Domain");
+	define('FLANG_HOST', "Host");
 	define('FLANG_OS', "OS");
 	define('FLANG_SEARCHW', "Word");
 	define('FLANG_SITE', "Site");
