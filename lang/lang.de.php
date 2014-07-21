@@ -33,6 +33,7 @@
 	define('FLANG_H_BOT', "Bots");
 	define('FLANG_H_BROWSER', "Browser");
 	define('FLANG_H_COUNTRY', "L&auml;nder");
+	define('FLANG_H_IP_VERSION', "IP Version");
 	define('FLANG_H_REFERER', "Referer");
 	define('FLANG_H_OS', "OS");
 	define('FLANG_H_SEARCHW', "Suchw&ouml;rter");

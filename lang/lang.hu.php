@@ -33,6 +33,7 @@
 	define('FLANG_H_BOT', "Botok");
 	define('FLANG_H_BROWSER', "Böngészők");
 	define('FLANG_H_COUNTRY', "Országok");
+	define('FLANG_H_IP_VERSION', "IP Version");
 	define('FLANG_H_REFERER', "Forgalmi források");
 	define('FLANG_H_OS', "OS");
 	define('FLANG_H_SEARCHW', "Kulcsszavak");
