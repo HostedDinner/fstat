@@ -123,6 +123,12 @@
     $overview->ovlist2('hosts', FLANG_HOST, 'host', 'host');
 ?>
         </div>
+        <div class="border">
+            <h2><?php echo FLANG_H_IP_VERSION; ?></h2>
+<?php 
+    $overview->ovlist2('ipv', FLANG_H_IP_VERSION, 'version', 'ip');
+?>
+        </div>
     </div>
     <div class="middle">
         <div class="border">

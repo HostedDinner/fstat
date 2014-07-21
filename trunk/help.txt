@@ -48,6 +48,7 @@ Files available are
 	* counter.php      - show the count for each day
 	* country.php      - lists the countries from the visitors
 	* host.php         - lists all hosts, under which the visitors requested
+	* ipv.php          - lists the ip Version IPv4/IPv6
 	* last.php         - lists last ... visitors
 	* lastbots.php     - lists last ... bots
 	* os.php           - lists used Operation System, categorised by OS Family

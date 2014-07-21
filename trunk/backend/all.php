@@ -19,6 +19,7 @@ $all_show_bot = false; //Bots
 $all_show_ref = false; //Referer
 $all_show_key = false; //Search
 $all_show_ho  = false; //Host
+$all_show_ipv = false; //IPv4/Ipv6
 $all_show_cou = false; //Country
 $all_show_cot = false; //Counter
 $all_show_tim = false; //Time
@@ -52,6 +53,9 @@ foreach($all_shows as $show){
         case "host":
             $all_show_ho = true;
             break;
+        case "ip":
+            $all_show_ipv = true;
+            break;
         case "cou":
         case "country":
             $all_show_cou = true;
@@ -70,7 +74,8 @@ foreach($all_shows as $show){
             $all_show_bot = true;
             $all_show_ref = true;
             $all_show_key = true;
-            $all_show_ho = true;
+            $all_show_ho  = true;
+            $all_show_ipv = true;
             $all_show_cou = true;
             $all_show_cot = true;
             $all_show_tim = true;
@@ -85,6 +90,7 @@ if($all_show_bot == true){$bot_arr = array();}
 if($all_show_ref == true){$ref_arr = array();}
 if($all_show_key == true){$key_arr = array();}
 if($all_show_ho  == true){$ho_arr = array();}
+if($all_show_ipv  == true){$ipv_arr = array();}
 if($all_show_cou == true){$cou_arr = array();}
 if($all_show_cot == true){
     $cot_arr = array();
@@ -145,6 +151,7 @@ for(; $m <= $m_end; $m++){
                     if($all_show_ref == true){Normal_Build($visitor, "rdom", $ref_arr);}
                     if($all_show_key == true){Normal_Build($visitor, "rkey", $key_arr);}
                     if($all_show_ho  == true){Normal_Build($visitor, "host", $ho_arr);}
+                    if($all_show_ipv == true){IPversion_Build($visitor, $ipv_arr);}
                     if($all_show_cou == true){Normal_Build($visitor, "ucon", $cou_arr, "ucoi", true);}
 
                     if($all_show_cot == true){
@@ -208,6 +215,12 @@ if($all_show_ho == true){
     Normal_Sort($ho_arr);
     $ho_root = $root->appendChild($xmlausgabe->createElement("hosts"));
     Normal_DOM($xmlausgabe, $ho_root, $ho_arr, "host", "host");
+}
+
+if($all_show_ipv == true){
+    Normal_Sort($ipv_arr);
+    $ipv_root = $root->appendChild($xmlausgabe->createElement("ipv"));
+    Normal_DOM($xmlausgabe, $ipv_root, $ipv_arr, "ip", "version");
 }
 
 if($all_show_cou == true){
