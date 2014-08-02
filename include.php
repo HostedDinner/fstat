@@ -49,9 +49,13 @@ if ($user->is_new) {
     $country->parse($user->ip);
     
     
+    //Browser Typ ist bis jetzt nicht deklariert
+    $user->type = $uaa['typ'];
+    
+    
     //Daten in XML schreiben:
     $tmp_filename = $current_folder . "/" . gmdate("d", $user->time) . ".xml";
-
+    
     if (file_exists($tmp_filename)) {
         $xmldoc = new DOMDocument();
         $xmldoc->preserveWhiteSpace = false;
@@ -76,6 +80,9 @@ if ($user->is_new) {
     $newvisitor->appendChild($xmldoc->createElement('ufam', htmlspecialchars($uaa['ua_family'])));
     $newvisitor->appendChild($xmldoc->createElement('unam', htmlspecialchars($uaa['ua_name'])));
     $newvisitor->appendChild($xmldoc->createElement('uico', htmlspecialchars($uaa['ua_icon'])));
+    if($user->type == "Robot" or $user->type == "Validator"){
+        $newvisitor->appendChild($xmldoc->createElement('uurl', htmlspecialchars($uaa['ua_url'])));
+    }
     $newvisitor->appendChild($xmldoc->createElement('ofam', htmlspecialchars($uaa['os_family'])));
     $newvisitor->appendChild($xmldoc->createElement('onam', htmlspecialchars($uaa['os_name'])));
     $newvisitor->appendChild($xmldoc->createElement('oico', htmlspecialchars($uaa['os_icon'])));
@@ -88,10 +95,7 @@ if ($user->is_new) {
 
     $xmldoc->formatOutput = true;
     $xmldoc->save($tmp_filename, LIBXML_NOEMPTYTAG);
-
-    //Browser Typ ist bis jetzt nicht deklariert
-    $user->type = $uaa['typ'];
-
+    
     //IP Cache schreiben:
     $user->writeToCache(__DIR__ . "/" . $fstat_cache_dir . "ip");
 }
