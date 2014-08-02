@@ -41,6 +41,7 @@
         $v_ufam = $xpath->evaluate('string(./ufam/text())', $row);
         $v_unam = $xpath->evaluate('string(./unam/text())', $row);
         $v_uico = $xpath->evaluate('string(./uico/text())', $row);
+        $v_uurl = $xpath->evaluate('string(./uurl/text())', $row); //only set for Bots
         $v_ofam = $xpath->evaluate('string(./ofam/text())', $row);
         $v_onam = $xpath->evaluate('string(./onam/text())', $row);
         $v_oico = $xpath->evaluate('string(./oico/text())', $row);
@@ -68,7 +69,11 @@
 <?php endif; ?>
                         <tr>
                             <td class="icell"><img src="<?php echo $fstat_ico_dir . "agent/" . $v_uico; ?>" alt="*" title="<?php echo $v_ufam; ?>" width="16" height="16"></td>
-                            <td><?php echo $v_unam; ?> </td>
+<?php if($v_uurl != ""): ?>
+                            <td><a href="<?php echo $v_uurl; ?>"><?php echo $v_unam; ?></a></td>
+<?php else: ?>
+                            <td><?php echo $v_unam; ?></td>
+<?php endif; ?>
                         </tr>
                     </table>
                 </td>
