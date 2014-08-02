@@ -48,6 +48,25 @@ hr{
     font-size:80%;
 }
 
+.IPv_4, .IPv_6{
+    margin-right:4px;
+    padding:1px 2px;
+    border:1px solid;
+    border-radius:3px;
+    
+    color:#FFF;
+}
+
+.IPv_4{
+    border-color:#024D6A;
+    background:#43A4C9;
+}
+
+.IPv_6{
+    border-color:#006746;
+    background:#4BBF99;
+}
+
 .border{
     margin:0 0 2px 0;
     padding:4px 0;

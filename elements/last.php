@@ -50,6 +50,7 @@
         $v_rkey = $xpath->evaluate('string(./rkey/text())', $row);
         $v_rdom = $xpath->evaluate('string(./rdom/text())', $row);
         $v_host = $xpath->evaluate('string(./host/text())', $row);
+        $v_ipv = strpos($v_uip, ":") === false ? "4" : "6";
         $sitenodelist = $xpath->query('./path/site', $row);
         $c_filename = $fstat_data_dir . "stat/" . date("Y/m/d", $v_uti) . ".xml";
 ?>
@@ -83,7 +84,7 @@
 <?php else : ?>
                 <td></td>
 <?php endif; ?>
-                <td><?php echo $v_host; ?></td>
+                <td><span class="IPv_<?php echo $v_ipv; ?>"><?php echo $v_ipv; ?></span><?php echo $v_host; ?></td>
             </tr>
 <?php endforeach; ?>
             </tbody>
