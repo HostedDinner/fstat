@@ -2,11 +2,13 @@
     error_reporting(0); //keine Fehler anzeigen
     //error_reporting(E_ALL ^ E_NOTICE); //alle Fehler ausser Notice anzeigen
     //error_reporting(E_ALL); // alle Fehler anzeigen
-
-    $startzeit = explode(" ", microtime());
-    $startzeit = $startzeit[0] + $startzeit[1];
     
     session_start();
+    
+    //measures the loading speed
+    require_once __DIR__ . "/classes/speedMeasure.php";
+    $speed = new SpeedMeasure();
+    $speed->start();
     
     //The language class is special, it includes the language defines at init time of the first var
     //therefor "new Language" must be called once!
