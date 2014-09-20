@@ -15,6 +15,10 @@
     require_once __DIR__ . "/classes/display/language.php";
     $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
 
+    //include user
+    require_once __DIR__ . "/classes/user.php";
+    $user = new User("Gast");
+    
     //including necassary classes
     require_once __DIR__ . "/classes/analyse/country.php";
     require_once __DIR__ . "/classes/display/displayTime.php";

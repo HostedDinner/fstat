@@ -6,6 +6,8 @@
     $fstat_cache_dir = "./cache/";
     $fstat_data_dir = "./stat_data/";
     $fstat_ico_dir = "./icons/";
+    
+    $fstat_password_file = "./config/users.php";
 
     $fstat_new_user = 14400;//in sec: 4 Hours
     $fstat_date_format = "j.n.Y";//or maybe "Y-n-j"
