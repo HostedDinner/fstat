@@ -12,18 +12,18 @@
     
     //The language class is special, it includes the language defines at init time of the first var
     //therefor "new Language" must be called once!
-    require_once "./classes/display/language.php";
+    require_once __DIR__ . "/classes/display/language.php";
     $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
 
     //including necassary classes
-    require_once "./classes/analyse/country.php";
-    require_once "./classes/display/displayTime.php";
-    require_once "./classes/display/urlbuilder.php";
-    require_once "./classes/backend.php";
+    require_once __DIR__ . "/classes/analyse/country.php";
+    require_once __DIR__ . "/classes/display/displayTime.php";
+    require_once __DIR__ . "/classes/display/urlbuilder.php";
+    require_once __DIR__ . "/classes/backend.php";
 
     //"Config"
-    include_once "./config/settings.php";
-    include_once "./config/information.php";
+    require_once __DIR__ . "/config/settings.php";
+    include_once __DIR__ . "/config/information.php";
 
 
     //instances of the classes
@@ -60,33 +60,33 @@
 <html>
 <head>
 <?php
-    include("./elements/layout_header.php");
+    include __DIR__ . "/elements/layout_header.php";
 ?>
 </head>
 <body>
 <div id="container">
 <?php
     //set Header
-    include("./elements/layout_menubar.php");
+    include __DIR__ . "/elements/layout_menubar.php";
 
     //set Page content
     switch ($urlBuilder->getPage()) {
         case "about":
-            include("./elements/about.php");
+            include __DIR__ . "/elements/about.php";
             break;
         case "last":
         case "lastbots":
             //checked in last.php what schould be diplayed
-            include("./elements/last.php");
+            include __DIR__ . "/elements/last.php";
             break;
         case "overview":
         default:
-            include("./elements/overview.php");
+            include __DIR__ . "/elements/overview.php";
             break;
     }
     
     //set Footer
-    include("./elements/layout_footer.php");
+    include __DIR__ . "/elements/layout_footer.php";
 ?>
 </div>
 </body>
