@@ -9,7 +9,7 @@
 
     $fstat_cache_dir = "./cache/";
     $fstat_data_dir = "./stat_data/";
-    $fstat_ico_dir = "./icons/";
+    $fstat_ico_dir = "./img/";
     
     $fstat_password_file = "./config/users.php";
 

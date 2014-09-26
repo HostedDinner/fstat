@@ -189,7 +189,7 @@ hr{
 .Auflistung .icell .country_icon{
     width:16px;
     height:11px;
-    background:url(./icons/country/flags.png) no-repeat;
+    background:url(./img/country/flags.png) no-repeat;
 }
 
 .Auflistung .text{
