@@ -9,7 +9,7 @@
 ?>
         <div class="border" style="text-align:left;">
             <div class="text">
-                <h2><a href="http://code.google.com/p/fstat/">FStat</a> Version <?php echo $fstat_fstat_version; ?></h2>
+                <h2><a href="https://github.com/HostedDinner/fstat">FStat</a> Version <?php echo $fstat_fstat_version; ?></h2>
                 &copy; F-Soft by <a href="http://www.fabian-neffgen.de/">Fabian Neffgen</a><br>
                 <?php echo FLANG_H_LICENSE; ?> <a href="https://www.gnu.org/licenses/gpl.html">GNU GPL v3</a><br>
                 <br>
