@@ -3,9 +3,9 @@
     require_once __DIR__ . "/../classes/display/overview.php";
     
     //
-    //var_dump(Backend::getXML("./backend/all.php"));
+    //var_dump(Backend::getXML(__DIR__ . "/../backend/all.php"));
     $xml_all = new DOMDocument();
-    $xml_all->loadXML(Backend::getXML("./backend/all.php"));
+    $xml_all->loadXML(Backend::getXML(__DIR__ . "/../backend/all.php"));
     
     //$_SESSION['xml'] = $xml_all->saveXML();
     
@@ -140,7 +140,7 @@
         <div class="border">
 <?php
 	$xml_sites = new DOMDocument();
-        $xml_sites->loadXML(Backend::getXML("./backend/sitecounter.php"));
+        $xml_sites->loadXML(Backend::getXML(__DIR__ . "/../backend/sitecounter.php"));
         
         $sites_xpath = new DOMXPath($xml_sites);
         

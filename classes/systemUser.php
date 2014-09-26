@@ -10,7 +10,7 @@ require_once __DIR__ . "/../config/settings.php";
  *
  * @author Fabian
  */
-class User {
+class SystemUser {
     
     private $auth;
     private $username;

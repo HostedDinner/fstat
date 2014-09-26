@@ -16,8 +16,8 @@
     $lang = new Language(isset($_GET['lang']) ? $_GET['lang'] : null);
 
     //include user
-    require_once __DIR__ . "/classes/user.php";
-    $user = new User("Gast");
+    require_once __DIR__ . "/classes/systemUser.php";
+    $user = new SystemUser("Gast");
     
     //including necassary classes
     require_once __DIR__ . "/classes/analyse/country.php";

@@ -32,13 +32,13 @@ function WriteLastMonth($filename){
 	
 	$handle = @fopen($filename, "w");
 	if($handle){
-		fputs($handle, Backend::getXML("./backend/counter.php", $tmp_year, $tmp_month));
+		fputs($handle, Backend::getXML(__DIR__ . "/backend/counter.php", $tmp_year, $tmp_month));
 	}
 	@fclose($handle);
 }
 
 
-$c_filename = $fstat_cache_dir."lastmonth.xml";
+$c_filename = __DIR__ . "/" . $fstat_cache_dir."lastmonth.xml";
 
 //check how old that file is
 	

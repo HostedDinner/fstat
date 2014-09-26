@@ -1,7 +1,7 @@
 <?php
     //lastupdate of uasdata
-    if (file_exists($fstat_cache_dir."cache.ini")) {
-            $cacheIni = parse_ini_file($fstat_cache_dir."cache.ini");
+    if (file_exists(__DIR__ . "/../" . $fstat_cache_dir."cache.ini")) {
+            $cacheIni = parse_ini_file(__DIR__ . "/../" . $fstat_cache_dir."cache.ini");
             $uasdata_date = date($fstat_date_format, $cacheIni['lastupdate']);
     }else{
             $uasdata_date = "";

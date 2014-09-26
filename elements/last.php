@@ -18,9 +18,9 @@
 
     $xml_last = new DOMDocument();
     if($urlBuilder->getPage() == 'last'){
-        $xml_last->loadXML(Backend::getXML("./backend/last.php"));
+        $xml_last->loadXML(Backend::getXML(__DIR__ . "/../backend/last.php"));
     }else if($urlBuilder->getPage() == 'lastbots'){
-        $xml_last->loadXML(Backend::getXML("./backend/lastbots.php"));
+        $xml_last->loadXML(Backend::getXML(__DIR__ . "/../backend/lastbots.php"));
     }
     
     $xpath = new DOMXPath($xml_last);
