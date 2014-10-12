@@ -38,6 +38,7 @@
 	define('FLANG_H_OS', "OS");
 	define('FLANG_H_SEARCHW', "Search Words");
 	define('FLANG_H_SITE', "Sites");
+	define('FLANG_H_HTTP_VERSION', "HTTP/HTTPS");
 	
 	
 	define('FLANG_BROWSER', "Browser");

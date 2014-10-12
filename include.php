@@ -5,6 +5,7 @@ require_once __DIR__ . "/classes/analyse/user.php";
 require_once __DIR__ . "/classes/dirHelper.php";
 require_once __DIR__ . "/classes/analyse/country.php";
 require_once __DIR__ . "/classes/analyse/reference.php";
+require_once __DIR__ . "/classes/analyse/security.php";
 require_once __DIR__ . "/classes/analyse/UASparser.php";
 
 $user = new User(getenv("REMOTE_ADDR"), $_SERVER['HTTP_USER_AGENT']);
@@ -83,6 +84,7 @@ if ($user->is_new) {
     if($user->type == "Robot" or $user->type == "Validator"){
         $newvisitor->appendChild($xmldoc->createElement('uurl', htmlspecialchars($uaa['ua_url'])));
     }
+    $newvisitor->appendChild($xmldoc->createElement('usec', Security::isHTTPS() ? 'HTTPS' : 'HTTP'));
     $newvisitor->appendChild($xmldoc->createElement('ofam', htmlspecialchars($uaa['os_family'])));
     $newvisitor->appendChild($xmldoc->createElement('onam', htmlspecialchars($uaa['os_name'])));
     $newvisitor->appendChild($xmldoc->createElement('oico', htmlspecialchars($uaa['os_icon'])));
