@@ -38,6 +38,9 @@
         </div>
         <div class="menuentry">
             <a href="<?php echo "./".$urlBuilder->build('lastbots'); ?>"><?php echo FLANG_LAST." ".$backend->getListLength()." ".FLANG_BOT_S; ?></a>
+            <div class="submenu">
+                <a href="<?php echo "./".$urlBuilder->build('lastbots', null, null, null, "doubleFilter"); ?>"><?php echo FLANG_LAST." ".$backend->getListLength()." ".FLANG_BOT_S . " (". FLANG_DOUBLEFILTER .")"; ?></a>
+            </div>
         </div>
         <div class="menuentry">
             <a href="#"><?php echo FLANG_LANG; ?></a>

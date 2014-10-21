@@ -21,7 +21,7 @@ class URLBuilder {
     }
     
     
-    public function build($newpage = null, $newyear = null, $newmonth = null, $newlang = null){
+    public function build($newpage = null, $newyear = null, $newmonth = null, $newlang = null, $extra = null){
         
         if($newpage == null){
             $newpage = $this->page;
@@ -43,6 +43,10 @@ class URLBuilder {
             $newlang = $this->language;
         }
         $temp .= "&amp;lang=".$newlang;
+        
+        if($extra != null){
+            $temp .= "&amp;" . $extra;
+        }
         
 	return $temp;
         

@@ -19,6 +19,7 @@ class Backend {
     private $forceRefresh;
     private $time;
     private $showList;
+    private $filterDoubleBot;
     
     const MODUS_DAY = 0;
     const MODUS_MONTH = 1;
@@ -34,6 +35,7 @@ class Backend {
         $this->forceRefresh = false;
         $this->time = new DisplayTime();
         $this->showList = 'all';
+        $this->filterDoubleBot = false;
     }
     
     public function setUnsafeListLength($newlength){
@@ -131,6 +133,13 @@ class Backend {
         return $this->showList;
     }
     
+    function setFilterDoubleBot($filterDoubleBot) {
+        $this->filterDoubleBot = $filterDoubleBot;
+    }
+    
+    function getFilterDoubleBot() {
+        return $this->filterDoubleBot;
+    }  
     
     public static function getXML($filename, $year = null, $month = null){
         if (is_file($filename)) {
