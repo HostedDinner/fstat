@@ -141,6 +141,53 @@ class Overview {
     
     
     /***********************************
+     *              List 3             *
+     *      IPVersion / HTTP(S)        *
+     ***********************************
+     * $type (for example "ipv", "security")
+     * $header2 (for example FLANG_H_IP_VERSION, FLANG_H_HTTP_VERSION)
+     * $attribute (for example "version", "https")
+     */
+    public function ovlist3($type, $header2, $attribute, $type2 = "ref"){
+?>
+            <table class="Auflistung striped">
+                <thead>
+                <tr>
+                    <th><?php echo $header2; ?>:</th>
+                    <th><?php echo FLANG_COUNT; ?>:</th>
+                </tr>
+                </thead>
+                <tbody>
+<?php
+    $count_all = $this->xpath->evaluate('sum(//'.$type.'/'.$type2.'/count/text())');
+
+    $nodelist = $this->xpath->query('//'.$type.'/'.$type2);
+
+    foreach($nodelist as $node){
+
+        $string = $node->getAttribute($attribute);
+        $count = $this->xpath->evaluate('string(./count[1]/text())', $node);
+?>
+                <tr>
+                    <td><?php echo $string; ?></td>
+                    <td><?php echo $count; ?></td>
+                </tr>
+<?php
+    }
+?>
+<?php if($count_all == 0): ?>
+                <tr><td colspan="2"><div class="text"><?php echo FLANG_NODATA; ?></div></td></tr>
+<?php endif; ?>
+                </tbody>
+            </table>
+<?php
+    }
+    
+    
+    
+    
+    
+    /***********************************
      *     Distribution Diagram        *
      ***********************************
      * $count_day_max

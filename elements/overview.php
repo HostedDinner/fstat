@@ -87,6 +87,18 @@
                 </tfoot>
             </table>
         </div>
+        <div class="border">
+            <h2><?php echo FLANG_H_IP_VERSION; ?></h2>
+<?php 
+    $overview->ovlist3('ipv', FLANG_H_IP_VERSION, 'version', 'ip');
+?>
+        </div>
+        <div class="border">
+            <h2><?php echo FLANG_H_HTTP_VERSION; ?></h2>
+<?php 
+    $overview->ovlist3('security', FLANG_H_HTTP_VERSION, 'https', 'sec');
+?>
+        </div>
     </div>
 
     <div class="right">
@@ -121,18 +133,6 @@
             <h2><?php echo FLANG_HOST; ?></h2>
 <?php 
     $overview->ovlist2('hosts', FLANG_HOST, 'host', 'host');
-?>
-        </div>
-        <div class="border">
-            <h2><?php echo FLANG_H_IP_VERSION; ?></h2>
-<?php 
-    $overview->ovlist2('ipv', FLANG_H_IP_VERSION, 'version', 'ip');
-?>
-        </div>
-        <div class="border">
-            <h2><?php echo FLANG_H_HTTP_VERSION; ?></h2>
-<?php 
-    $overview->ovlist2('security', FLANG_H_HTTP_VERSION, 'https', 'sec');
 ?>
         </div>
     </div>
