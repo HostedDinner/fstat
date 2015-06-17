@@ -46,7 +46,7 @@ if ($user->is_new) {
     $ref = new Reference(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "");
     $ref->parse();
     //Country Parser
-    $country = new Country(__DIR__ . "/dbip-country-1.csv", __DIR__ . "/dbip-country-2.csv", __DIR__ . "/dbip-country-3.csv");
+    $country = new Country(__DIR__ . "/dbip-country-1.csv", __DIR__ . "/dbip-country-2.csv", __DIR__ . "/dbip-country-3.csv", __DIR__ . "/dbip-country-4.csv", __DIR__ . "/dbip-country-5.csv");
     $country->parse($user->ip);
     
     
