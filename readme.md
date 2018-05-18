@@ -1,3 +1,5 @@
+**_Disclaimer: This piece of software is not conform to the DSGVO, as it stores all IP-Adresses without anonymizing!_**
+
 English
 ==============
 About
